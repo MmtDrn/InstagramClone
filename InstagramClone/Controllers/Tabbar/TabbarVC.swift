@@ -30,6 +30,7 @@ class TabbarVC: WHTabbarController {
                                                object: nil)
         observeDataSource()
         observeViewModel()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -102,22 +103,21 @@ class TabbarVC: WHTabbarController {
     
     private func observeDataSource() {
         
-        viewModel.dataSource.subscribe { [weak self] state in
-            switch state {
-            case .setImage(let image):
-                self?.viewModel.setImageToStorage(image: image)
-            }
-        }
     }
     
     private func observeViewModel() {
-        viewModel.subscribe { state in
+        viewModel.subscribe { [weak self] state in
+            guard let self = self else { return }
+            
             switch state {
-                
-            case .showAlert(let message):
-                AlertManager.shared.showAlert(onVC: self, errorMesaage: message)
-            case .mediaUploadSuccessfully(let pickerController):
-                pickerController.dismiss(animated: true)
+            case .pushPostVC:
+                DispatchQueue.main.async {
+                    self.navigationController?.pushViewController(PostVC(), animated: true)
+                }
+            case .showAlert(let alertVC):
+                DispatchQueue.main.async {
+                    self.present(alertVC, animated: true)
+                }
             }
         }
     }
@@ -126,12 +126,11 @@ class TabbarVC: WHTabbarController {
 extension TabbarVC: PostButtonsProtocol {
     
     func cameraTapped() {
-//        viewModel.cameraButtonTapped()
-        navigationController?.pushViewController(PostVC(), animated: true)
+        viewModel.cameraButtonTapped()
     }
     
     func libraryTapped() {
-        viewModel.libraryButtonTapped()
+        viewModel.requestPhotoLibraryAuthorization()
     }
     
 }

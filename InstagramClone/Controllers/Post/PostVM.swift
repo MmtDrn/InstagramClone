@@ -6,29 +6,27 @@
 //
 
 import UIKit
-
-enum PostCases: Int {
-    case post
-    case upload
-}
+import Photos
 
 enum PostVMStateChange: StateChange {
-    
+    case relodData
 }
 
 class PostVM: StatefulVM<PostVMStateChange> {
     
     var dataSource = PostDS()
-    var step = 0
     
-    public func choseImage() {
-        let pickerController = UIImagePickerController()
+    func fetchImages() {
+        let fetchOptions = PHFetchOptions()
         
-        pickerController.delegate = dataSource
-        pickerController.sourceType = .photoLibrary
-        pickerController.modalPresentationStyle = .fullScreen
+        fetchOptions.fetchLimit = .max
+        let images = PHAsset.fetchAssets(with: .image, options: fetchOptions)
         
-        UIApplication.getTopViewController()?.present(pickerController, animated: true)
+        images.enumerateObjects { [weak self] asset, count, _ in
+            guard let self = self, let image = asset.convertToUIImage() else { return }
+            self.dataSource.images.append(image)
+        }
+        self.emit(.relodData)
     }
 }
 

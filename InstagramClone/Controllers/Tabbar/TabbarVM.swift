@@ -7,60 +7,45 @@
 
 import UIKit
 import Firebase
-import ProgressHUD
+import Photos
 
 enum TabbarVMStateChange: StateChange {
-    case showAlert(message: String)
-    case mediaUploadSuccessfully(pickerController: UIImagePickerController)
+    case pushPostVC
+    case showAlert(alertVC: UIAlertController)
 }
 
 class TabbarVM: StatefulVM<TabbarVMStateChange> {
     
     var dataSource = TabbarDS()
-    var pickerController: UIImagePickerController?
     
     public func cameraButtonTapped() {
-        pickerController = UIImagePickerController()
+        let pickerController = UIImagePickerController()
         
-        pickerController!.delegate = dataSource
-        pickerController!.sourceType = .camera
-        pickerController!.modalPresentationStyle = .fullScreen
+        pickerController.sourceType = .camera
+        pickerController.modalPresentationStyle = .fullScreen
         
-        UIApplication.getTopViewController()?.present(pickerController!, animated: true)
+        UIApplication.getTopViewController()?.present(pickerController, animated: true)
     }
     
-    public func libraryButtonTapped() {
-        pickerController = UIImagePickerController()
-        
-        pickerController!.delegate = dataSource
-        pickerController!.sourceType = .photoLibrary
-        pickerController!.modalPresentationStyle = .fullScreen
-        pickerController!.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done,
-            target: self,
-            action: #selector(self.dataSource.imagePickerController(_:didFinishPickingMediaWithInfo:)))
-        UIApplication.getTopViewController()?.present(pickerController!, animated: true)
-    }
-    
-    public func setImageToStorage(image: UIImage) {
-        ProgressHUD.animationType = .circleRotateChase
-        ProgressHUD.show("Loading", interaction: true)
-        pickerController?.view.isUserInteractionEnabled = false
-        let storage = Storage.storage()
-        let storageReferance = storage.reference()
-        let mediaFolder = storageReferance.child("media")
-        
-        if let imageData = image.jpegData(compressionQuality: 0.5) {
-            let imageReferance = mediaFolder.child("image.jpg")
-            
-            imageReferance.putData(imageData) { [weak self] (metaData, error) in
-                guard let self = self else { return }
-                if error != nil {
-                    self.emit(.showAlert(message: error?.localizedDescription ?? ""))
-                } else {
-                    ProgressHUD.dismiss()
-                    self.emit(.mediaUploadSuccessfully(pickerController: self.pickerController!))
-                }
+    func requestPhotoLibraryAuthorization() {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            guard let self = self else { return }
+            switch status {
+            case .authorized:
+                self.emit(.pushPostVC)
+            case .denied, .restricted:
+                let alertController = UIAlertController(title: "Photo Library Access Denied", message: "Please grant permission to access your photo library in Settings.", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                        alertController.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
+                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                        }))
+                self.emit(.showAlert(alertVC: alertController))
+            case .notDetermined:
+                print("Photo library access not determined.")
+            case .limited:
+                self.emit(.pushPostVC)
+            @unknown default:
+                print("Unknown status.")
             }
         }
     }

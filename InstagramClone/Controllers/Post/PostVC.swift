@@ -12,76 +12,98 @@ class PostVC: BaseViewController {
     
     private lazy var viewModel = PostVM()
     
-    private lazy var navView: PostNavView = {
-        let view = PostNavView(title: "New Post")
+    private lazy var imageView: BaseImageView = {
+        let imageView = BaseImageView(image: nil,
+                                      contentMode: .scaleAspectFit,
+                                      backgroundColor: .clear)
         
-        view.delegate = self
-        
-        return view
+        return imageView
     }()
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    private lazy var collectionView: BaseCollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
         
-        self.viewModel.choseImage()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+        let collectionView = BaseCollectionView(layout: layout,
+                                                cells: [PostCell.self],
+                                                allowsSelection: true,
+                                                allowsMultipleSelection: true,
+                                                backgroundColor: .clear)
+
+        collectionView.delegate = viewModel.dataSource
+        collectionView.dataSource = viewModel.dataSource
+
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        viewModel.choseImage()
+        self.setNavigationBar(navBarType: .post(title: "New Post",
+                                                rightImage: UIImage(named: "rightArrow"),
+                                                leftImage: UIImage(named: "xImage")),
+                              backItemHidden: true,
+                              isTransparent: true,
+                              backGroundColor: .white,
+                              rightButtonAction: #selector(doneButtonTapped),
+                              leftButtonAction: #selector(cancelButtonTapped))
+        viewModel.fetchImages()
     }
     
     override func setupViews() {
         super.setupViews()
-        view.addSubview(navView)
+        view.addSubview(imageView)
+        view.addSubview(collectionView)
     }
     
     override func setupLayouts() {
         super.setupLayouts()
-        navView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(CGFloat.dHeight * (30/812))
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(CGFloat.dHeight * (70/812))
+        
+        imageView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.leading.trailing.equalToSuperview().inset(5)
+            make.height.equalTo(CGFloat.dHeight/3)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(5)
+            make.bottom.equalToSuperview()
         }
     }
     
+    @objc private func cancelButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc private func doneButtonTapped() {
+        print("doneButtonTapped")
+    }
+    
+    
     override func observeViewModel() {
         super.observeViewModel()
+        
+        viewModel.subscribe { [weak self] state in
+            guard let self = self else { return }
+            switch state {
+                
+            case .relodData:
+                self.imageView.image = self.viewModel.dataSource.images.first
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     override func observeDataSource() {
         super.observeDataSource()
-        
-        viewModel.dataSource.subscribe { state in
+        viewModel.dataSource.subscribe { [weak self] state in
+            guard let self = self else { return }
+            
             switch state {
                 
-            case .setImage(let image):
-                break
-            case .cancel:
-                self.navLeftButtonAction()
+            case .setHeaderImage(let image):
+                self.imageView.image = image
             }
         }
-    }
-}
-
-//MARK: - Navigation Button Actions
-extension PostVC: PostNavViewProtocol {
-    
-    func navRightButtonAction() {
-        print("post nav right button tapped")
-    }
-    
-    func navLeftButtonAction() {
-        navigationController?.popViewController(animated: true)
     }
 }
