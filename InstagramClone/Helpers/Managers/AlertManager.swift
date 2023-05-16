@@ -12,11 +12,29 @@ class AlertManager {
     static var shared = AlertManager()
     private init() { }
     
-    func showAlert(onVC: UIViewController?, errorMesaage: String) {
-        let alertVC = AlertVC(message: errorMesaage)
-        alertVC.modalPresentationStyle = .overFullScreen
-        alertVC.modalTransitionStyle = .crossDissolve
+    func showAlert(onVC: UIViewController?, type: AlertType,
+                   firstActionCompletion: CompletionHandler? = nil,
+                   secondActionCompletion: CompletionHandler? = nil) {
         
-        onVC?.present(alertVC, animated: true)
+        switch type {
+        case .justMessage(let message):
+            let alertVC = AlertVC(alertType: .justMessage(message: message))
+            alertVC.modalPresentationStyle = .overFullScreen
+            alertVC.modalTransitionStyle = .crossDissolve
+            
+            onVC?.present(alertVC, animated: true)
+        case .doubleButton(let message, let firstButtonTitle, let secondButtonTitle):
+            let alertVC = AlertVC(alertType: .doubleButton(message: message, firstButtonTitle: firstButtonTitle,
+                                                           secondButtonTitle: secondButtonTitle),
+                                  firstActionCompletion: firstActionCompletion,
+                                  secondActionCompletion: secondActionCompletion)
+            alertVC.modalPresentationStyle = .overFullScreen
+            alertVC.modalTransitionStyle = .crossDissolve
+            
+            onVC?.present(alertVC, animated: true)
+        }
+        
+        
+       
     }
 }

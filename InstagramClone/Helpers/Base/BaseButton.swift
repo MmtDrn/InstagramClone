@@ -9,6 +9,8 @@ import UIKit
 
 class BaseButton: UIButton {
     
+    lazy var buttonClicked: () -> () = {}
+    
     convenience init(title: String? = nil,
                      image: UIImage? = nil,
                      titleColor: UIColor? = .white,
@@ -29,7 +31,12 @@ class BaseButton: UIButton {
         self.layer.borderColor = borderColor?.cgColor
         self.layer.cornerRadius = cornerRadius!
         self.backgroundColor = backGroundColor
+        self.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         self.contentHorizontalAlignment = contentHorizontalAlignment
         self.contentVerticalAlignment = contentVerticalAlignment
+    }
+    
+    @objc private func buttonTapped() {
+        buttonClicked()
     }
 }

@@ -114,10 +114,19 @@ class TabbarVC: WHTabbarController {
                 DispatchQueue.main.async {
                     self.navigationController?.pushViewController(PostVC(), animated: true)
                 }
-            case .showAlert(let alertVC):
+            case .showAlert:
                 DispatchQueue.main.async {
-                    self.present(alertVC, animated: true)
+                    AlertManager.shared.showAlert(onVC: self,
+                                                  type: .doubleButton(message: "Please grant permission to access your photo library in Settings.",
+                                                                      firstButtonTitle: "Cancel",
+                                                                      secondButtonTitle: "Settings")) {
+                        NotificationCenter.default.post(name: .alertViewDismiss, object: nil)
+                    } secondActionCompletion: {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    }
+
                 }
+                
             }
         }
     }

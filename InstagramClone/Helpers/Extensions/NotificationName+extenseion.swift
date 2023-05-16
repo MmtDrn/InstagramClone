@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
     public static let postViewStatus = Notification.Name("postViewStatus")
+    public static let alertViewDismiss = Notification.Name("alertViewDismiss")
 }

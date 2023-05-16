@@ -210,7 +210,8 @@ class RegisterVC: BaseViewController {
             switch state {
                 
             case .showAlert(let message):
-                AlertManager.shared.showAlert(onVC: self, errorMesaage: message)
+                AlertManager.shared.showAlert(onVC: self,
+                                              type: .justMessage(message: message))
             case .registerSucces:
                 self.presentNavigate(to: TabbarVC())
             }

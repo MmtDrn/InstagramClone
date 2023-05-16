@@ -11,7 +11,7 @@ import Photos
 
 enum TabbarVMStateChange: StateChange {
     case pushPostVC
-    case showAlert(alertVC: UIAlertController)
+    case showAlert
 }
 
 class TabbarVM: StatefulVM<TabbarVMStateChange> {
@@ -34,12 +34,8 @@ class TabbarVM: StatefulVM<TabbarVMStateChange> {
             case .authorized:
                 self.emit(.pushPostVC)
             case .denied, .restricted:
-                let alertController = UIAlertController(title: "Photo Library Access Denied", message: "Please grant permission to access your photo library in Settings.", preferredStyle: .alert)
-                        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                        alertController.addAction(UIAlertAction(title: "Settings", style: .default, handler: { _ in
-                            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-                        }))
-                self.emit(.showAlert(alertVC: alertController))
+                
+                self.emit(.showAlert)
             case .notDetermined:
                 print("Photo library access not determined.")
             case .limited:

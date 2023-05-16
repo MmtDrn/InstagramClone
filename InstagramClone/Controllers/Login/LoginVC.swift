@@ -199,7 +199,7 @@ import SnapKit
             switch state {
                  
             case .showAlert(let message):
-                AlertManager.shared.showAlert(onVC: self, errorMesaage: message)
+                AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             case .logInSucces:
                 self.presentNavigate(to: TabbarVC())
              }

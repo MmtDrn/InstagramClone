@@ -57,8 +57,7 @@ extension RegisterVM {
           (result, error) in
             guard let self = self else { return }
           if error != nil {
-              AlertManager.shared.showAlert(onVC: UIApplication.getTopViewController(),
-                                            errorMesaage: error?.localizedDescription ?? "")
+              self.emit(.showAlert(message: error?.localizedDescription ?? ""))
           } else {
               Defs.shared.userModel = DefsUserModel(uid: result?.user.uid,
                                                     fullName: fullName,
