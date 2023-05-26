@@ -14,6 +14,13 @@
 		B5299D9229DAC0C50085B22E /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5299D9129DAC0C50085B22E /* RegisterVC.swift */; };
 		B5299D9429DAC9630085B22E /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5299D9329DAC9630085B22E /* BaseButton.swift */; };
 		B5299D9629DADD8E0085B22E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5299D9529DADD8E0085B22E /* GoogleService-Info.plist */; };
+		B52AA0122A20ADB0003D9DDC /* BaseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA0112A20ADB0003D9DDC /* BaseTableView.swift */; };
+		B52AA0142A20AE66003D9DDC /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA0132A20AE66003D9DDC /* BaseTableViewCell.swift */; };
+		B52AA0172A20B344003D9DDC /* HomeTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA0162A20B344003D9DDC /* HomeTVCell.swift */; };
+		B52AA01A2A20B740003D9DDC /* PostTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA0192A20B740003D9DDC /* PostTopView.swift */; };
+		B52AA01C2A20B993003D9DDC /* HomeDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA01B2A20B993003D9DDC /* HomeDS.swift */; };
+		B52AA01E2A20BF4D003D9DDC /* PostMiddleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA01D2A20BF4D003D9DDC /* PostMiddleView.swift */; };
+		B52AA0202A20D475003D9DDC /* PostBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52AA01F2A20D475003D9DDC /* PostBottomView.swift */; };
 		B538C63D29FD513D0075AE9B /* BaseCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538C63C29FD513D0075AE9B /* BaseCollectionView.swift */; };
 		B538C63F29FD51CD0075AE9B /* ViewCells+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538C63E29FD51CD0075AE9B /* ViewCells+Extensions.swift */; };
 		B54CD6D529D5999C00AA1AE2 /* TabbarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54CD6D429D5999C00AA1AE2 /* TabbarItem.swift */; };
@@ -103,6 +110,13 @@
 		B5299D9129DAC0C50085B22E /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		B5299D9329DAC9630085B22E /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
 		B5299D9529DADD8E0085B22E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		B52AA0112A20ADB0003D9DDC /* BaseTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableView.swift; sourceTree = "<group>"; };
+		B52AA0132A20AE66003D9DDC /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		B52AA0162A20B344003D9DDC /* HomeTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTVCell.swift; sourceTree = "<group>"; };
+		B52AA0192A20B740003D9DDC /* PostTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTopView.swift; sourceTree = "<group>"; };
+		B52AA01B2A20B993003D9DDC /* HomeDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDS.swift; sourceTree = "<group>"; };
+		B52AA01D2A20BF4D003D9DDC /* PostMiddleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMiddleView.swift; sourceTree = "<group>"; };
+		B52AA01F2A20D475003D9DDC /* PostBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBottomView.swift; sourceTree = "<group>"; };
 		B538C63C29FD513D0075AE9B /* BaseCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionView.swift; sourceTree = "<group>"; };
 		B538C63E29FD51CD0075AE9B /* ViewCells+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewCells+Extensions.swift"; sourceTree = "<group>"; };
 		B54CD6D429D5999C00AA1AE2 /* TabbarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarItem.swift; sourceTree = "<group>"; };
@@ -223,6 +237,24 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
+		B52AA0152A20B335003D9DDC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B52AA0162A20B344003D9DDC /* HomeTVCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B52AA0182A20B72E003D9DDC /* PostCellCompenents */ = {
+			isa = PBXGroup;
+			children = (
+				B52AA0192A20B740003D9DDC /* PostTopView.swift */,
+				B52AA01D2A20BF4D003D9DDC /* PostMiddleView.swift */,
+				B52AA01F2A20D475003D9DDC /* PostBottomView.swift */,
+			);
+			path = PostCellCompenents;
+			sourceTree = "<group>";
+		};
 		B54CD6D029D5932100AA1AE2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,6 +296,8 @@
 				B5858EF42A05423B009CBF7B /* BaseCollectionViewCell.swift */,
 				B5858EF72A054332009CBF7B /* BaseImageView.swift */,
 				B5F9E8112A1E8D0600B1DC15 /* BaseTextView.swift */,
+				B52AA0112A20ADB0003D9DDC /* BaseTableView.swift */,
+				B52AA0132A20AE66003D9DDC /* BaseTableViewCell.swift */,
 			);
 			path = BaseClasses;
 			sourceTree = "<group>";
@@ -365,6 +399,7 @@
 		B562D42F29D5706C00C56A2F /* Compenents */ = {
 			isa = PBXGroup;
 			children = (
+				B52AA0182A20B72E003D9DDC /* PostCellCompenents */,
 				B582880129D6E1D000C5DF5E /* PostNavView.swift */,
 				B5C8FAB129D71F9D004E9531 /* SocialLoginButton.swift */,
 				B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */,
@@ -459,8 +494,10 @@
 		B5865CAD29D577180046D0B6 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				B52AA0152A20B335003D9DDC /* Cell */,
 				B5865CB129D5774D0046D0B6 /* HomeVC.swift */,
 				B5A2930C29E6D7F100D04542 /* HomeVM.swift */,
+				B52AA01B2A20B993003D9DDC /* HomeDS.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -770,17 +807,22 @@
 				B5859A9129DC5A92001D2836 /* AlertManager.swift in Sources */,
 				B5299D8D29DAB7360085B22E /* LoginRegisterSubView.swift in Sources */,
 				B5EA9E0329E97AAD00D52999 /* NotificationName+extenseion.swift in Sources */,
+				B52AA01E2A20BF4D003D9DDC /* PostMiddleView.swift in Sources */,
 				B5A2930F29E6DA5100D04542 /* DefsUserModel.swift in Sources */,
 				B582880029D6C42500C5DF5E /* UIApplication+Extensions.swift in Sources */,
 				B5F9E8122A1E8D0600B1DC15 /* BaseTextView.swift in Sources */,
 				B54CD6D529D5999C00AA1AE2 /* TabbarItem.swift in Sources */,
+				B52AA0142A20AE66003D9DDC /* BaseTableViewCell.swift in Sources */,
 				B5865CAB29D572FC0046D0B6 /* TabbarVC.swift in Sources */,
 				B5865CB929D577BB0046D0B6 /* ProfileVC.swift in Sources */,
 				B5F9E8142A1E8DE200B1DC15 /* TextType.swift in Sources */,
 				B582880229D6E1D000C5DF5E /* PostNavView.swift in Sources */,
 				B562D3FF29D56EF000C56A2F /* AppDelegate.swift in Sources */,
 				B5865CBC29D577E10046D0B6 /* ChoosePostVC.swift in Sources */,
+				B52AA01A2A20B740003D9DDC /* PostTopView.swift in Sources */,
+				B52AA0122A20ADB0003D9DDC /* BaseTableView.swift in Sources */,
 				B5C8FAB229D71F9D004E9531 /* SocialLoginButton.swift in Sources */,
+				B52AA0202A20D475003D9DDC /* PostBottomView.swift in Sources */,
 				B538C63F29FD51CD0075AE9B /* ViewCells+Extensions.swift in Sources */,
 				B563554729DAE93C00A8DCE2 /* BaseLabel.swift in Sources */,
 				B5299D8F29DABAEC0085B22E /* BaseStackView.swift in Sources */,
@@ -788,6 +830,7 @@
 				B5299D9229DAC0C50085B22E /* RegisterVC.swift in Sources */,
 				B563555029DAF4BB00A8DCE2 /* RegisterVM.swift in Sources */,
 				B5858EF82A054332009CBF7B /* BaseImageView.swift in Sources */,
+				B52AA0172A20B344003D9DDC /* HomeTVCell.swift in Sources */,
 				B55AB36E2A13C5A0000B3FC8 /* SharePostVM.swift in Sources */,
 				B5858EF52A05423B009CBF7B /* BaseCollectionViewCell.swift in Sources */,
 				B5C8FAB029D6FFC4004E9531 /* CGFloat+Extensions.swift in Sources */,
@@ -801,6 +844,7 @@
 				B5A2930929E6A51300D04542 /* UserDefaultsManager.swift in Sources */,
 				B563554A29DAEEED00A8DCE2 /* ValidationManager.swift in Sources */,
 				B5C2FC0F29E694AA002117FF /* LoginVM.swift in Sources */,
+				B52AA01C2A20B993003D9DDC /* HomeDS.swift in Sources */,
 				B5A2931529E6FB6900D04542 /* ChoosePostDS.swift in Sources */,
 				B582880429D6E45100C5DF5E /* BaseView.swift in Sources */,
 				B5865CB729D5779C0046D0B6 /* NotificationsVC.swift in Sources */,

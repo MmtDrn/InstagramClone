@@ -14,4 +14,5 @@ enum HomeVMStateChange: StateChange {
 
 class HomeVM: StatefulVM<HomeVMStateChange> {
     
+    let dataSource = HomeDS()
 }
