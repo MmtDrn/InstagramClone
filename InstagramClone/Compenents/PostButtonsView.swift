@@ -82,7 +82,10 @@ class PostButtonsView: BaseView {
             if self.showing {
                 self.cameraButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
                 self.libraryButton.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-                self.isHidden = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                    self.isHidden = true
+
+                }
             } else {
                 self.isHidden = false
                 self.cameraButton.transform = CGAffineTransform(scaleX: 1, y: 1)

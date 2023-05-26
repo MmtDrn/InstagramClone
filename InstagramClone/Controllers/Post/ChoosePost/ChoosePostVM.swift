@@ -8,13 +8,13 @@
 import UIKit
 import Photos
 
-enum PostVMStateChange: StateChange {
+enum ChoosePostVMStateChange: StateChange {
     case relodData
 }
 
-class PostVM: StatefulVM<PostVMStateChange> {
+class ChoosePostVM: StatefulVM<ChoosePostVMStateChange> {
     
-    var dataSource = PostDS()
+    var dataSource = ChoosePostDS()
     
     func fetchImages() {
         let fetchOptions = PHFetchOptions()

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfileVC: BaseViewController {
     
@@ -21,7 +22,12 @@ class ProfileVC: BaseViewController {
     }
     
     @objc private func navRightButtonTapped() {
-        print("profile settings button tapped")
+        do {
+            try Auth.auth().signOut()
+            presentNavigate(to: LoginVC())
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
 }

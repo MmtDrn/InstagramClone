@@ -51,4 +51,12 @@ extension Date {
         }
         return isGreater
     }
+    
+    public func stringValue(dateFormat: String = "YYYY-MM-dd'T'HH:mm:ss") -> String {
+        var string : String = ""
+        let formatter : DateFormatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        string = formatter.string(from: self)
+        return string
+    }
 }

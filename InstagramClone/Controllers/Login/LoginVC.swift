@@ -201,7 +201,7 @@ import SnapKit
             case .showAlert(let message):
                 AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             case .logInSucces:
-                self.presentNavigate(to: TabbarVC())
+                self.navigationController?.pushViewController(TabbarVC(), animated: true)
              }
          }
      }

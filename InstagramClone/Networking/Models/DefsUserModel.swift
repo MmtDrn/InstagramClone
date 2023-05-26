@@ -13,4 +13,5 @@ struct DefsUserModel: Codable {
     var userName: String?
     var email: String?
     var phoneNumber: String?
+    var profilImageURL: String?
 }

@@ -16,7 +16,7 @@ class BaseButton: UIButton {
                      titleColor: UIColor? = .white,
                      titleFont: UIFont? = nil,
                      borderWidth: CGFloat? = 0,
-                     borderColor: UIColor? = .white,
+                     borderColor: UIColor? = .clear,
                      cornerRadius: CGFloat? = 0,
                      backGroundColor: UIColor? = .clear,
                      contentVerticalAlignment: UIControl.ContentVerticalAlignment = .center,

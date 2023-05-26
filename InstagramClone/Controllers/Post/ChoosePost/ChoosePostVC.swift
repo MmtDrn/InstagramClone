@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-class PostVC: BaseViewController {
+class ChoosePostVC: BaseViewController {
     
-    private lazy var viewModel = PostVM()
+    private lazy var viewModel = ChoosePostVM()
     
     private lazy var imageView: BaseImageView = {
         let imageView = BaseImageView(image: nil,
@@ -76,7 +76,8 @@ class PostVC: BaseViewController {
     }
     
     @objc private func doneButtonTapped() {
-        print("doneButtonTapped")
+        guard let image = imageView.image else { return }
+        push(to: SharePostVC(image: image))
     }
     
     

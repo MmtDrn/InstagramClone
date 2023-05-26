@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 
 enum RegisterVMStateChange: StateChange {
     case showAlert(message: String)
@@ -64,15 +65,41 @@ extension RegisterVM {
                                                     userName: userName,
                                                     email: email,
                                                     phoneNumber: phoneNumber)
+              self.setUserData(uuid: (result?.user.uid)!,
+                               email: email,
+                               fullName: fullName,
+                               userName: userName,
+                               phoneNumber: phoneNumber,
+                               profilImageURL: nil)
               self.emit(.registerSucces)
           }
       }
     }
     
-    private func setDisplayName(userName: String) {
-        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-        changeRequest?.displayName = userName
-        changeRequest?.commitChanges()
+    private func setUserData(uuid: String,
+                             email: String,
+                             fullName: String,
+                             userName: String,
+                             phoneNumber: String,
+                             profilImageURL: String?) {
         
+        let data: [String : Any] = ["uuid": uuid,
+                                    "email" : email,
+                                    "fullName" : fullName,
+                                    "userName" : userName,
+                                    "phoneNumber" : phoneNumber,
+                                    "profilImageURL" : profilImageURL]
+        
+        let fireStoreDatabase = Firestore.firestore()
+        var fireStoreReferance : DocumentReference? = nil
+        
+        fireStoreReferance = fireStoreDatabase.collection("users").addDocument(data: data, completion: { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("user data save succesfly")
+            }
+        })
     }
 }

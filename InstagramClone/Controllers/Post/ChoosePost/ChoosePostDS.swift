@@ -7,15 +7,15 @@
 
 import UIKit
 
-enum PostDSStateChange: StateChange {
+enum ChoosePostDSStateChange: StateChange {
     case setHeaderImage(image: UIImage)
 }
 
-class PostDS: StatefulDS<PostDSStateChange> {
+class ChoosePostDS: StatefulDS<ChoosePostDSStateChange> {
     var images: [UIImage] = []
 }
 
-extension PostDS: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension ChoosePostDS: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count
     }
