@@ -201,7 +201,8 @@ import SnapKit
             case .showAlert(let message):
                 AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             case .logInSucces:
-                self.navigationController?.pushViewController(TabbarVC(), animated: true)
+                let vc = UINavigationController(rootViewController: TabbarVC())
+                self.presentNavigate(to: vc)
              }
          }
      }
@@ -211,7 +212,7 @@ extension LoginVC {
     
     @objc private func toRegisterViewAction() {
         let registerVC = RegisterVC()
-        push(to: registerVC)
+        presentNavigate(to: registerVC)
     }
     
     @objc private func forgetPasswordButtonAction() {

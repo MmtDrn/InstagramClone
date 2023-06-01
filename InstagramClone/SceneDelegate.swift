@@ -24,7 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = vc
             window?.makeKeyAndVisible()
         } else {
-            let vc = UINavigationController(rootViewController: LoginVC())
+            let vc = LoginVC()
             window?.rootViewController = vc
             window?.makeKeyAndVisible()
         }

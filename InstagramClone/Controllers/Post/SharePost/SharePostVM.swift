@@ -45,9 +45,7 @@ class SharePostVM: StatefulVM<SharePostVMStateChange> {
     }
     
     public func popToTabbarvc(on: BaseViewController) {
-        if let targetViewController = on.navigationController?.viewControllers.first(where: { $0 is TabbarVC }) {
-            on.navigationController?.popToViewController(targetViewController, animated: true)
-        }
+        on.navigationController?.popToRootViewController(animated: true)
     }
     
     private func setPostData(postURL: String,
@@ -59,7 +57,7 @@ class SharePostVM: StatefulVM<SharePostVMStateChange> {
         let fireStoreDatabase = Firestore.firestore()
         var fireStoreReferance : DocumentReference? = nil
         
-        fireStoreReferance = fireStoreDatabase.collection("posts").addDocument(data: data, completion: { [weak self] error in
+        fireStoreReferance = fireStoreDatabase.collection("postData").document("11postData").collection("sharePosts").addDocument(data: data, completion: { [weak self] error in
             guard let self else { return }
             if let error = error {
                 print(error.localizedDescription)
@@ -67,5 +65,15 @@ class SharePostVM: StatefulVM<SharePostVMStateChange> {
                 print("*******************/npost data save succesfly/n*******************")
             }
         })
+            
+            
+//            .addDocument(data: data, completion: { [weak self] error in
+//            guard let self else { return }
+//            if let error = error {
+//                print(error.localizedDescription)
+//            } else {
+//                print("*******************/npost data save succesfly/n*******************")
+//            }
+//        })
     }
 }

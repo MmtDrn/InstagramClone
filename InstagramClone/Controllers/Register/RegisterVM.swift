@@ -64,7 +64,8 @@ extension RegisterVM {
                                                     fullName: fullName,
                                                     userName: userName,
                                                     email: email,
-                                                    phoneNumber: phoneNumber)
+                                                    phoneNumber: phoneNumber,
+                                                    profilImageURL: nil)
               self.setUserData(uuid: (result?.user.uid)!,
                                email: email,
                                fullName: fullName,
@@ -93,7 +94,7 @@ extension RegisterVM {
         let fireStoreDatabase = Firestore.firestore()
         var fireStoreReferance : DocumentReference? = nil
         
-        fireStoreReferance = fireStoreDatabase.collection("users").addDocument(data: data, completion: { [weak self] error in
+        fireStoreReferance = fireStoreDatabase.collection("users").document("\(uuid)userData").collection("data").addDocument(data: data, completion: { [weak self] error in
             guard let self = self else { return }
             if let error = error {
                 print(error.localizedDescription)
