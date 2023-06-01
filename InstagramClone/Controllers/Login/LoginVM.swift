@@ -57,6 +57,16 @@ class LoginVM: StatefulVM<LoginVMStateChange> {
                         self.updateProfilImageURL(profilImageURL: profilImageURL)
                         Defs.shared.userModel?.profilImageURL = profilImageURL
                     }
+                    
+                    if let followers = data["followerUID"] as? [String] {
+                        self.updateFollowers(followers: followers)
+                        Defs.shared.userModel?.followers = followers
+                    }
+                    
+                    if let following = data["followingUID"] as? [String] {
+                        self.updateFollowing(following: following)
+                        Defs.shared.userModel?.following = following
+                    }
                 }
             }
         }
@@ -68,6 +78,32 @@ class LoginVM: StatefulVM<LoginVMStateChange> {
         db.collection("users").document("\(Defs.shared.userModel?.uid ?? "")userData").collection("data").getDocuments { (snapShot, error) in
             if error == nil {
                 snapShot?.documents.first?.reference.setData(["profilImageURL": profilImageURL], merge: true)
+//                for document in snapShot!.documents {
+//                    document.reference.setData(["profilImageURL": "profilImageURL"], merge: true)
+//                }
+            }
+        }
+    }
+    
+    func updateFollowers(followers: [String]) {
+        let db = Firestore.firestore()
+        
+        db.collection("users").document("\(Defs.shared.userModel?.uid ?? "")userData").collection("data").getDocuments { (snapShot, error) in
+            if error == nil {
+                snapShot?.documents.first?.reference.setData(["followers": followers], merge: true)
+//                for document in snapShot!.documents {
+//                    document.reference.setData(["profilImageURL": "profilImageURL"], merge: true)
+//                }
+            }
+        }
+    }
+    
+    func updateFollowing(following: [String]) {
+        let db = Firestore.firestore()
+        
+        db.collection("users").document("\(Defs.shared.userModel?.uid ?? "")userData").collection("data").getDocuments { (snapShot, error) in
+            if error == nil {
+                snapShot?.documents.first?.reference.setData(["following": following], merge: true)
 //                for document in snapShot!.documents {
 //                    document.reference.setData(["profilImageURL": "profilImageURL"], merge: true)
 //                }

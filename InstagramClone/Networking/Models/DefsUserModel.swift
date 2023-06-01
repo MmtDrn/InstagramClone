@@ -14,4 +14,6 @@ struct DefsUserModel: Codable {
     var email: String?
     var phoneNumber: String?
     var profilImageURL: String?
+    var followers: [String]?
+    var following: [String]?
 }

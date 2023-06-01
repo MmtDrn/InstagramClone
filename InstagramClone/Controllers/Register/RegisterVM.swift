@@ -71,7 +71,9 @@ extension RegisterVM {
                                fullName: fullName,
                                userName: userName,
                                phoneNumber: phoneNumber,
-                               profilImageURL: nil)
+                               profilImageURL: nil,
+                               followingUID: nil,
+                               followerUID: nil)
               self.emit(.registerSucces)
           }
       }
@@ -82,14 +84,18 @@ extension RegisterVM {
                              fullName: String,
                              userName: String,
                              phoneNumber: String,
-                             profilImageURL: String?) {
+                             profilImageURL: String?,
+                             followingUID: [String]?,
+                             followerUID: [String]?) {
         
         let data: [String : Any] = ["uuid": uuid,
                                     "email" : email,
                                     "fullName" : fullName,
                                     "userName" : userName,
                                     "phoneNumber" : phoneNumber,
-                                    "profilImageURL" : profilImageURL]
+                                    "profilImageURL" : profilImageURL,
+                                    "followingUID" : followingUID,
+                                    "followerUID" : followerUID]
         
         let fireStoreDatabase = Firestore.firestore()
         var fireStoreReferance : DocumentReference? = nil
