@@ -22,12 +22,7 @@ class ProfileVC: BaseViewController {
     }
     
     @objc private func navRightButtonTapped() {
-        do {
-            try Auth.auth().signOut()
-            presentNavigate(to: LoginVC())
-        } catch {
-            print(error.localizedDescription)
-        }
+        FirebaseManager.shared.logOut()
     }
     
 }

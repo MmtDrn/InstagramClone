@@ -213,7 +213,8 @@ class RegisterVC: BaseViewController {
                 AlertManager.shared.showAlert(onVC: self,
                                               type: .justMessage(message: message))
             case .registerSucces:
-                self.presentNavigate(to: TabbarVC())
+                let vc = UINavigationController(rootViewController: TabbarVC())
+                self.presentNavigate(to: vc)
             }
         }
     }
@@ -222,10 +223,10 @@ class RegisterVC: BaseViewController {
 extension RegisterVC {
     
     @objc private func sigInButtonAction() {
-        viewModel.registerValidate()
+        viewModel.register()
     }
     
     @objc private func toLoginViewAction() {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

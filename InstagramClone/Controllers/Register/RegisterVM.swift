@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Firebase
-import FirebaseFirestore
 
 enum RegisterVMStateChange: StateChange {
     case showAlert(message: String)
@@ -16,97 +14,17 @@ enum RegisterVMStateChange: StateChange {
 
 class RegisterVM: StatefulVM<RegisterVMStateChange> {
     var registerModel = RegisterModel()
-}
-
-extension RegisterVM {
     
-    func registerValidate() {
-        let validationManager = ValidationManager.shared
-        guard let name = registerModel.fullName,
-              let userName = registerModel.userName,
-              let email = registerModel.email,
-              let phoneNumber = registerModel.phoneNumber,
-              let password = registerModel.password,
-              let passwordAgain = registerModel.passwordAgain else {
-            emit(.showAlert(message: "alanları eksiksiz doldurunuz"))
-            return
-            
-        }
-        
-        if !validationManager.validate(name: name) {
-            emit(.showAlert(message: "plase check your name"))
-        } else if !validationManager.validate(email: email) {
-            emit(.showAlert(message: "plase check your email"))
-        } else if !validationManager.validate(phone: phoneNumber) {
-            emit(.showAlert(message: "plase check your phone number"))
-        } else if !validationManager.validate(password: password) {
-            emit(.showAlert(message: "plase check your passwprd"))
-        } else if password != passwordAgain {
-            emit(.showAlert(message: "passwords are not matched"))
-        } else {
-            register(email: email,
-                     password: password,
-                     userName: userName,
-                     phoneNumber: phoneNumber,
-                     fullName: name)
-        }
-    }
-    
-    private func register(email: String, password: String, userName: String, phoneNumber: String, fullName: String) {
-
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self]
-          (result, error) in
-            guard let self = self else { return }
-          if error != nil {
-              self.emit(.showAlert(message: error?.localizedDescription ?? ""))
-          } else {
-              Defs.shared.userModel = DefsUserModel(uid: result?.user.uid,
-                                                    fullName: fullName,
-                                                    userName: userName,
-                                                    email: email,
-                                                    phoneNumber: phoneNumber,
-                                                    profilImageURL: nil)
-              self.setUserData(uuid: (result?.user.uid)!,
-                               email: email,
-                               fullName: fullName,
-                               userName: userName,
-                               phoneNumber: phoneNumber,
-                               profilImageURL: nil,
-                               followingUID: nil,
-                               followerUID: nil)
-              self.emit(.registerSucces)
-          }
-      }
-    }
-    
-    private func setUserData(uuid: String,
-                             email: String,
-                             fullName: String,
-                             userName: String,
-                             phoneNumber: String,
-                             profilImageURL: String?,
-                             followingUID: [String]?,
-                             followerUID: [String]?) {
-        
-        let data: [String : Any] = ["uuid": uuid,
-                                    "email" : email,
-                                    "fullName" : fullName,
-                                    "userName" : userName,
-                                    "phoneNumber" : phoneNumber,
-                                    "profilImageURL" : profilImageURL,
-                                    "followingUID" : followingUID,
-                                    "followerUID" : followerUID]
-        
-        let fireStoreDatabase = Firestore.firestore()
-        var fireStoreReferance : DocumentReference? = nil
-        
-        fireStoreReferance = fireStoreDatabase.collection("users").document("\(uuid)userData").collection("data").addDocument(data: data, completion: { [weak self] error in
-            guard let self = self else { return }
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                print("user data save succesfly")
+    public func register() {
+        FirebaseManager.shared.userRegister(model: registerModel) { [weak self] result in
+            guard let self else { return }
+            switch result {
+                
+            case .success(_):
+                self.emit(.registerSucces)
+            case .failure(let error):
+                self.emit(.showAlert(message: error.errorMessage))
             }
-        })
+        }
     }
 }

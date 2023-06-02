@@ -231,6 +231,6 @@ extension LoginVC {
         guard let email = emailTextField.text,
               let password = passwordTextField.text else { return }
         
-        viewModel.logİn(email: email, password: password)
+        viewModel.login(email: email, password: password)
     }
 }

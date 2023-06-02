@@ -32,7 +32,7 @@ class HomeVC: BaseViewController {
                               isTransparent: true,
                               backGroundColor: .white,
                               rightButtonAction: #selector(navDirectButtonTapped))
-        viewModel.getDataFromDB()
+//        viewModel.getDataFromDB()
     }
     
     override func setupViews() {
