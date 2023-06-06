@@ -112,7 +112,7 @@ class TabbarVC: WHTabbarController {
             switch state {
             case .pushPostVC:
                 DispatchQueue.main.async {
-                    self.navigationController?.pushViewController(ChoosePostVC(), animated: true)
+                    self.navigationController?.pushViewController(ChoosePostVC(shareType: .post), animated: true)
                 }
             case .showAlert:
                 DispatchQueue.main.async {

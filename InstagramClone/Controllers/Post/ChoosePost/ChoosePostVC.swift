@@ -36,6 +36,15 @@ class ChoosePostVC: BaseViewController {
         return collectionView
     }()
     
+    init(shareType: ShareType) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.shareType = shareType
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNavigationBar(navBarType: .post(title: "New Post",
@@ -76,8 +85,15 @@ class ChoosePostVC: BaseViewController {
     }
     
     @objc private func doneButtonTapped() {
-        guard let image = imageView.image else { return }
-        push(to: SharePostVC(image: image))
+        guard let image = imageView.image,
+              let shareType = viewModel.shareType else { return }
+        
+        switch shareType {
+        case .post:
+            push(to: SharePostVC(image: image))
+        case .profilImage:
+            viewModel.setProfilImage(image: image)
+        }
     }
     
     
@@ -91,6 +107,8 @@ class ChoosePostVC: BaseViewController {
             case .relodData:
                 self.imageView.image = self.viewModel.dataSource.images.first
                 self.collectionView.reloadData()
+            case .setPFSuccess:
+                self.navigationController?.popToRootViewController(animated: true)
             }
         }
     }

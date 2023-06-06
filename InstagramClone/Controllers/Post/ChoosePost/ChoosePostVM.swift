@@ -10,11 +10,13 @@ import Photos
 
 enum ChoosePostVMStateChange: StateChange {
     case relodData
+    case setPFSuccess
 }
 
 class ChoosePostVM: StatefulVM<ChoosePostVMStateChange> {
     
     var dataSource = ChoosePostDS()
+    var shareType: ShareType?
     
     func fetchImages() {
         let fetchOptions = PHFetchOptions()
@@ -27,6 +29,20 @@ class ChoosePostVM: StatefulVM<ChoosePostVMStateChange> {
             self.dataSource.images.append(image)
         }
         self.emit(.relodData)
+    }
+    
+    func setProfilImage(image: UIImage) {
+        FirebasePostManager.shared.shareImage(shareType: .profilImage,
+                                              image: image, description: nil) { [weak self] result in
+            guard let self else { return }
+            switch result {
+                
+            case .success(_):
+                self.emit(.setPFSuccess)
+            case .failure(_):
+                self.emit(.setPFSuccess)
+            }
+        }
     }
 }
 

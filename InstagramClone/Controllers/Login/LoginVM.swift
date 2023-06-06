@@ -15,7 +15,7 @@ enum LoginVMStateChange: StateChange {
 class LoginVM: StatefulVM<LoginVMStateChange> {
     
     func login(email: String, password: String) {
-        FirebaseManager.shared.logIn(email: email, password: password) { [weak self] result in
+        FirebaseAuthManager.shared.logIn(email: email, password: password) { [weak self] result in
             guard let self else { return }
             switch result {
                 

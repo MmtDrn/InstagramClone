@@ -9,9 +9,9 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-class FirebaseManager {
+class FirebaseAuthManager {
     
-    static let shared = FirebaseManager()
+    static let shared = FirebaseAuthManager()
     private init() {}
     
     
@@ -77,16 +77,12 @@ class FirebaseManager {
         
     }
     
-    public func logOut() {
+    public func logOut(completion: @escaping(Result<Bool, Error>) -> Void) {
         do {
             try Auth.auth().signOut()
-            
-            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-                  let window = sceneDelegate.window else { return }
-            let controller = UINavigationController(rootViewController: LoginVC())
-            window.rootViewController = controller
+            completion(.success(true))
         } catch {
-            print(error.localizedDescription)
+            completion(.failure(error))
         }
     }
     
@@ -116,14 +112,14 @@ class FirebaseManager {
             if let _ = error {
                 completion(nil, .setUserData)
             } else {
-                Defs.shared.userModel = DefsUserModel(uid: uid,
+                Defs.shared.userModel = DefsUserModel(uuid: uid,
                                                       fullName: fullName,
                                                       userName: userName,
                                                       email: email,
                                                       phoneNumber: phoneNumber,
                                                       profilImageURL: nil,
-                                                      followers: nil,
-                                                      following: nil)
+                                                      followerUID: nil,
+                                                      followingUID: nil)
                 completion(true, nil)
             }
         })
@@ -146,7 +142,7 @@ class FirebaseManager {
                        let userName = data["userName"] as? String,
                        let uuid = data["uuid"] as? String {
                         
-                        Defs.shared.userModel = DefsUserModel(uid: uuid,
+                        Defs.shared.userModel = DefsUserModel(uuid: uuid,
                                                               fullName: fullName,
                                                               userName: userName,
                                                               email: email,
@@ -160,12 +156,12 @@ class FirebaseManager {
                     
                     if let followers = data["followerUID"] as? [String] {
                         self.updateUserData(userDataType: .followers, data: followers)
-                        Defs.shared.userModel?.followers = followers
+                        Defs.shared.userModel?.followerUID = followers
                     }
                     
                     if let following = data["followingUID"] as? [String] {
                         self.updateUserData(userDataType: .followed, data: following)
-                        Defs.shared.userModel?.following = following
+                        Defs.shared.userModel?.followingUID = following
                     }
                 }
             }
@@ -174,12 +170,38 @@ class FirebaseManager {
     
     
     
-    private func updateUserData<T>(userDataType: UserDataType, data: T) {
+    func updateUserData<T>(userDataType: UserDataType, data: T) {
         let db = Firestore.firestore()
         
-        db.collection("users").document("\(Defs.shared.userModel?.uid ?? "")userData").collection("data").getDocuments { (snapShot, error) in
+        db.collection("users").document("\(Defs.shared.userModel?.uuid ?? "")userData").collection("data").getDocuments { (snapShot, error) in
             if error == nil {
                 snapShot?.documents.first?.reference.setData([userDataType.path : data], merge: true)
+                switch userDataType {
+                case .uid:
+                    guard let data = data as? String else { return }
+                    Defs.shared.userModel?.uuid = data
+                case .email:
+                    guard let data = data as? String else { return }
+                    Defs.shared.userModel?.email = data
+                case .fullName:
+                    guard let data = data as? String else { return }
+                    Defs.shared.userModel?.fullName = data
+                case .phoneNumber:
+                    guard let data = data as? String else { return }
+                    Defs.shared.userModel?.phoneNumber = data
+                case .userName:
+                    guard let data = data as? String else { return }
+                    Defs.shared.userModel?.userName = data
+                case .profilImageUrl:
+                    guard let data = data as? String else { return }
+                    Defs.shared.userModel?.profilImageURL = data
+                case .followers:
+                    guard let data = data as? [String] else { return }
+                    Defs.shared.userModel?.followerUID = data
+                case .followed:
+                    guard let data = data as? [String] else { return }
+                    Defs.shared.userModel?.followingUID = data
+                }
             }
         }
     }

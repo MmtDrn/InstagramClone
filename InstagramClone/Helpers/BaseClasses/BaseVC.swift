@@ -61,7 +61,7 @@ extension BaseViewController {
         } else {
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: tintColor]
             self.navigationController?.navigationBar.isTranslucent = false
-            self.navigationController?.navigationBar.barTintColor  = backGroundColor
+            self.navigationController?.navigationBar.backgroundColor  = backGroundColor
             self.navigationItem.largeTitleDisplayMode = prefersLargeTitles ? .always : .never
         }
         self.navigationController?.isNavigationBarHidden = false

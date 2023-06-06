@@ -137,7 +137,9 @@ class SharePostVC: BaseViewController {
             switch state {
                 
             case .shareSuccessful:
-                self.viewModel.popToTabbarvc(on: self)
+                self.navigationController?.popToRootViewController(animated: true)
+            case .showAlert(let message):
+                AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             }
         }
     }

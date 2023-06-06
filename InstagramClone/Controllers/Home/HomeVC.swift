@@ -32,7 +32,7 @@ class HomeVC: BaseViewController {
                               isTransparent: true,
                               backGroundColor: .white,
                               rightButtonAction: #selector(navDirectButtonTapped))
-//        viewModel.getDataFromDB()
+        viewModel.getAllPostData()
     }
     
     override func setupViews() {
@@ -51,5 +51,19 @@ class HomeVC: BaseViewController {
     
     @objc private func navDirectButtonTapped() {
         print("direct button tapped")
+    }
+    
+    override func observeViewModel() {
+        super.observeViewModel()
+        viewModel.subscribe { [weak self] state in
+            guard let self else { return }
+            switch state {
+                
+            case .fetcPostsError(let message):
+                AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
+            case .fetcPostsSuccess(let models):
+                print(models)
+            }
+        }
     }
 }

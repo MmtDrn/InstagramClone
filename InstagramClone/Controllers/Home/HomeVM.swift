@@ -10,7 +10,8 @@ import Firebase
 import FirebaseFirestore
 
 enum HomeVMStateChange: StateChange {
-    
+    case fetcPostsError(String)
+    case fetcPostsSuccess([PostModel])
 }
 
 
@@ -18,16 +19,15 @@ class HomeVM: StatefulVM<HomeVMStateChange> {
     
     let dataSource = HomeDS()
     
-    public func getDataFromDB() {
-        let db = Firestore.firestore()
-        
-        db.collection("postData").document("11postData").collection("sharePosts").addSnapshotListener { [weak self] (snapShot, error) in
+    func getAllPostData() {
+        guard let followed = Defs.shared.userModel?.followingUID else { return }
+        FirebasePostManager.shared.followedPosts(follwedPersons: followed) { [weak self] (models, error) in
+            guard let self else { return }
             if let error {
-                print(error.localizedDescription)
-            }
-            
-            for document in snapShot!.documents {
-                print(document.documentID)
+                self.emit(.fetcPostsError(error.localizedDescription))
+            } else {
+                guard let models else { return }
+                self.emit(.fetcPostsSuccess(models))
             }
         }
     }

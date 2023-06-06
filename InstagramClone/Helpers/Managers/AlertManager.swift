@@ -24,7 +24,8 @@ class AlertManager {
             
             onVC?.present(alertVC, animated: true)
         case .doubleButton(let message, let firstButtonTitle, let secondButtonTitle):
-            let alertVC = AlertVC(alertType: .doubleButton(message: message, firstButtonTitle: firstButtonTitle,
+            let alertVC = AlertVC(alertType: .doubleButton(message: message,
+                                                           firstButtonTitle: firstButtonTitle,
                                                            secondButtonTitle: secondButtonTitle),
                                   firstActionCompletion: firstActionCompletion,
                                   secondActionCompletion: secondActionCompletion)

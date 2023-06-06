@@ -20,4 +20,13 @@ extension String {
         return emailTest.evaluate(with: self)
         
     }
+    
+    public func toDate(withFormat format: String = "YYYY-MM-dd'T'HH:mm:ss") -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        guard let date = dateFormatter.date(from: self) else {
+            return Date()
+        }
+        return date
+    }
 }

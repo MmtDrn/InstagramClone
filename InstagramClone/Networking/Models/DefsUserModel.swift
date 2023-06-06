@@ -8,12 +8,12 @@
 import Foundation
 
 struct DefsUserModel: Codable {
-    var uid: String?
+    var uuid: String?
     var fullName: String?
     var userName: String?
     var email: String?
     var phoneNumber: String?
     var profilImageURL: String?
-    var followers: [String]?
-    var following: [String]?
+    var followerUID: [String]?
+    var followingUID: [String]?
 }

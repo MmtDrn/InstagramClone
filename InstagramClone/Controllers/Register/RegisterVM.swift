@@ -16,7 +16,7 @@ class RegisterVM: StatefulVM<RegisterVMStateChange> {
     var registerModel = RegisterModel()
     
     public func register() {
-        FirebaseManager.shared.userRegister(model: registerModel) { [weak self] result in
+        FirebaseAuthManager.shared.userRegister(model: registerModel) { [weak self] result in
             guard let self else { return }
             switch result {
                 
