@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol PostMiddleViewProtocol: AnyObject {
     func likeAction()
@@ -20,9 +21,12 @@ class PostMiddleView: BaseView {
     weak var delegate: PostMiddleViewProtocol?
     
     private lazy var postImage: BaseImageView = {
-        let imageView = BaseImageView(image: UIImage(named: "post"),
+        let imageView = BaseImageView(image: UIImage(),
                                       contentMode: .scaleToFill,
                                       backgroundColor: .clear)
+        
+        imageView.layer.cornerRadius = CGFloat.dHeight * (20/812)
+        imageView.clipsToBounds = true
         
         return imageView
     }()
@@ -132,5 +136,10 @@ class PostMiddleView: BaseView {
         default:
             break
         }
+    }
+    
+    public func setPostView(postURL: String) {
+        guard let url = URL(string: postURL) else { return }
+        postImage.kf.setImage(with: url)
     }
 }

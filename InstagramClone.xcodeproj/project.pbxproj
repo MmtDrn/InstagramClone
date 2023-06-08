@@ -13,6 +13,7 @@
 		B5087D272A2DE7AD00A62F42 /* ProfilePostTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D262A2DE7AD00A62F42 /* ProfilePostTVCell.swift */; };
 		B5087D292A2DED3A00A62F42 /* ProfilePostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D282A2DED3A00A62F42 /* ProfilePostCVCell.swift */; };
 		B5087D2B2A2F171400A62F42 /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2A2A2F171400A62F42 /* ShareType.swift */; };
+		B5087D2D2A2F934000A62F42 /* ProfileBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */; };
 		B51F1E682A29C7F700499843 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */; };
 		B51F1E6A2A29E22100499843 /* RegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E692A29E22100499843 /* RegisterError.swift */; };
 		B5299D8D29DAB7360085B22E /* LoginRegisterSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */; };
@@ -73,6 +74,8 @@
 		B5865CB729D5779C0046D0B6 /* NotificationsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5865CB629D5779C0046D0B6 /* NotificationsVC.swift */; };
 		B5865CB929D577BB0046D0B6 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5865CB829D577BB0046D0B6 /* ProfileVC.swift */; };
 		B5865CBC29D577E10046D0B6 /* ChoosePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5865CBB29D577E10046D0B6 /* ChoosePostVC.swift */; };
+		B58A3E5B2A305191005AFBF1 /* FetchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A3E5A2A305191005AFBF1 /* FetchError.swift */; };
+		B58A3E5D2A3080B0005AFBF1 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A3E5C2A3080B0005AFBF1 /* UIColor+Extensions.swift */; };
 		B5A2930929E6A51300D04542 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2930829E6A51300D04542 /* UserDefaultsManager.swift */; };
 		B5A2930B29E6A54400D04542 /* Defs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2930A29E6A54400D04542 /* Defs.swift */; };
 		B5A2930D29E6D7F100D04542 /* HomeVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A2930C29E6D7F100D04542 /* HomeVM.swift */; };
@@ -122,6 +125,7 @@
 		B5087D262A2DE7AD00A62F42 /* ProfilePostTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostTVCell.swift; sourceTree = "<group>"; };
 		B5087D282A2DED3A00A62F42 /* ProfilePostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCVCell.swift; sourceTree = "<group>"; };
 		B5087D2A2A2F171400A62F42 /* ShareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareType.swift; sourceTree = "<group>"; };
+		B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBackView.swift; sourceTree = "<group>"; };
 		B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		B51F1E692A29E22100499843 /* RegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterError.swift; sourceTree = "<group>"; };
 		B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterSubView.swift; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 		B5865CB629D5779C0046D0B6 /* NotificationsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsVC.swift; sourceTree = "<group>"; };
 		B5865CB829D577BB0046D0B6 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B5865CBB29D577E10046D0B6 /* ChoosePostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoosePostVC.swift; sourceTree = "<group>"; };
+		B58A3E5A2A305191005AFBF1 /* FetchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchError.swift; sourceTree = "<group>"; };
+		B58A3E5C2A3080B0005AFBF1 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		B5A2930829E6A51300D04542 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		B5A2930A29E6A54400D04542 /* Defs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defs.swift; sourceTree = "<group>"; };
 		B5A2930C29E6D7F100D04542 /* HomeVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVM.swift; sourceTree = "<group>"; };
@@ -292,6 +298,7 @@
 				B5EA9E0229E97AAD00D52999 /* NotificationName+extenseion.swift */,
 				B538C63E29FD51CD0075AE9B /* ViewCells+Extensions.swift */,
 				B5858EF02A0534C2009CBF7B /* PHAsset+extension.swift */,
+				B58A3E5C2A3080B0005AFBF1 /* UIColor+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -306,6 +313,7 @@
 				B51F1E692A29E22100499843 /* RegisterError.swift */,
 				B5F7DF142A2A0897003D310D /* UserDataType.swift */,
 				B5087D2A2A2F171400A62F42 /* ShareType.swift */,
+				B58A3E5A2A305191005AFBF1 /* FetchError.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -435,6 +443,7 @@
 				B5859A8E29DC518C001D2836 /* AlertView.swift */,
 				B5BCEFD729E7243B0066325B /* PostButtonsView.swift */,
 				B564CE8E2A2C8E5700AE0851 /* ProfileTopView.swift */,
+				B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */,
 			);
 			path = Compenents;
 			sourceTree = "<group>";
@@ -834,6 +843,7 @@
 			files = (
 				B5299D9429DAC9630085B22E /* BaseButton.swift in Sources */,
 				B54CD6DA29D59A3300AA1AE2 /* BaseVC.swift in Sources */,
+				B58A3E5B2A305191005AFBF1 /* FetchError.swift in Sources */,
 				B5859A8D29DC4D4C001D2836 /* AlertVC.swift in Sources */,
 				B5A2930D29E6D7F100D04542 /* HomeVM.swift in Sources */,
 				B5BCEFDC29E730EB0066325B /* TabbarDS.swift in Sources */,
@@ -842,6 +852,7 @@
 				B5865CB529D577740046D0B6 /* SearchVC.swift in Sources */,
 				B5C8FAAA29D6FAAE004E9531 /* BaseTextField.swift in Sources */,
 				B562D40329D56EF000C56A2F /* ViewController.swift in Sources */,
+				B58A3E5D2A3080B0005AFBF1 /* UIColor+Extensions.swift in Sources */,
 				B5087D252A2DC49800A62F42 /* StoryCVCell.swift in Sources */,
 				B563555229DB0EE100A8DCE2 /* TextField+Extension.swift in Sources */,
 				B5C8FAA829D6F959004E9531 /* LoginVC.swift in Sources */,
@@ -903,6 +914,7 @@
 				B563554C29DAEF9100A8DCE2 /* String+Extensions.swift in Sources */,
 				B5A2930929E6A51300D04542 /* UserDefaultsManager.swift in Sources */,
 				B563554A29DAEEED00A8DCE2 /* ValidationManager.swift in Sources */,
+				B5087D2D2A2F934000A62F42 /* ProfileBackView.swift in Sources */,
 				B5C2FC0F29E694AA002117FF /* LoginVM.swift in Sources */,
 				B52AA01C2A20B993003D9DDC /* HomeDS.swift in Sources */,
 				B5A2931529E6FB6900D04542 /* ChoosePostDS.swift in Sources */,

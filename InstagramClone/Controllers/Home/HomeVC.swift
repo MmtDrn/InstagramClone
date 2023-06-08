@@ -12,7 +12,8 @@ class HomeVC: BaseViewController {
     private let viewModel = HomeVM()
     
     private lazy var tableView: BaseTableView = {
-        let tableView = BaseTableView(cells: [HomeTVCell.self],
+        let tableView = BaseTableView(cells: [HomeTVCell.self,
+                                              StoryTVCell.self],
                                       showsVerticalScrollIndicator: false,
                                       separatorStyle: .none,
                                       backgroundColor: .clear)
@@ -61,8 +62,8 @@ class HomeVC: BaseViewController {
                 
             case .fetcPostsError(let message):
                 AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
-            case .fetcPostsSuccess(let models):
-                print(models)
+            case .fetcPostsSuccess:
+                self.tableView.reloadData()
             }
         }
     }

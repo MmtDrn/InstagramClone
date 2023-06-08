@@ -126,7 +126,12 @@ class SharePostVC: BaseViewController {
     @objc private func shareButtonTapped() {
         guard let image = imageView.image,
         let description = descriptionTextView.text else { return }
-        viewModel.sharePost(image: image, description: description)
+        if description == "Write your description about this photo.." {
+            viewModel.sharePost(image: image, description: nil)
+        } else {
+            viewModel.sharePost(image: image, description: description)
+        }
+        
     }
     
     override func observeViewModel() {

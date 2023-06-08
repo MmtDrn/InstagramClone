@@ -69,12 +69,17 @@ class FirebaseAuthManager {
                 completion(.failure(error))
             } else {
                 guard let result = result else { return }
-                self.getUserDatas(uid: result.user.uid)
-                completion(.success(true))
+                self.getUserDatas(uid: result.user.uid) { result in
+                    switch result {
+                    case .success(_):
+                        completion(.success(true))
+                    case .failure(let failure):
+                        completion(.failure(failure))
+                    }
+                }
+                
             }
         }
-        
-        
     }
     
     public func logOut(completion: @escaping(Result<Bool, Error>) -> Void) {
@@ -125,13 +130,13 @@ class FirebaseAuthManager {
         })
     }
 
-    private func getUserDatas(uid: String) {
+    private func getUserDatas(uid: String, completion: @escaping(Result<Bool,Error>)-> Void) {
         
         let db = Firestore.firestore()
         
         db.collection("users").document("\(uid)userData").collection("data").getDocuments { (snapShot, error) in
             if let error {
-                print(error.localizedDescription)
+                completion(.failure(error))
             } else {
                 for document in snapShot!.documents {
                     let data = document.data()
@@ -164,6 +169,7 @@ class FirebaseAuthManager {
                         Defs.shared.userModel?.followingUID = following
                     }
                 }
+                completion(.success(true))
             }
         }
     }
@@ -206,25 +212,20 @@ class FirebaseAuthManager {
         }
     }
     
-    func getUserdata(userDataType: UserDataType, uid: String, completion: @escaping(Any?, Error?) -> Void) {
+    func getUserdata<T>(userDataType: UserDataType, uid: String, completion: @escaping(T?, FetchError?) -> Void) {
         let db = Firestore.firestore()
         
         db.collection("users").document("\(uid)userData").collection("data").getDocuments { (snapShot, error) in
-            if let error {
-                completion(nil, error)
+            if let _ = error {
+                completion(nil, .backendError)
             } else {
                 guard let snapShot,
                       let dataRef = snapShot.documents.first?.data() else { return }
                 
-                switch userDataType {
-                case .followed, .followers:
-                    if let data = dataRef[userDataType.path] as? [String] {
-                        completion(data, nil)
-                    }
-                default:
-                    if let data = dataRef[userDataType.path] as? String {
-                        completion(data, nil)
-                    }
+                if let data = dataRef[userDataType.path] as? T {
+                    completion(data, nil)
+                } else {
+                    completion(nil, .noneItem)
                 }
             }
         }

@@ -19,7 +19,7 @@ class ProfileTopView: BaseView {
     weak var delegate: ProfileTopViewProtocol?
     
     private lazy var profilImageView: BaseImageView = {
-        let imageView = BaseImageView(image: UIImage(named: "noneUser"),
+        let imageView = BaseImageView(image: UIImage(named: "noneUserPlus"),
                                       contentMode: .scaleAspectFill,
                                       backgroundColor: .clear)
         

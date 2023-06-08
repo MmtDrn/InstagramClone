@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import Kingfisher
 
 class PostTopView: BaseView {
     
     private lazy var profilImage: BaseImageView = {
-        let imageView = BaseImageView(image: UIImage(named: "pf"),
+        let imageView = BaseImageView(image: UIImage(named: "noneUser"),
                                       contentMode: .scaleAspectFill,
                                       backgroundColor: .clear)
         
@@ -21,11 +22,11 @@ class PostTopView: BaseView {
     }()
     
     private lazy var nameLabel: BaseLabel = {
-        let label = BaseLabel(text: "mehmet.durann",
+        let label = BaseLabel(text: "unknown",
                               textColor: .black,
                               textAlignment: .left,
                               numberOfLines: 0,
-                              font: .systemFont(ofSize: CGFloat.dHeight * (14/812), weight: .semibold),
+                              font: .systemFont(ofSize: CGFloat.dHeight * (14/812), weight: .regular),
                               backGroundColor: .clear)
         
         return label
@@ -52,11 +53,11 @@ class PostTopView: BaseView {
         profilImage.snp.makeConstraints { make in
             make.width.height.equalTo(CGFloat.dHeight * (40/812))
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(5)
+            make.leading.equalToSuperview()
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(profilImage.snp.trailing).offset(5)
+            make.leading.equalTo(profilImage.snp.trailing).offset(8)
             make.centerY.equalToSuperview()
         }
         
@@ -64,12 +65,29 @@ class PostTopView: BaseView {
             make.height.equalTo(CGFloat.dHeight * (40/812))
             make.width.equalTo(CGFloat.dHeight * (20/812))
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(5)
+            make.trailing.equalToSuperview()
         }
     }
     
-    public func setViews(profilImage: UIImage, name: String) {
-        self.profilImage.image = profilImage
-        self.nameLabel.text = name
+    public func setViews(uid: String) {
+        
+        FirebaseAuthManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self]
+            (data: String?, error) in
+            guard let self else { return }
+            if error == nil {
+                self.nameLabel.text = data
+            }
+        }
+        
+        FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self]
+            (data: String?, error) in
+            guard let self else { return }
+            if error == nil {
+                if let urlString = data,
+                   let url = URL(string: urlString) {
+                    self.profilImage.kf.setImage(with: url)
+                }
+            }
+        }
     }
 }

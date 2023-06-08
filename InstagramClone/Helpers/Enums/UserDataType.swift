@@ -30,7 +30,7 @@ enum UserDataType {
         case .userName:
             return "userName"
         case .profilImageUrl:
-            return "profilImageUrl"
+            return "profilImageURL"
         case .followers:
             return "followerUID"
         case .followed:

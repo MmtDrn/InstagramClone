@@ -99,7 +99,7 @@ class FirebasePostManager {
         }
     }
     
-    public func followedPosts(follwedPersons: [String], completion: @escaping([PostModel]?,Error?) -> Void) {
+    public func followedPosts(follwedPersons: [String], completion: @escaping([PostModel]?,FetchError?) -> Void) {
         let db = Firestore.firestore()
         var posts = [PostModel]()
         let group = DispatchGroup()
@@ -110,8 +110,8 @@ class FirebasePostManager {
                 defer {
                     group.leave()
                 }
-                if let error {
-                    completion(nil, error)
+                if let _ = error {
+                    completion(nil, .backendError)
                 }
                 
                 for document in snapShot!.documents {
@@ -142,7 +142,11 @@ class FirebasePostManager {
                 }
                 return date1 > date2
             }
-            completion(sortedPosts, nil)
+            if sortedPosts.isEmpty {
+                completion(nil, .noneItem)
+            } else {
+                completion(sortedPosts, nil)
+            }
         }
     }
 }

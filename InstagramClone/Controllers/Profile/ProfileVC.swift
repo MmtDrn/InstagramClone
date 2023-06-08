@@ -21,8 +21,8 @@ class ProfileVC: BaseViewController {
         return view
     }()
     
-    private lazy var backView: BaseView = {
-        let view = BaseView(backGroundColor: .white)
+    private lazy var backView: ProfileBackView = {
+        let view = ProfileBackView(backGroundColor: .white)
         return view
     }()
     
@@ -97,6 +97,7 @@ class ProfileVC: BaseViewController {
                 AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             case .setPostModelsSuccess:
                 self.profilTopView.setPostCount(count: self.viewModel.postModels.count)
+                self.backView.setLabelHiddenStatus()
                 self.tableView.reloadData()
             }
         }

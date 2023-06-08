@@ -10,7 +10,7 @@ import UIKit
 class PostBottomView: BaseView {
     
     private lazy var likeCountLabel: BaseLabel = {
-        let label = BaseLabel(text: "70.401 likes",
+        let label = BaseLabel(text: "\(Int.random(in: 101...199)) likes",
                               textColor: .black,
                               textAlignment: .left,
                               numberOfLines: 1,
@@ -19,7 +19,7 @@ class PostBottomView: BaseView {
     }()
     
     private lazy var descriptionLabel: BaseLabel = {
-        let label = BaseLabel(text: "blablabla blablabla blablablabla blablabla blablablabla blablabla blablablabla blablabla blablablabla blablabla blablablabla blablabla",
+        let label = BaseLabel(text: "",
                               textColor: .black,
                               textAlignment: .left,
                               numberOfLines: 0,
@@ -28,7 +28,7 @@ class PostBottomView: BaseView {
     }()
     
     private lazy var commentLabel: BaseLabel = {
-        let label = BaseLabel(text: "See all 153 comments",
+        let label = BaseLabel(text: "See all \(Int.random(in: 37...99)) comments",
                               textColor: .gray,
                               textAlignment: .left,
                               numberOfLines: 1,
@@ -61,9 +61,11 @@ class PostBottomView: BaseView {
         }
     }
     
-    public func setValue(likeCount: String, description: String, comment: String) {
-        likeCountLabel.text = likeCount
+    public func setLikeCount(likeCount: String) {
+        likeCountLabel.text = "\(likeCount) likes"
+    }
+    
+    public func setDescription(description: String) {
         descriptionLabel.text = description
-        commentLabel.text = comment
     }
 }
