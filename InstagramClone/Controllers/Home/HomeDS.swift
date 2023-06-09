@@ -58,7 +58,7 @@ extension HomeDS: UITableViewDelegate, UITableViewDataSource {
         case .story:
             return 100
         case .post:
-            return 500
+            return 570
         }
         
     }

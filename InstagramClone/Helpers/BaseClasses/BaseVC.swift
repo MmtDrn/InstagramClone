@@ -99,6 +99,20 @@ extension BaseViewController {
             } else {
                 self.title = title
             }
+        case .postPresent(let leftImage, let leftTitle):
+            navigationItem.leftBarButtonItems = []
+            if let leftImage, let leftTitle {
+                let backButton = UIBarButtonItem(customView: createImageViewForNavbar(image: leftImage,
+                                                                                      action: leftButtonAction))
+                navigationItem.leftBarButtonItems?.append(backButton)
+                
+                let button = BaseButton(title: leftTitle,
+                                        titleColor: .black,
+                                        titleFont: .systemFont(ofSize: 20, weight: .bold),
+                                        backGroundColor: .clear)
+                let titleButton = UIBarButtonItem(customView: button)
+                navigationItem.leftBarButtonItems?.append(titleButton)
+            }
         case .none:
             break
         }

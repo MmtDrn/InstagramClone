@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol ProfilePostTVCellProtocol: AnyObject {
+    func setIndex(index: Int)
+}
+
 class ProfilePostTVCell: BaseTableViewCell {
     
     private var postModels = [PostModel]()
+    weak var delegate: ProfilePostTVCellProtocol?
     
     private lazy var collectionView: BaseCollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -63,11 +68,21 @@ extension ProfilePostTVCell: UICollectionViewDelegate, UICollectionViewDataSourc
         let model = postModels[indexPath.item]
         
         cell.setView(model: model)
+        cell.delegate = self
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (CGFloat.dWidth/3) - 10, height: 180)
+    }
+}
+
+extension ProfilePostTVCell: ProfilePostCVCellProtocol {
+    
+    func setIndexPath(cell: BaseCollectionViewCell) {
+        let indexPath = collectionView.indexPath(for: cell)
+        guard let index = indexPath?.item else { return }
+        delegate?.setIndex(index: index)
     }
 }

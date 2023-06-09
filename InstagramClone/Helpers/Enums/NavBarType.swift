@@ -20,4 +20,7 @@ enum NavbarEnum: Equatable {
               leftImage: UIImage? = nil)
     
     case justTitle(title: String? = nil)
+    
+    case postPresent(leftImage: UIImage? = nil,
+               leftTitle: String? = nil)
 }

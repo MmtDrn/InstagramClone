@@ -93,12 +93,12 @@ class PostMiddleView: BaseView {
         
         postImage.snp.makeConstraints { make in
             make.leading.top.trailing.equalToSuperview()
-            make.height.equalTo(CGFloat.dHeight * (300/812))
+            make.height.equalTo(CGFloat.dHeight * (350/812))
         }
         
         likeImage.snp.makeConstraints { make in
             make.top.equalTo(postImage.snp.bottom).offset(8)
-            make.leading.equalToSuperview().offset(10)
+            make.leading.equalToSuperview()
             make.width.height.equalTo(itemSize)
         }
         

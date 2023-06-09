@@ -8,7 +8,13 @@
 import UIKit
 import Kingfisher
 
+protocol ProfilePostCVCellProtocol: AnyObject {
+    func setIndexPath(cell: BaseCollectionViewCell)
+}
+
 class ProfilePostCVCell: BaseCollectionViewCell {
+    
+    weak var delegate: ProfilePostCVCellProtocol?
     
     private lazy var postImageView: BaseImageView = {
         let imageView = BaseImageView(image: UIImage(named: "pf"),
@@ -17,6 +23,8 @@ class ProfilePostCVCell: BaseCollectionViewCell {
         
         imageView.layer.cornerRadius = CGFloat.dHeight * (25/812)
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setIndexPath)))
         
         return imageView
     }()
@@ -47,5 +55,9 @@ class ProfilePostCVCell: BaseCollectionViewCell {
                 .transition(.fade(1)),
                 .cacheOriginalImage
             ])
+    }
+    
+    @objc private func setIndexPath() {
+        delegate?.setIndexPath(cell: self)
     }
 }

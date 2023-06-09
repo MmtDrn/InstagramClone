@@ -22,7 +22,7 @@ class PostBottomView: BaseView {
         let label = BaseLabel(text: "",
                               textColor: .black,
                               textAlignment: .left,
-                              numberOfLines: 0,
+                              numberOfLines: 2,
                               font: .systemFont(ofSize: CGFloat.dHeight * (12/812), weight: .regular))
         return label
     }()

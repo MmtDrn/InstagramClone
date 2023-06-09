@@ -47,20 +47,20 @@ class HomeTVCell: BaseTableViewCell {
         super.setupLayouts()
         topView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(4)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.height.equalTo(CGFloat.dHeight * (50/812))
         }
         
         middleView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom).offset(4)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.height.equalTo(CGFloat.dHeight * (340/812))
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.height.equalTo(CGFloat.dHeight * (390/812))
         }
         
         bottomView.snp.makeConstraints { make in
             make.top.equalTo(middleView.snp.bottom)
-            make.trailing.equalToSuperview()
-            make.leading.equalToSuperview().offset(12)
+            make.trailing.equalToSuperview().inset(24)
+            make.leading.equalToSuperview().offset(24)
         }
     }
     
@@ -85,6 +85,11 @@ class HomeTVCell: BaseTableViewCell {
         if let desc = model?.description {
             bottomView.setDescription(description: desc)
         }
+    }
+    
+    public func setCornerRadius() {
+        self.layer.cornerRadius = 20
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
     }
 }
 

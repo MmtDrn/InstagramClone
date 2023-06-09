@@ -23,6 +23,6 @@ class BaseLabel: UILabel {
         self.numberOfLines = numberOfLines
         self.font = font
         self.backgroundColor = backGroundColor
-        self.adjustsFontSizeToFitWidth = true
+        self.adjustsFontSizeToFitWidth = false
     }
 }

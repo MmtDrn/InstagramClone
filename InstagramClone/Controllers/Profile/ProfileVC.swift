@@ -50,7 +50,6 @@ class ProfileVC: BaseViewController {
                               isTransparent: true,
                               backGroundColor: .systemGray6,
                               rightButtonAction: #selector(navRightButtonTapped))
-        navigationController?.navigationBar.backgroundColor = .systemGray6
         view.backgroundColor = .systemGray6
         
     }
@@ -111,6 +110,10 @@ class ProfileVC: BaseViewController {
                 
             case .setPF:
                 self.push(to: ChoosePostVC(shareType: .profilImage))
+            
+            case .toPresentPosts(let models, let index):
+                let vc = PresentPostVC(models: models, scrollIndex: index)
+                self.push(to: vc)
             }
         }
     }

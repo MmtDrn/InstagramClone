@@ -14,6 +14,7 @@ enum ProfilSection: CaseIterable {
 
 enum ProfilDSStateFull: StateChange {
     case setPF
+    case toPresentPosts([PostModel], Int)
 }
 
 class ProfilDS: StatefulDS<ProfilDSStateFull> {
@@ -41,6 +42,7 @@ extension ProfilDS: UITableViewDelegate, UITableViewDataSource {
         case .post:
             let cell = tableView.dequeueReusableCell(withIdentifier: ProfilePostTVCell.identifier, for: indexPath) as! ProfilePostTVCell
             cell.setModels(models: postModels)
+            cell.delegate = self
             return cell
         }
     }
@@ -62,7 +64,11 @@ extension ProfilDS: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension ProfilDS: ProfileTopViewProtocol {
+extension ProfilDS: ProfileTopViewProtocol, ProfilePostTVCellProtocol {
+    
+    func setIndex(index: Int) {
+        emit(.toPresentPosts(postModels, index))
+    }
     
     func clickImage() {
         emit(.setPF)

@@ -14,6 +14,7 @@
 		B5087D292A2DED3A00A62F42 /* ProfilePostCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D282A2DED3A00A62F42 /* ProfilePostCVCell.swift */; };
 		B5087D2B2A2F171400A62F42 /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2A2A2F171400A62F42 /* ShareType.swift */; };
 		B5087D2D2A2F934000A62F42 /* ProfileBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */; };
+		B51206B62A320BB40009DB4B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51206B52A320BB40009DB4B /* UIView+Extensions.swift */; };
 		B51F1E682A29C7F700499843 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */; };
 		B51F1E6A2A29E22100499843 /* RegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E692A29E22100499843 /* RegisterError.swift */; };
 		B5299D8D29DAB7360085B22E /* LoginRegisterSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */; };
@@ -92,6 +93,9 @@
 		B5C8FAAC29D6FCEA004E9531 /* TextFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C8FAAB29D6FCEA004E9531 /* TextFieldType.swift */; };
 		B5C8FAB029D6FFC4004E9531 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C8FAAF29D6FFC4004E9531 /* CGFloat+Extensions.swift */; };
 		B5C8FAB229D71F9D004E9531 /* SocialLoginButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C8FAB129D71F9D004E9531 /* SocialLoginButton.swift */; };
+		B5E1D5EC2A33004900EA59D3 /* PresentPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1D5EB2A33004900EA59D3 /* PresentPostVC.swift */; };
+		B5E1D5EE2A3308BE00EA59D3 /* PresentPostVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1D5ED2A3308BE00EA59D3 /* PresentPostVM.swift */; };
+		B5E1D5F12A33095100EA59D3 /* PresentPostDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1D5F02A33095100EA59D3 /* PresentPostDS.swift */; };
 		B5EA9E0329E97AAD00D52999 /* NotificationName+extenseion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EA9E0229E97AAD00D52999 /* NotificationName+extenseion.swift */; };
 		B5F7DF152A2A0897003D310D /* UserDataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F7DF142A2A0897003D310D /* UserDataType.swift */; };
 		B5F9E8122A1E8D0600B1DC15 /* BaseTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F9E8112A1E8D0600B1DC15 /* BaseTextView.swift */; };
@@ -126,6 +130,7 @@
 		B5087D282A2DED3A00A62F42 /* ProfilePostCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePostCVCell.swift; sourceTree = "<group>"; };
 		B5087D2A2A2F171400A62F42 /* ShareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareType.swift; sourceTree = "<group>"; };
 		B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBackView.swift; sourceTree = "<group>"; };
+		B51206B52A320BB40009DB4B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		B51F1E692A29E22100499843 /* RegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterError.swift; sourceTree = "<group>"; };
 		B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterSubView.swift; sourceTree = "<group>"; };
@@ -208,6 +213,9 @@
 		B5C8FAAB29D6FCEA004E9531 /* TextFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldType.swift; sourceTree = "<group>"; };
 		B5C8FAAF29D6FFC4004E9531 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		B5C8FAB129D71F9D004E9531 /* SocialLoginButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginButton.swift; sourceTree = "<group>"; };
+		B5E1D5EB2A33004900EA59D3 /* PresentPostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentPostVC.swift; sourceTree = "<group>"; };
+		B5E1D5ED2A3308BE00EA59D3 /* PresentPostVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentPostVM.swift; sourceTree = "<group>"; };
+		B5E1D5F02A33095100EA59D3 /* PresentPostDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentPostDS.swift; sourceTree = "<group>"; };
 		B5EA9E0229E97AAD00D52999 /* NotificationName+extenseion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extenseion.swift"; sourceTree = "<group>"; };
 		B5F7DF142A2A0897003D310D /* UserDataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataType.swift; sourceTree = "<group>"; };
 		B5F9E8112A1E8D0600B1DC15 /* BaseTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTextView.swift; sourceTree = "<group>"; };
@@ -299,6 +307,7 @@
 				B538C63E29FD51CD0075AE9B /* ViewCells+Extensions.swift */,
 				B5858EF02A0534C2009CBF7B /* PHAsset+extension.swift */,
 				B58A3E5C2A3080B0005AFBF1 /* UIColor+Extensions.swift */,
+				B51206B52A320BB40009DB4B /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -420,6 +429,7 @@
 		B562D42E29D5700E00C56A2F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B5E1D5EF2A33093B00EA59D3 /* PresentPost */,
 				B5859A8B29DC4D3D001D2836 /* Alert */,
 				B5299D9029DAC0B80085B22E /* Register */,
 				B582880529D6F93800C5DF5E /* Login */,
@@ -589,6 +599,16 @@
 				B55AB3692A13C3BF000B3FC8 /* ChoosePost */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		B5E1D5EF2A33093B00EA59D3 /* PresentPost */ = {
+			isa = PBXGroup;
+			children = (
+				B5E1D5EB2A33004900EA59D3 /* PresentPostVC.swift */,
+				B5E1D5ED2A3308BE00EA59D3 /* PresentPostVM.swift */,
+				B5E1D5F02A33095100EA59D3 /* PresentPostDS.swift */,
+			);
+			path = PresentPost;
 			sourceTree = "<group>";
 		};
 		F61AFC97E9B04A9D20C6083A /* Frameworks */ = {
@@ -880,6 +900,7 @@
 				B5087D292A2DED3A00A62F42 /* ProfilePostCVCell.swift in Sources */,
 				B5865CB929D577BB0046D0B6 /* ProfileVC.swift in Sources */,
 				B5F9E8142A1E8DE200B1DC15 /* TextType.swift in Sources */,
+				B51206B62A320BB40009DB4B /* UIView+Extensions.swift in Sources */,
 				B582880229D6E1D000C5DF5E /* PostNavView.swift in Sources */,
 				B562D3FF29D56EF000C56A2F /* AppDelegate.swift in Sources */,
 				B5865CBC29D577E10046D0B6 /* ChoosePostVC.swift in Sources */,
@@ -892,6 +913,7 @@
 				B538C63F29FD51CD0075AE9B /* ViewCells+Extensions.swift in Sources */,
 				B563554729DAE93C00A8DCE2 /* BaseLabel.swift in Sources */,
 				B5299D8F29DABAEC0085B22E /* BaseStackView.swift in Sources */,
+				B5E1D5F12A33095100EA59D3 /* PresentPostDS.swift in Sources */,
 				B51F1E6A2A29E22100499843 /* RegisterError.swift in Sources */,
 				B5F7DF152A2A0897003D310D /* UserDataType.swift in Sources */,
 				B5BCEFDA29E72FD30066325B /* TabbarVM.swift in Sources */,
@@ -914,6 +936,8 @@
 				B563554C29DAEF9100A8DCE2 /* String+Extensions.swift in Sources */,
 				B5A2930929E6A51300D04542 /* UserDefaultsManager.swift in Sources */,
 				B563554A29DAEEED00A8DCE2 /* ValidationManager.swift in Sources */,
+				B5E1D5EC2A33004900EA59D3 /* PresentPostVC.swift in Sources */,
+				B5E1D5EE2A3308BE00EA59D3 /* PresentPostVM.swift in Sources */,
 				B5087D2D2A2F934000A62F42 /* ProfileBackView.swift in Sources */,
 				B5C2FC0F29E694AA002117FF /* LoginVM.swift in Sources */,
 				B52AA01C2A20B993003D9DDC /* HomeDS.swift in Sources */,
