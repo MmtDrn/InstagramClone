@@ -7,11 +7,6 @@
 
 import UIKit
 
-enum ProfilSection: CaseIterable {
-    case story
-    case post
-}
-
 enum ProfilDSStateFull: StateChange {
     case setPF
     case toPresentPosts([PostModel], Int)

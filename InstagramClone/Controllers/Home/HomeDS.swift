@@ -7,13 +7,8 @@
 
 import UIKit
 
-enum HomeCase: CaseIterable {
-    case story
-    case post
-}
-
 enum HomeDSStateChange: StateChange {
-    
+    case navigateToProfil(uid: String)
 }
 
 class HomeDS: StatefulDS<HomeDSStateChange> {
@@ -46,6 +41,7 @@ extension HomeDS: UITableViewDelegate, UITableViewDataSource {
             let model = models[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: HomeTVCell.identifier, for: indexPath) as! HomeTVCell
             cell.setModel(model: model)
+            cell.delegate = self
             return cell
         }
         
@@ -61,5 +57,12 @@ extension HomeDS: UITableViewDelegate, UITableViewDataSource {
             return 570
         }
         
+    }
+}
+
+extension HomeDS: HomeTVCellProtocol {
+    
+    func setUID(uid: String) {
+        emit(.navigateToProfil(uid: uid))
     }
 }

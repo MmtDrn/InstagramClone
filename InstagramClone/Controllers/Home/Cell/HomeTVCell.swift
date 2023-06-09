@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol HomeTVCellProtocol: AnyObject {
+    func setUID(uid: String)
+}
+
 class HomeTVCell: BaseTableViewCell {
+    
+    weak var delegate: HomeTVCellProtocol?
     
     private var model: PostModel? {
         didSet {
@@ -19,6 +25,9 @@ class HomeTVCell: BaseTableViewCell {
     
     private lazy var topView: PostTopView = {
         let view = PostTopView(backGroundColor: .clear)
+        
+        view.delegate = self
+        
         return view
     }()
     
@@ -93,8 +102,12 @@ class HomeTVCell: BaseTableViewCell {
     }
 }
 
-extension HomeTVCell: PostMiddleViewProtocol {
+extension HomeTVCell: PostMiddleViewProtocol, PostTopViewProtocol {
     
+    func setUID(uid: String) {
+        delegate?.setUID(uid: uid)
+    }
+        
     func likeAction() {
         print("like")
     }

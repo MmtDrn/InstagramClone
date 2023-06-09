@@ -16,9 +16,27 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     
     let dataSource = ProfilDS()
     var postModels = [PostModel]()
+    var profilType: ProfilType?
+    var userName: String?
     
     func getPostData() {
-        guard let uid = Defs.shared.userModel?.uuid else { return }
+        guard let profilType else { return }
+
+        switch profilType {
+
+        case .oneself:
+            guard let uid = Defs.shared.userModel?.uuid else { return }
+            self.getPostsService(uid: uid)
+        case .anyone(let uid):
+            FirebaseAuthManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self] (data: String?, error) in
+                guard let self, let data else { return }
+                self.userName = data
+                self.getPostsService(uid: uid)
+            }
+        }
+    }
+    
+    private func getPostsService(uid: String) {
         self.postModels.removeAll()
         FirebasePostManager.shared.getPostData(uid: uid) { [weak self] (models, error) in
             guard let self else { return }

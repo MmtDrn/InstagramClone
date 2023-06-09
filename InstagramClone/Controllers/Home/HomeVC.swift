@@ -67,4 +67,17 @@ class HomeVC: BaseViewController {
             }
         }
     }
+    
+    override func observeDataSource() {
+        super.observeDataSource()
+        viewModel.dataSource.subscribe { [weak self] state in
+            guard let self else { return }
+            switch state {
+                
+            case .navigateToProfil(let uid):
+                let vc = ProfileVC(profilType: .anyone(uid: uid))
+                self.push(to: vc)
+            }
+        }
+    }
 }

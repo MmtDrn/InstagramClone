@@ -136,7 +136,7 @@ class ProfileTopView: BaseView {
         
     }
     
-    public func setPostCount(count: Int) {
+    public func setPostCountPF(count: Int, profilType: ProfilType) {
         let postLabelText = "\(count)\nPosts"
         let postLabelAttributedString = NSMutableAttributedString(string: postLabelText)
         let lastFiveRange = NSRange(location: postLabelText.count - 5, length: 5)
@@ -146,9 +146,26 @@ class ProfileTopView: BaseView {
         postLabelAttributedString.addAttribute(.foregroundColor, value: lastColor, range: lastFiveRange)
         postLabel.attributedText = postLabelAttributedString
         
-        guard let pfImageString = Defs.shared.userModel?.profilImageURL,
-              let url = URL(string: pfImageString) else { return }
-        profilImageView.kf.setImage(with: url)
+        
+        switch profilType {
+        case .oneself:
+            guard let pfImageString = Defs.shared.userModel?.profilImageURL,
+                  let url = URL(string: pfImageString) else { return }
+            profilImageView.kf.setImage(with: url)
+        case .anyone(let uid):
+            FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
+                guard let pfImageString = data,
+                      let url = URL(string: pfImageString) else { return }
+                self?.profilImageView.kf.setImage(with: url)
+            }
+            
+            FirebaseAuthManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
+                guard let data else { return }
+                self?.nameLabel.text = data
+            }
+        }
+        
+        
     }
     
     private func setViews() {

@@ -41,23 +41,24 @@ class ProfileVC: BaseViewController {
         return tableView
     }()
     
+    init(profilType: ProfilType) {
+        viewModel.profilType = profilType
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.setNavigationBar(navBarType: .profile(rightItemImage: UIImage(named: "threeTopPoint"),
-                                                   title: Defs.shared.userModel?.userName),
-                              backItemHidden: true,
-                              isTransparent: true,
-                              backGroundColor: .systemGray6,
-                              rightButtonAction: #selector(navRightButtonTapped))
         view.backgroundColor = .systemGray6
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         viewModel.getPostData()
-
     }
     
     override func setupViews() {
@@ -80,8 +81,32 @@ class ProfileVC: BaseViewController {
         }
     }
     
+    private func configureNavBar() {
+        guard let type = viewModel.profilType else { return }
+        switch type {
+        case .oneself:
+            self.setNavigationBar(navBarType: .profile(rightItemImage: UIImage(named: "threeTopPoint"),
+                                                       title: Defs.shared.userModel?.userName),
+                                  backItemHidden: true,
+                                  isTransparent: true,
+                                  backGroundColor: .systemGray6,
+                                  rightButtonAction: #selector(navRightButtonTapped))
+        case .anyone:
+            self.setNavigationBar(navBarType: .postPresent(leftImage: UIImage(named: "leftArrow"),
+                                                           leftTitle: viewModel.userName ?? "unkown"),
+                                  backItemHidden: true,
+                                  isTransparent: true,
+                                  backGroundColor: .systemGray6,
+                                  leftButtonAction: #selector(popToRoot))
+        }
+    }
+    
     @objc private func navRightButtonTapped() {
         viewModel.logOut()
+    }
+    
+    @objc private func popToRoot() {
+        navigationController?.popViewController(animated: true)
     }
     
     override func observeViewModel() {
@@ -95,7 +120,10 @@ class ProfileVC: BaseViewController {
             case .showAlert(let message):
                 AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             case .setPostModelsSuccess:
-                self.profilTopView.setPostCount(count: self.viewModel.postModels.count)
+                self.configureNavBar()
+                guard let profilType = self.viewModel.profilType else { return }
+                self.profilTopView.setPostCountPF(count: self.viewModel.postModels.count,
+                                                  profilType: profilType)
                 self.backView.setLabelHiddenStatus()
                 self.tableView.reloadData()
             }

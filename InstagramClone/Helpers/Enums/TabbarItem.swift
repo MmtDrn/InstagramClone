@@ -53,7 +53,7 @@ enum TabbarItem: Int {
         case .Notifications:
             return NotificationsVC()
         case .Profile:
-            return ProfileVC()
+            return ProfileVC(profilType: .oneself)
         case .Post:
             return nil
         }

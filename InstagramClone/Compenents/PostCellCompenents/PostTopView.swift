@@ -8,7 +8,14 @@
 import UIKit
 import Kingfisher
 
+protocol PostTopViewProtocol: AnyObject {
+    func setUID(uid: String)
+}
+
 class PostTopView: BaseView {
+    
+    private var uid: String?
+    weak var delegate: PostTopViewProtocol?
     
     private lazy var profilImage: BaseImageView = {
         let imageView = BaseImageView(image: UIImage(named: "noneUser"),
@@ -17,6 +24,8 @@ class PostTopView: BaseView {
         
         imageView.layer.cornerRadius = CGFloat.dHeight * (20/812)
         imageView.clipsToBounds = true
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setUID)))
         
         return imageView
     }()
@@ -28,6 +37,9 @@ class PostTopView: BaseView {
                               numberOfLines: 0,
                               font: .systemFont(ofSize: CGFloat.dHeight * (14/812), weight: .regular),
                               backGroundColor: .clear)
+        
+        label.isUserInteractionEnabled = true
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(setUID)))
         
         return label
     }()
@@ -70,7 +82,7 @@ class PostTopView: BaseView {
     }
     
     public func setViews(uid: String) {
-        
+        self.uid = uid
         FirebaseAuthManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self]
             (data: String?, error) in
             guard let self else { return }
@@ -89,5 +101,10 @@ class PostTopView: BaseView {
                 }
             }
         }
+    }
+    
+    @objc private func setUID() {
+        guard let uid else { return }
+        delegate?.setUID(uid: uid)
     }
 }
