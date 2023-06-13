@@ -15,7 +15,7 @@ class ProfileVC: BaseViewController {
     private lazy var profilTopView: ProfileTopView = {
         let view = ProfileTopView()
         
-        view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 220)
+        view.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: viewModel.profilType == .oneself ? 220 : 270)
         view.delegate = viewModel.dataSource
         
         return view

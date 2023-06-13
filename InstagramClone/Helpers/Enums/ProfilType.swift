@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ProfilType {
+enum ProfilType: Equatable {
     case oneself
     case anyone(uid: String)
 }

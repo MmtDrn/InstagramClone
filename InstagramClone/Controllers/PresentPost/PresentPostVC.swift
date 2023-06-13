@@ -41,7 +41,6 @@ class PresentPostVC: BaseViewController {
                               isTransparent: true,
                               backGroundColor: .white,
                               leftButtonAction: #selector(backAction))
-//        tableView.scrollToRow(at: IndexPath(row: 2, section: 0), at: .top, animated: false)
     }
     
     override func setupViews() {

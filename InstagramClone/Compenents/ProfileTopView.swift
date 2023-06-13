@@ -12,11 +12,14 @@ protocol ProfileTopViewProtocol: AnyObject {
     func clickFollowers()
     func clickFollowing()
     func clickImage()
+    func clickFallowButton()
+    func clickMessageButton()
 }
 
 class ProfileTopView: BaseView {
     
     weak var delegate: ProfileTopViewProtocol?
+    private var profilType: ProfilType = .oneself
     
     private lazy var profilImageView: BaseImageView = {
         let imageView = BaseImageView(image: UIImage(named: "noneUserPlus"),
@@ -91,12 +94,55 @@ class ProfileTopView: BaseView {
         return stackView
     }()
     
+    private lazy var followButton: BaseButton = {
+        let button = BaseButton(title: "Follow",
+                                titleColor: .white,
+                                titleFont: .systemFont(ofSize: CGFloat.dHeight * (15/812), weight: .semibold),
+                                borderWidth: 0.5,
+                                borderColor: .gray,
+                                cornerRadius: CGFloat.dHeight * (10/812),
+                                backGroundColor: .systemBlue)
+        
+        button.layer.opacity = 0.8
+        button.tag = 0
+        button.addTarget(self, action: #selector(clickButtons(sender:)), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var messageButton: BaseButton = {
+        let button = BaseButton(title: "Message",
+                                titleColor: .black,
+                                titleFont: .systemFont(ofSize: CGFloat.dHeight * (15/812), weight: .medium),
+                                borderWidth: 0.5,
+                                borderColor: .gray,
+                                cornerRadius: CGFloat.dHeight * (10/812),
+                                backGroundColor: .white)
+        
+        button.tag = 1
+        button.addTarget(self, action: #selector(clickButtons(sender:)), for: .touchUpInside)
+        
+        return button
+    }()
+    
+    private lazy var stackViewbuttons: BaseStackView = {
+        let stackView = BaseStackView(arrangedSubviews: [followButton, messageButton],
+                                      axis: .horizontal,
+                                      alignment: .fill,
+                                      distribution: .fillEqually,
+                                      spacing: 10)
+        stackView.isHidden = true
+        
+        return stackView
+    }()
+    
     override func setupViews() {
         super.setupViews()
         backgroundColor = .systemGray6
         addSubview(profilImageView)
         addSubview(nameLabel)
         addSubview(stackViewLabels)
+        addSubview(stackViewbuttons)
         
         setViews()
     }
@@ -119,6 +165,11 @@ class ProfileTopView: BaseView {
             make.leading.trailing.equalToSuperview().inset(CGFloat.dHeight * (20/812))
             make.top.equalTo(nameLabel.snp.bottom).offset(12)
         }
+        
+        stackViewbuttons.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(CGFloat.dHeight * (60/812))
+            make.top.equalTo(stackViewLabels.snp.bottom).offset(20)
+        }
     }
     
     @objc private func clickViews(sender: UITapGestureRecognizer) {
@@ -131,12 +182,24 @@ class ProfileTopView: BaseView {
             default: break
             }
         } else if let _ = sender.view as? UIImageView {
-            delegate?.clickImage()
+            if profilType == .oneself {
+                delegate?.clickImage()
+            }
         }
-        
+    }
+    
+    @objc private func clickButtons(sender: BaseButton) {
+        switch sender.tag {
+        case 0:
+            delegate?.clickFallowButton()
+        case 1:
+            delegate?.clickMessageButton()
+        default: break
+        }
     }
     
     public func setPostCountPF(count: Int, profilType: ProfilType) {
+        self.profilType = profilType
         let postLabelText = "\(count)\nPosts"
         let postLabelAttributedString = NSMutableAttributedString(string: postLabelText)
         let lastFiveRange = NSRange(location: postLabelText.count - 5, length: 5)
@@ -153,10 +216,16 @@ class ProfileTopView: BaseView {
                   let url = URL(string: pfImageString) else { return }
             profilImageView.kf.setImage(with: url)
         case .anyone(let uid):
+            stackViewbuttons.isHidden = false
             FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
-                guard let pfImageString = data,
-                      let url = URL(string: pfImageString) else { return }
-                self?.profilImageView.kf.setImage(with: url)
+                guard let self else { return }
+                if let _ = error {
+                    self.profilImageView.image = UIImage(named: "noneUser")
+                } else {
+                    guard let pfImageString = data,
+                          let url = URL(string: pfImageString) else { return }
+                    self.profilImageView.kf.setImage(with: url)
+                }
             }
             
             FirebaseAuthManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in

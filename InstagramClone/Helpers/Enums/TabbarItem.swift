@@ -23,6 +23,23 @@ enum TabbarItem: Int {
         case .Notifications:
             return UIImage(systemName: "heart") ?? .add
         case .Profile:
+            guard let urlString = Defs.shared.userModel?.profilImageURL,
+                  let url = URL(string: urlString) else { return UIImage(systemName: "person") ?? .add }
+            
+            if let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                let image = image.resize(to: CGSize(width: 30, height: 30))
+                let imageView = UIImageView(image: image)
+                imageView.layer.cornerRadius = 15
+                imageView.clipsToBounds = true
+                imageView.layer.borderColor = UIColor.gray.cgColor
+                imageView.layer.borderWidth = 0.5
+                let renderer = UIGraphicsImageRenderer(size: imageView.bounds.size)
+                let roundedImage = renderer.image { context in
+                    imageView.layer.render(in: context.cgContext)
+                }
+                return roundedImage.withRenderingMode(.alwaysOriginal)
+            }
             return UIImage(systemName: "person") ?? .add
         case .Post:
             return nil

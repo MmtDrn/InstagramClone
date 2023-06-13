@@ -61,6 +61,14 @@ extension ProfilDS: UITableViewDelegate, UITableViewDataSource {
 
 extension ProfilDS: ProfileTopViewProtocol, ProfilePostTVCellProtocol {
     
+    func clickFallowButton() {
+        print("click fallow button")
+    }
+    
+    func clickMessageButton() {
+        print("click message button")
+    }
+    
     func setIndex(index: Int) {
         emit(.toPresentPosts(postModels, index))
     }

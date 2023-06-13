@@ -13,6 +13,7 @@ enum PresentPostDSStateChange: StateChange {
 
 class PresentPostDS: StatefulDS<PresentPostDSStateChange> {
     var models = [PostModel]()
+    private var scroolStatus = true
 }
 
 extension PresentPostDS: UITableViewDelegate, UITableViewDataSource {
@@ -31,7 +32,8 @@ extension PresentPostDS: UITableViewDelegate, UITableViewDataSource {
         cell.setModel(model: model)
         if indexPath.row == 0 {
             cell.setCornerRadius()
-        } else if indexPath.row == indexPath.last {
+        } else if (indexPath.row == indexPath.last) && scroolStatus {
+            scroolStatus = false
             emit(.scrollToRow)
         }
         

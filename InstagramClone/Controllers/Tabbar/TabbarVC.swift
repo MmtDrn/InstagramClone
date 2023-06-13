@@ -74,7 +74,11 @@ class TabbarVC: WHTabbarController {
               let selectedIcon = item.selectedIcon else { return UIViewController() }
         
         let rootVC = UINavigationController(rootViewController: vc)
-        rootVC.tabBarItem = UITabBarItem(title: nil, image: icon, selectedImage: selectedIcon)
+        if item == .Profile {
+            rootVC.tabBarItem = UITabBarItem(title: nil, image: icon, selectedImage: icon)
+        } else {
+            rootVC.tabBarItem = UITabBarItem(title: nil, image: icon, selectedImage: selectedIcon)
+        }
         
         return rootVC
     }
