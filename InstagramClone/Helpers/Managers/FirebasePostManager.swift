@@ -112,25 +112,25 @@ class FirebasePostManager {
                 }
                 if let _ = error {
                     completion(nil, .backendError)
-                }
-                
-                for document in snapShot!.documents {
-                    let data = document.data()
-                    
-                    if let postURL = data["postURL"] as? String,
-                       let date = data["date"] as? String,
-                       let author = data["author"] as? String {
-                        var post = PostModel(authorUID: author, postURL: postURL, description: nil, likeCount: nil, date: date)
-                        if let likeCount = data["likeCount"] as? String {
-                            post.likeCount = likeCount
+                } else if let snapShot {
+                    for document in snapShot.documents {
+                        let data = document.data()
+                        
+                        if let postURL = data["postURL"] as? String,
+                           let date = data["date"] as? String,
+                           let author = data["author"] as? String {
+                            var post = PostModel(authorUID: author, postURL: postURL, description: nil, likeCount: nil, date: date)
+                            if let likeCount = data["likeCount"] as? String {
+                                post.likeCount = likeCount
+                            }
+                            
+                            if let description = data["description"] as? String {
+                                post.description = description
+                            }
+                            posts.append(post)
                         }
                         
-                        if let description = data["description"] as? String {
-                            post.description = description
-                        }
-                        posts.append(post)
                     }
-                    
                 }
             }
         }

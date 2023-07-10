@@ -21,7 +21,9 @@ class HomeVM: StatefulVM<HomeVMStateChange> {
     
     
     func getAllPostData() {
-        guard let followed = Defs.shared.userModel?.followingUID else { return }
+        guard let followed = Defs.shared.userModel?.followingUID else {
+            self.emit(.fetcPostsError("You have to follow someone to see the stream on the homepage."))
+            return }
         FirebasePostManager.shared.followedPosts(follwedPersons: followed) { [weak self] (models, error) in
             guard let self else { return }
             if let error {

@@ -47,14 +47,7 @@ class ChoosePostVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNavigationBar(navBarType: .post(title: "New Post",
-                                                rightImage: UIImage(named: "rightArrow"),
-                                                leftImage: UIImage(named: "xImage")),
-                              backItemHidden: true,
-                              isTransparent: true,
-                              backGroundColor: .white,
-                              rightButtonAction: #selector(doneButtonTapped),
-                              leftButtonAction: #selector(cancelButtonTapped))
+        configureNavBar()
         viewModel.fetchImages()
     }
     
@@ -77,6 +70,30 @@ class ChoosePostVC: BaseViewController {
             make.top.equalTo(imageView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(5)
             make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func configureNavBar() {
+        guard let type = viewModel.shareType else { return }
+        switch type {
+        case .post:
+            self.setNavigationBar(navBarType: .post(title: "New Post",
+                                                    rightImage: UIImage(named: "rightArrow"),
+                                                    leftImage: UIImage(named: "xImage")),
+                                  backItemHidden: true,
+                                  isTransparent: true,
+                                  backGroundColor: .white,
+                                  rightButtonAction: #selector(doneButtonTapped),
+                                  leftButtonAction: #selector(cancelButtonTapped))
+        case .profilImage:
+            self.setNavigationBar(navBarType: .post(title: "New Profil Image",
+                                                    rightImage: UIImage(named: "rightArrow"),
+                                                    leftImage: UIImage(named: "xImage")),
+                                  backItemHidden: true,
+                                  isTransparent: true,
+                                  backGroundColor: .white,
+                                  rightButtonAction: #selector(doneButtonTapped),
+                                  leftButtonAction: #selector(cancelButtonTapped))
         }
     }
     

@@ -159,4 +159,13 @@ extension BaseViewController {
         to.modalPresentationStyle = presentationSyle
         present(to, animated: animated)
     }
+    
+    public func changeStatusBarColor(color: UIColor) {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let statusBarManager = windowScene.windows.first?.windowScene?.statusBarManager {
+                let statusBarView = UIView(frame: statusBarManager.statusBarFrame)
+                statusBarView.backgroundColor = color
+                view.addSubview(statusBarView)
+        }
+    }
 }

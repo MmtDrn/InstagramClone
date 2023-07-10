@@ -124,7 +124,9 @@ class ProfileVC: BaseViewController {
                 guard let profilType = self.viewModel.profilType else { return }
                 self.profilTopView.setPostCountPF(count: self.viewModel.postModels.count,
                                                   profilType: profilType)
-                self.backView.setLabelHiddenStatus()
+                if !self.viewModel.postModels.isEmpty {
+                    self.backView.setLabelHiddenStatus()
+                }
                 self.tableView.reloadData()
             }
         }

@@ -68,7 +68,7 @@ class FirebaseAuthManager {
             if let error {
                 completion(.failure(error))
             } else {
-                guard let result = result else { return }
+                guard let result else { return }
                 self.getUserDatas(uid: result.user.uid) { result in
                     switch result {
                     case .success(_):
@@ -137,39 +137,40 @@ class FirebaseAuthManager {
         db.collection("users").document("\(uid)userData").collection("data").getDocuments { (snapShot, error) in
             if let error {
                 completion(.failure(error))
-            } else {
-                for document in snapShot!.documents {
-                    let data = document.data()
+            } else if let document = snapShot?.documents.first {
+                
+                let data = document.data()
+                
+                if let email = data["email"] as? String,
+                   let fullName = data["fullName"] as? String,
+                   let phoneNumber = data["phoneNumber"] as? String,
+                   let userName = data["userName"] as? String,
+                   let uuid = data["uuid"] as? String {
                     
-                    if let email = data["email"] as? String,
-                       let fullName = data["fullName"] as? String,
-                       let phoneNumber = data["phoneNumber"] as? String,
-                       let userName = data["userName"] as? String,
-                       let uuid = data["uuid"] as? String {
-                        
-                        Defs.shared.userModel = DefsUserModel(uuid: uuid,
-                                                              fullName: fullName,
-                                                              userName: userName,
-                                                              email: email,
-                                                              phoneNumber: phoneNumber)
-                    }
-                    
-                    if let profilImageURL = data["profilImageURL"] as? String {
-                        self.updateUserData(userDataType: .profilImageUrl, data: profilImageURL)
-                        Defs.shared.userModel?.profilImageURL = profilImageURL
-                    }
-                    
-                    if let followers = data["followerUID"] as? [String] {
-                        self.updateUserData(userDataType: .followers, data: followers)
-                        Defs.shared.userModel?.followerUID = followers
-                    }
-                    
-                    if let following = data["followingUID"] as? [String] {
-                        self.updateUserData(userDataType: .followed, data: following)
-                        Defs.shared.userModel?.followingUID = following
-                    }
+                    Defs.shared.userModel = DefsUserModel(uuid: uuid,
+                                                          fullName: fullName,
+                                                          userName: userName,
+                                                          email: email,
+                                                          phoneNumber: phoneNumber)
+                }
+                
+                if let profilImageURL = data["profilImageURL"] as? String {
+                    self.updateUserData(userDataType: .profilImageUrl, data: profilImageURL)
+                    Defs.shared.userModel?.profilImageURL = profilImageURL
+                }
+                
+                if let followers = data["followerUID"] as? [String] {
+                    self.updateUserData(userDataType: .followers, data: followers)
+                    Defs.shared.userModel?.followerUID = followers
+                }
+                
+                if let following = data["followingUID"] as? [String] {
+                    self.updateUserData(userDataType: .followed, data: following)
+                    Defs.shared.userModel?.followingUID = following
                 }
                 completion(.success(true))
+            } else {
+                completion(.failure(FetchError.backendError))
             }
         }
     }
@@ -231,5 +232,16 @@ class FirebaseAuthManager {
         }
     }
     
-    
+    public func getAllUsers() {
+        let db = Firestore.firestore()
+        
+        db.collection("users").getDocuments { (snapShot, error) in
+            
+            if let error {
+                print(error)
+            } else if let snapShot {
+                print(snapShot.documents.count)
+            }
+        }
+    }
 }
