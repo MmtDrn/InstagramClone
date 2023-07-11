@@ -142,7 +142,7 @@ class ProfileVC: BaseViewController {
                 self.push(to: ChoosePostVC(shareType: .profilImage))
             
             case .toPresentPosts(let models, let index):
-                let vc = PresentPostVC(models: models, scrollIndex: index)
+                let vc = PresentPostVC(presentType: .posts, models: models, scrollIndex: index)
                 self.push(to: vc)
             }
         }

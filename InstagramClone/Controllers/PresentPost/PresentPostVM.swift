@@ -15,4 +15,5 @@ class PresentPostVM: StatefulVM<PresentPostVMStateChange> {
     
     let dataSource = PresentPostDS()
     var scrollIndex: Int?
+    var presentType: PresentPostType?
 }

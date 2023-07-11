@@ -9,6 +9,7 @@ import UIKit
 
 enum PresentPostDSStateChange: StateChange {
     case scrollToRow
+    case navigateToProfil(uid: String)
 }
 
 class PresentPostDS: StatefulDS<PresentPostDSStateChange> {
@@ -30,6 +31,7 @@ extension PresentPostDS: UITableViewDelegate, UITableViewDataSource {
         let model = models[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: HomeTVCell.identifier, for: indexPath) as! HomeTVCell
         cell.setModel(model: model)
+        cell.delegate = self
         if indexPath.row == 0 {
             cell.setCornerRadius()
         } else if (indexPath.row == indexPath.last) && scroolStatus {
@@ -42,5 +44,12 @@ extension PresentPostDS: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 570
+    }
+}
+
+extension PresentPostDS: HomeTVCellProtocol {
+    
+    func setUID(uid: String) {
+        emit(.navigateToProfil(uid: uid))
     }
 }

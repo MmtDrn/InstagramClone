@@ -23,10 +23,11 @@ class PresentPostVC: BaseViewController {
         return tableView
     }()
     
-    init(models: [PostModel], scrollIndex: Int) {
+    init(presentType: PresentPostType, models: [PostModel], scrollIndex: Int) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel.dataSource.models = models
         self.viewModel.scrollIndex = scrollIndex
+        self.viewModel.presentType = presentType
     }
     
     required init?(coder: NSCoder) {
@@ -35,12 +36,7 @@ class PresentPostVC: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setNavigationBar(navBarType: .postPresent(leftImage: UIImage(named: "leftArrow"),
-                                                       leftTitle: "Posts"),
-                              backItemHidden: true,
-                              isTransparent: true,
-                              backGroundColor: .white,
-                              leftButtonAction: #selector(backAction))
+        configureNavBar()
     }
     
     override func setupViews() {
@@ -60,6 +56,17 @@ class PresentPostVC: BaseViewController {
         navigationController?.popViewController(animated: true)
     }
     
+    private func configureNavBar() {
+        guard let presentType = viewModel.presentType else { return }
+        let leftTitle = presentType.rawValue
+        self.setNavigationBar(navBarType: .postPresent(leftImage: UIImage(named: "leftArrow"),
+                                                       leftTitle: leftTitle),
+                              backItemHidden: true,
+                              isTransparent: true,
+                              backGroundColor: .white,
+                              leftButtonAction: #selector(backAction))
+    }
+    
     override func observeDataSource() {
         super.observeDataSource()
         viewModel.dataSource.subscribe { [weak self] state in
@@ -69,6 +76,9 @@ class PresentPostVC: BaseViewController {
             case .scrollToRow:
                 guard let row = self.viewModel.scrollIndex else { return }
                 self.tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .top, animated: false)
+            case .navigateToProfil(let uid):
+                let vc = ProfileVC(profilType: .anyone(uid: uid))
+                self.push(to: vc)
             }
         }
     }

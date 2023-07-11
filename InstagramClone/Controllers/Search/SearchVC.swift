@@ -21,14 +21,30 @@ class SearchVC: BaseViewController {
         return searchBar
     }()
     
+    private lazy var collectionView: BaseCollectionView = {
+        let collectionView = BaseCollectionView(layout: viewModel.createCompositionalLayout(),
+                                                cells: [ExploreCell.self],
+                                                showsVerticalScrollIndicator: false,
+                                                showsHorizontalScrollIndicator: false,
+                                                backgroundColor: .clear)
+
+        collectionView.dataSource = viewModel.dataSource
+        collectionView.delegate = viewModel.dataSource
+
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
+        viewModel.getAllpost()
     }
     
     override func setupViews() {
         super.setupViews()
+        
         view.addSubview(searchBar)
+        view.addSubview(collectionView)
     }
     
     override func setupLayouts() {
@@ -38,6 +54,27 @@ class SearchVC: BaseViewController {
             make.top.equalToSuperview().offset(CGFloat.dHeight * (50/812))
             make.height.equalTo(CGFloat.dHeight * (34/812))
         }
+        
+        collectionView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(4)
+            make.top.equalTo(searchBar.snp.bottom).offset(4)
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    override func observeViewModel() {
+        super.observeViewModel()
+        viewModel.subscribe { [weak self] state in
+            guard let self else { return }
+            
+            switch state {
+                
+            case .fetchError:
+                print("fetch error")
+            case .allPostFetched:
+                self.collectionView.reloadData()
+            }
+        }
     }
     
     override func observeDataSource() {
@@ -45,6 +82,14 @@ class SearchVC: BaseViewController {
         viewModel.dataSource.subscribe { [weak self] state in
             guard let self else { return }
             
+            switch state {
+                
+            case .clickPost(let cell):
+                guard let indexPath = self.collectionView.indexPath(for: cell) else { return }
+                let presentPostVC = PresentPostVC(presentType: .explore, models: self.viewModel.posts,
+                                                  scrollIndex: indexPath.item)
+                self.push(to: presentPostVC)
+            }
         }
     }
 }
