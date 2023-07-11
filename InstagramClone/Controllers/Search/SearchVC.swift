@@ -21,31 +21,9 @@ class SearchVC: BaseViewController {
         return searchBar
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.isNavigationBarHidden = true
-        FirebaseAuthManager.shared.getAllUsers()
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(gesture:)))
-        swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
-    }
-    
-    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-            switch swipeGesture.direction {
-            case UISwipeGestureRecognizer.Direction.right:
-                print("Swiped right")
-            case UISwipeGestureRecognizer.Direction.down:
-                print("Swiped down")
-            case UISwipeGestureRecognizer.Direction.left:
-                print("Swiped left")
-            case UISwipeGestureRecognizer.Direction.up:
-                print("Swiped up")
-            default:
-                break
-            }
-        }
     }
     
     override func setupViews() {

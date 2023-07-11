@@ -63,9 +63,40 @@ class FirebasePostManager {
                                     "date" : Date().stringValue()]
         
         let fireStoreDatabase = Firestore.firestore()
-        var fireStoreReferance : DocumentReference? = nil
         
-        fireStoreReferance = fireStoreDatabase.collection("postData").document("\(uid)postData").collection("sharePosts").addDocument(data: data)
+        fireStoreDatabase.collection("postData").document("\(uid)postData").collection("sharePosts").addDocument(data: data)
+        fireStoreDatabase.collection("allPosts").addDocument(data: data)
+    }
+    
+    public func getAllPosts(completion: @escaping([PostModel]?,Error?) -> Void) {
+        let db = Firestore.firestore()
+        var posts = [PostModel]()
+        
+        db.collection("allPosts").getDocuments { (snapShot, error) in
+            if let error {
+                completion(nil, error)
+            }
+            
+            for document in snapShot!.documents {
+                let data = document.data()
+                
+                if let postURL = data["postURL"] as? String,
+                   let date = data["date"] as? String,
+                   let author = data["author"] as? String {
+                    var post = PostModel(authorUID: author, postURL: postURL, description: nil, likeCount: nil, date: date)
+                    if let likeCount = data["likeCount"] as? String {
+                        post.likeCount = likeCount
+                    }
+                    
+                    if let description = data["description"] as? String {
+                        post.description = description
+                    }
+                    posts.append(post)
+                }
+                
+            }
+            completion(posts, nil)
+        }
     }
     
     public func getPostData(uid: String, completion: @escaping([PostModel]?,Error?) -> Void) {

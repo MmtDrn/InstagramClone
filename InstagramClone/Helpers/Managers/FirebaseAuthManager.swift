@@ -111,9 +111,9 @@ class FirebaseAuthManager {
                                     "followerUID" : followerUID]
         
         let fireStoreDatabase = Firestore.firestore()
-        var fireStoreReferance : DocumentReference? = nil
         
-        fireStoreReferance = fireStoreDatabase.collection("users").document("\(uid)userData").collection("data").addDocument(data: data, completion: { error in
+        fireStoreDatabase.collection("allUser").addDocument(data: ["uid": uid])
+        fireStoreDatabase.collection("users").document("\(uid)userData").collection("data").addDocument(data: data, completion: { error in
             if let _ = error {
                 completion(nil, .setUserData)
             } else {
@@ -232,15 +232,26 @@ class FirebaseAuthManager {
         }
     }
     
-    public func getAllUsers() {
+    public func getAllUsers(completion: @escaping([String]?, FetchError?) -> Void) {
         let db = Firestore.firestore()
+        let usersRef = db.collection("allUser")
         
-        db.collection("users").getDocuments { (snapShot, error) in
-            
-            if let error {
-                print(error)
+        usersRef.getDocuments { (snapShot, error) in
+
+            if let _ = error {
+                completion(nil, .backendError)
             } else if let snapShot {
-                print(snapShot.documents.count)
+                if snapShot.documents.isEmpty {
+                    completion(nil, .noneItem)
+                } else {
+                    var users: [String] = []
+                    for document in snapShot.documents {
+                        let data = document.data()
+                        let user = data["uid"] as? String
+                        users.append(user!)
+                    }
+                    completion(users, nil)
+                }
             }
         }
     }
