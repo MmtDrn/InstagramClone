@@ -45,6 +45,7 @@ class RegisterVC: BaseViewController {
     private lazy var userNameTextField: BaseTextField = {
         let textField = BaseTextField(placeholder: "User name",
                                       textAlignment: .left,
+                                      textType: .emailAddress,
                                       textColor: .black,
                                       font: .systemFont(ofSize: CGFloat.dHeight * (14/812), weight: .semibold),
                                       opacity: 0.5,

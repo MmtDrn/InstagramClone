@@ -179,35 +179,77 @@ class FirebaseAuthManager {
     
     func updateUserData<T>(userDataType: UserDataType, data: T) {
         let db = Firestore.firestore()
+        guard let selfUID = Defs.shared.userModel?.uuid,
+              let setData = data as? String else { return }
+
         
-        db.collection("users").document("\(Defs.shared.userModel?.uuid ?? "")userData").collection("data").getDocuments { (snapShot, error) in
+        db.collection("users").document("\(selfUID)userData").collection("data").getDocuments { (snapShot, error) in
             if error == nil {
-                snapShot?.documents.first?.reference.setData([userDataType.path : data], merge: true)
+                
                 switch userDataType {
-                case .uid:
-                    guard let data = data as? String else { return }
-                    Defs.shared.userModel?.uuid = data
-                case .email:
-                    guard let data = data as? String else { return }
-                    Defs.shared.userModel?.email = data
-                case .fullName:
-                    guard let data = data as? String else { return }
-                    Defs.shared.userModel?.fullName = data
-                case .phoneNumber:
-                    guard let data = data as? String else { return }
-                    Defs.shared.userModel?.phoneNumber = data
-                case .userName:
-                    guard let data = data as? String else { return }
-                    Defs.shared.userModel?.userName = data
-                case .profilImageUrl:
-                    guard let data = data as? String else { return }
-                    Defs.shared.userModel?.profilImageURL = data
-                case .followers:
-                    guard let data = data as? [String] else { return }
-                    Defs.shared.userModel?.followerUID = data
-                case .followed:
-                    guard let data = data as? [String] else { return }
-                    Defs.shared.userModel?.followingUID = data
+                case .followed, .followers:
+                    // CURRENT USER
+                    
+                    /// current user followings are download from db
+                    self.getUserdata(userDataType: .followed,
+                                     uid: selfUID) { (data:[String]?, error: FetchError?) in
+                        if data != nil || error == .noneItem {
+                            var setArray = [String]()
+                            if let data { setArray = data }
+                            setArray.append(setData)
+                            /// current user's new following are uploaded to db
+                            snapShot?.documents.first?.reference.setData([userDataType.path : setArray],
+                                                                         merge: true, completion: { error in
+                                if error == nil {
+                                    db.collection("users").document("\(setData)userData").collection("data").getDocuments { (snapShot, error) in
+                                        if error == nil {
+                                            // COUNTER USER
+                                            
+                                            /// counter user followers are download from db
+                                            self.getUserdata(userDataType: .followers,
+                                                             uid: setData) { (data:[String]?, error: FetchError?) in
+                                                if let data {
+                                                    var setArray = data
+                                                    setArray.append(selfUID)
+                                                    /// counter user's new followers are uploaded to db
+                                                    snapShot?.documents.first?.reference.setData([UserDataType.followers.path : setArray], merge: true)
+                                                } else if error == .noneItem {
+                                                    var setArray: [String] = []
+                                                    setArray.append(selfUID)
+                                                    /// counter user's new followers are uploaded to db
+                                                    snapShot?.documents.first?.reference.setData([UserDataType.followers.path : setArray], merge: true)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                            /// current user's new following are uploaded to userDefault
+                            Defs.shared.userModel?.followingUID?.append(setData)
+                        }
+                    }
+
+                default:
+                    snapShot?.documents.first?.reference.setData([userDataType.path : data], merge: true, completion: { error in
+                        if error == nil {
+                            switch userDataType {
+                            case .uid:
+                                Defs.shared.userModel?.uuid = setData
+                            case .email:
+                                Defs.shared.userModel?.email = setData
+                            case .fullName:
+                                Defs.shared.userModel?.fullName = setData
+                            case .phoneNumber:
+                                Defs.shared.userModel?.phoneNumber = setData
+                            case .userName:
+                                Defs.shared.userModel?.userName = setData
+                            case .profilImageUrl:
+                                Defs.shared.userModel?.profilImageURL = setData
+                            default:
+                                break
+                            }
+                        }
+                    })
                 }
             }
         }
