@@ -22,7 +22,7 @@ class ProfileTopView: BaseView {
     private var profilType: ProfilType = .oneself
     
     private lazy var profilImageView: BaseImageView = {
-        let imageView = BaseImageView(image: UIImage(named: "noneUserPlus"),
+        let imageView = BaseImageView(image: nil,
                                       contentMode: .scaleAspectFill,
                                       backgroundColor: .clear)
         
@@ -35,7 +35,7 @@ class ProfileTopView: BaseView {
     }()
     
     private lazy var nameLabel: BaseLabel = {
-        let label = BaseLabel(text: Defs.shared.userModel?.fullName,
+        let label = BaseLabel(text: nil,
                               textColor: .black,
                               textAlignment: .center,
                               numberOfLines: 0,
@@ -143,8 +143,6 @@ class ProfileTopView: BaseView {
         addSubview(nameLabel)
         addSubview(stackViewLabels)
         addSubview(stackViewbuttons)
-        
-        setViews()
     }
     
     override func setupLayouts() {
@@ -198,9 +196,41 @@ class ProfileTopView: BaseView {
         }
     }
     
-    public func setPostCountPF(count: Int, profilType: ProfilType) {
+    public func setPostCountPF(profilType: ProfilType,
+                               pfURL: String?,
+                               fullname: String?,
+                               postCount:Int,
+                               followerCount:Int,
+                               followingCount:Int) {
+        
         self.profilType = profilType
-        let postLabelText = "\(count)\nPosts"
+        setViewsCount(postCount: postCount, followerCount: followerCount, followingCount: followingCount)
+        
+        switch profilType {
+        case .oneself:
+            nameLabel.text = Defs.shared.userModel?.fullName
+            if let pfURL,
+               let url = URL(string: pfURL) {
+                profilImageView.kf.setImage(with: url)
+            } else {
+                profilImageView.image = UIImage(named: "noneUserPlus")
+            }
+        case .anyone:
+            stackViewbuttons.isHidden = false
+            if let pfURL,
+               let url = URL(string: pfURL) {
+                profilImageView.kf.setImage(with: url)
+            } else {
+                profilImageView.image = UIImage(named: "noneUser")
+            }
+            guard let fullname else { return }
+            nameLabel.text = fullname
+        }
+    }
+    
+    private func setViewsCount(postCount:Int, followerCount:Int, followingCount:Int) {
+                
+        let postLabelText = "\(postCount)\nPosts"
         let postLabelAttributedString = NSMutableAttributedString(string: postLabelText)
         let lastFiveRange = NSRange(location: postLabelText.count - 5, length: 5)
         let lastFont = UIFont.systemFont(ofSize: CGFloat.dHeight * (14/812), weight: .light)
@@ -209,52 +239,29 @@ class ProfileTopView: BaseView {
         postLabelAttributedString.addAttribute(.foregroundColor, value: lastColor, range: lastFiveRange)
         postLabel.attributedText = postLabelAttributedString
         
-        
-        switch profilType {
-        case .oneself:
-            guard let pfImageString = Defs.shared.userModel?.profilImageURL,
-                  let url = URL(string: pfImageString) else { return }
-            profilImageView.kf.setImage(with: url)
-        case .anyone(let uid):
-            stackViewbuttons.isHidden = false
-            FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
-                guard let self else { return }
-                if let _ = error {
-                    self.profilImageView.image = UIImage(named: "noneUser")
-                } else {
-                    guard let pfImageString = data,
-                          let url = URL(string: pfImageString) else { return }
-                    self.profilImageView.kf.setImage(with: url)
-                }
-            }
-            
-            FirebaseAuthManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
-                guard let data else { return }
-                self?.nameLabel.text = data
-            }
-        }
-        
-        
-    }
-    
-    private func setViews() {
-        
-        nameLabel.text = Defs.shared.userModel?.fullName
-        
-        let lastFont = UIFont.systemFont(ofSize: CGFloat.dHeight * (14/812), weight: .light)
-        let lastColor = UIColor.black
-        let followersLabelText = "\(Defs.shared.userModel?.followerUID?.count ?? 0)\nFollowers"
+        let followersLabelText = "\(followerCount)\nFollowers"
         let followersLabelAttributedString = NSMutableAttributedString(string: followersLabelText)
         let lastNineRange = NSRange(location: followersLabelText.count - 9, length: 9)
         followersLabelAttributedString.addAttribute(.font, value: lastFont, range: lastNineRange)
         followersLabelAttributedString.addAttribute(.foregroundColor, value: lastColor, range: lastNineRange)
         followersLabel.attributedText = followersLabelAttributedString
         
-        let followingLabelText = "\(Defs.shared.userModel?.followingUID?.count ?? 0)\nFollowing"
+        let followingLabelText = "\(followingCount)\nFollowing"
         let followingLabelAttributedString = NSMutableAttributedString(string: followingLabelText)
         let lastNine1Range = NSRange(location: followingLabelText.count - 9, length: 9)
         followingLabelAttributedString.addAttribute(.font, value: lastFont, range: lastNine1Range)
         followingLabelAttributedString.addAttribute(.foregroundColor, value: lastColor, range: lastNine1Range)
         followingLabel.attributedText = followingLabelAttributedString
         }
+    
+    public func setButtonTitle(follow: Bool) {
+        var title = ""
+        switch follow {
+        case true:
+            title = "Following"
+        case false:
+            title = "Follow"
+        }
+        followButton.setTitle(title, for: .normal)
+    }
 }

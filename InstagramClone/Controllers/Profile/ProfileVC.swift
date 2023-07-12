@@ -91,13 +91,14 @@ class ProfileVC: BaseViewController {
                                   isTransparent: true,
                                   backGroundColor: .systemGray6,
                                   rightButtonAction: #selector(navRightButtonTapped))
-        case .anyone:
+        case .anyone(let uid):
             self.setNavigationBar(navBarType: .postPresent(leftImage: UIImage(named: "leftArrow"),
                                                            leftTitle: viewModel.userName ?? "unkown"),
                                   backItemHidden: true,
                                   isTransparent: true,
                                   backGroundColor: .systemGray6,
                                   leftButtonAction: #selector(popToRoot))
+            self.profilTopView.setButtonTitle(follow: viewModel.checkFollowStatus(uid: uid))
         }
     }
     
@@ -122,8 +123,12 @@ class ProfileVC: BaseViewController {
             case .setPostModelsSuccess:
                 self.configureNavBar()
                 guard let profilType = self.viewModel.profilType else { return }
-                self.profilTopView.setPostCountPF(count: self.viewModel.postModels.count,
-                                                  profilType: profilType)
+                self.profilTopView.setPostCountPF(profilType: profilType,
+                                                  pfURL: self.viewModel.pfURL,
+                                                  fullname: self.viewModel.fullName,
+                                                  postCount: self.viewModel.postModels.count,
+                                                  followerCount: self.viewModel.follower?.count ?? 0,
+                                                  followingCount: self.viewModel.following?.count ?? 0)
                 if !self.viewModel.postModels.isEmpty {
                     self.backView.setLabelHiddenStatus()
                 }

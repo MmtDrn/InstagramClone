@@ -77,8 +77,11 @@ class PresentPostVC: BaseViewController {
                 guard let row = self.viewModel.scrollIndex else { return }
                 self.tableView.scrollToRow(at: IndexPath(row: row, section: 0), at: .top, animated: false)
             case .navigateToProfil(let uid):
-                let vc = ProfileVC(profilType: .anyone(uid: uid))
-                self.push(to: vc)
+                guard let selfUID = Defs.shared.userModel?.uuid else { return }
+                if uid != selfUID {
+                    let vc = ProfileVC(profilType: .anyone(uid: uid))
+                    self.push(to: vc)
+                }
             }
         }
     }

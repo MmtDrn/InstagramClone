@@ -16,8 +16,12 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     
     let dataSource = ProfilDS()
     var postModels = [PostModel]()
+    var following: [String]?
+    var follower: [String]?
     var profilType: ProfilType?
     var userName: String?
+    var fullName: String?
+    var pfURL: String?
     
     func getPostData() {
         guard let profilType else { return }
@@ -25,6 +29,9 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
         switch profilType {
 
         case .oneself:
+            if let pfImageString = Defs.shared.userModel?.profilImageURL { self.pfURL = pfImageString }
+            if let following = Defs.shared.userModel?.followingUID { self.following = following }
+            if let follower = Defs.shared.userModel?.followerUID { self.follower = follower }
             guard let uid = Defs.shared.userModel?.uuid else { return }
             self.getPostsService(uid: uid)
         case .anyone(let uid):
@@ -32,6 +39,35 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
                 guard let self, let data else { return }
                 self.userName = data
                 self.getPostsService(uid: uid)
+            }
+            
+            FirebaseAuthManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
+                guard let self, let data else { return }
+                self.fullName = data
+            }
+            
+            FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
+                guard let self else { return }
+                if error == nil {
+                    guard let data else { return }
+                    self.pfURL = data
+                }
+            }
+            
+            FirebaseAuthManager.shared.getUserdata(userDataType: .followers, uid: uid) { [weak self] (data: [String]?, error) in
+                guard let self else { return }
+                if error == nil {
+                    guard let data else { return }
+                    self.follower = data
+                }
+            }
+            
+            FirebaseAuthManager.shared.getUserdata(userDataType: .followed, uid: uid) { [weak self] (data: [String]?, error) in
+                guard let self else { return }
+                if error == nil {
+                    guard let data else { return }
+                    self.following = data
+                }
             }
         }
     }
@@ -72,5 +108,10 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
                 self.emit(.showAlert(error.localizedDescription))
             }
         }
+    }
+    
+    public func checkFollowStatus(uid: String) -> Bool {
+        guard let followed = Defs.shared.userModel?.followingUID else { return false }
+        return followed.contains(uid)
     }
 }

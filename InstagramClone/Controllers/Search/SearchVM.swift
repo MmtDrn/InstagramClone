@@ -17,14 +17,15 @@ class SearchVM: StatefulVM<SearchVMStateChange> {
     var posts = [PostModel]()
     
     public func getAllpost() {
+        guard let selfUID = Defs.shared.userModel?.uuid else { return }
         FirebasePostManager.shared.getAllPosts { [weak self] (posts, error) in
             guard let self else { return }
             
             if let _ = error {
                 self.emit(.fetchError)
             } else if let posts {
-                self.dataSource.posts = posts
-                self.posts = posts
+                self.dataSource.posts = posts.filter({ $0.authorUID != selfUID })
+                self.posts = posts.filter({ $0.authorUID != selfUID })
                 self.emit(.allPostFetched)
             }
         }
