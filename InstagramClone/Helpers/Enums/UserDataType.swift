@@ -8,7 +8,7 @@
 import Foundation
 
 enum UserDataType {
-    case uid
+    case uuid
     case email
     case fullName
     case phoneNumber
@@ -19,7 +19,7 @@ enum UserDataType {
     
     var path: String {
         switch self {
-        case .uid:
+        case .uuid:
             return "uuid"
         case .email:
             return "email"

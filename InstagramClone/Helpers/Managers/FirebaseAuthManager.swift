@@ -42,7 +42,7 @@ class FirebaseAuthManager {
               if error != nil {
                   completion(.failure(.backend))
               } else {
-                  self.setUserData(uid: (result?.user.uid)!,
+                  self.setUserDataToDB(uid: (result?.user.uid)!,
                                    email: email,
                                    fullName: name,
                                    userName: userName,
@@ -91,7 +91,7 @@ class FirebaseAuthManager {
         }
     }
     
-    private func setUserData(uid: String,
+    private func setUserDataToDB(uid: String,
                              email: String,
                              fullName: String,
                              userName: String,
@@ -101,19 +101,17 @@ class FirebaseAuthManager {
                              followerUID: [String]?,
                              completion: @escaping(Bool?, RegisterError?) -> Void) {
         
-        let data: [String : Any] = ["uuid": uid,
-                                    "email" : email,
-                                    "fullName" : fullName,
-                                    "userName" : userName,
-                                    "phoneNumber" : phoneNumber,
-                                    "profilImageURL" : profilImageURL,
-                                    "followingUID" : followingUID,
-                                    "followerUID" : followerUID]
-        
-        let fireStoreDatabase = Firestore.firestore()
-        
-        fireStoreDatabase.collection("allUser").addDocument(data: ["uid": uid])
-        fireStoreDatabase.collection("users").document("\(uid)userData").collection("data").addDocument(data: data, completion: { error in
+        let data: [String : Any] = [UserDataTag.uuid: uid,
+                                    UserDataTag.email : email,
+                                    UserDataTag.fullName : fullName,
+                                    UserDataTag.userName : userName,
+                                    UserDataTag.phoneNumber : phoneNumber,
+                                    UserDataTag.profilImageURL : profilImageURL,
+                                    UserDataTag.followingUID : followingUID,
+                                    UserDataTag.followerUID : followerUID]
+                
+        Collections.allUsers.collection.addDocument(data: [AllUserTag.uuid: uid])
+        Collections.users(uid: uid).collection.addDocument(data: data, completion: { error in
             if let _ = error {
                 completion(nil, .setUserData)
             } else {
@@ -131,21 +129,19 @@ class FirebaseAuthManager {
     }
 
     private func getUserDatas(uid: String, completion: @escaping(Result<Bool,Error>)-> Void) {
-        
-        let db = Firestore.firestore()
-        
-        db.collection("users").document("\(uid)userData").collection("data").getDocuments { (snapShot, error) in
+            
+        Collections.users(uid: uid).collection.getDocuments { (snapShot, error) in
             if let error {
                 completion(.failure(error))
             } else if let document = snapShot?.documents.first {
                 
                 let data = document.data()
                 
-                if let email = data["email"] as? String,
-                   let fullName = data["fullName"] as? String,
-                   let phoneNumber = data["phoneNumber"] as? String,
-                   let userName = data["userName"] as? String,
-                   let uuid = data["uuid"] as? String {
+                if let email = data[UserDataTag.email] as? String,
+                   let fullName = data[UserDataTag.fullName] as? String,
+                   let phoneNumber = data[UserDataTag.phoneNumber] as? String,
+                   let userName = data[UserDataTag.userName] as? String,
+                   let uuid = data[UserDataTag.uuid] as? String {
                     
                     Defs.shared.userModel = DefsUserModel(uuid: uuid,
                                                           fullName: fullName,
@@ -154,17 +150,17 @@ class FirebaseAuthManager {
                                                           phoneNumber: phoneNumber)
                 }
                 
-                if let profilImageURL = data["profilImageURL"] as? String {
+                if let profilImageURL = data[UserDataTag.profilImageURL] as? String {
                     self.updateUserData(userDataType: .profilImageUrl, data: profilImageURL)
                     Defs.shared.userModel?.profilImageURL = profilImageURL
                 }
                 
-                if let followers = data["followerUID"] as? [String] {
+                if let followers = data[UserDataTag.followerUID] as? [String] {
                     self.updateUserData(userDataType: .followers, data: followers)
                     Defs.shared.userModel?.followerUID = followers
                 }
                 
-                if let following = data["followingUID"] as? [String] {
+                if let following = data[UserDataTag.followingUID] as? [String] {
                     self.updateUserData(userDataType: .followed, data: following)
                     Defs.shared.userModel?.followingUID = following
                 }
@@ -178,12 +174,11 @@ class FirebaseAuthManager {
     
     
     func updateUserData<T>(userDataType: UserDataType, data: T) {
-        let db = Firestore.firestore()
         guard let selfUID = Defs.shared.userModel?.uuid,
               let setData = data as? String else { return }
 
         
-        db.collection("users").document("\(selfUID)userData").collection("data").getDocuments { (snapShot, error) in
+        Collections.users(uid: selfUID).collection.getDocuments { (snapShot, error) in
             if error == nil {
                 
                 switch userDataType {
@@ -201,7 +196,7 @@ class FirebaseAuthManager {
                             snapShot?.documents.first?.reference.setData([userDataType.path : setArray],
                                                                          merge: true, completion: { error in
                                 if error == nil {
-                                    db.collection("users").document("\(setData)userData").collection("data").getDocuments { (snapShot, error) in
+                                    Collections.users(uid: setData).collection.getDocuments { (snapShot, error) in
                                         if error == nil {
                                             // COUNTER USER
                                             
@@ -232,22 +227,7 @@ class FirebaseAuthManager {
                 default:
                     snapShot?.documents.first?.reference.setData([userDataType.path : data], merge: true, completion: { error in
                         if error == nil {
-                            switch userDataType {
-                            case .uid:
-                                Defs.shared.userModel?.uuid = setData
-                            case .email:
-                                Defs.shared.userModel?.email = setData
-                            case .fullName:
-                                Defs.shared.userModel?.fullName = setData
-                            case .phoneNumber:
-                                Defs.shared.userModel?.phoneNumber = setData
-                            case .userName:
-                                Defs.shared.userModel?.userName = setData
-                            case .profilImageUrl:
-                                Defs.shared.userModel?.profilImageURL = setData
-                            default:
-                                break
-                            }
+                            Defs.shared.userModel?.setData(dataType: userDataType, data: setData)
                         }
                     })
                 }
@@ -256,9 +236,8 @@ class FirebaseAuthManager {
     }
     
     func getUserdata<T>(userDataType: UserDataType, uid: String, completion: @escaping(T?, FetchError?) -> Void) {
-        let db = Firestore.firestore()
         
-        db.collection("users").document("\(uid)userData").collection("data").getDocuments { (snapShot, error) in
+        Collections.users(uid: uid).collection.getDocuments { (snapShot, error) in
             if let _ = error {
                 completion(nil, .backendError)
             } else {
@@ -275,10 +254,8 @@ class FirebaseAuthManager {
     }
     
     public func getAllUsers(completion: @escaping([String]?, FetchError?) -> Void) {
-        let db = Firestore.firestore()
-        let usersRef = db.collection("allUser")
         
-        usersRef.getDocuments { (snapShot, error) in
+        Collections.allUsers.collection.getDocuments { (snapShot, error) in
 
             if let _ = error {
                 completion(nil, .backendError)
@@ -289,7 +266,7 @@ class FirebaseAuthManager {
                     var users: [String] = []
                     for document in snapShot.documents {
                         let data = document.data()
-                        let user = data["uid"] as? String
+                        let user = data[AllUserTag.uuid] as? String
                         users.append(user!)
                     }
                     completion(users, nil)

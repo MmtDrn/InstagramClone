@@ -60,6 +60,11 @@
 		B564CE8F2A2C8E5700AE0851 /* ProfileTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564CE8E2A2C8E5700AE0851 /* ProfileTopView.swift */; };
 		B564CE912A2CB0A100AE0851 /* ProfilDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564CE902A2CB0A100AE0851 /* ProfilDS.swift */; };
 		B564CE942A2CB59200AE0851 /* StoryTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B564CE932A2CB59200AE0851 /* StoryTVCell.swift */; };
+		B57BF68D2A7715B0008CB59F /* Collections.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF68C2A7715B0008CB59F /* Collections.swift */; };
+		B57BF68F2A7715C4008CB59F /* PostStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF68E2A7715C4008CB59F /* PostStorage.swift */; };
+		B57BF6912A7715F0008CB59F /* UserDataTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6902A7715F0008CB59F /* UserDataTag.swift */; };
+		B57BF6932A771606008CB59F /* PostDataTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6922A771606008CB59F /* PostDataTag.swift */; };
+		B57BF6952A771625008CB59F /* AllUserTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6942A771625008CB59F /* AllUserTag.swift */; };
 		B581B8072A2A27E300B70A36 /* FirebasePostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */; };
 		B581B8092A2A2E8D00B70A36 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581B8082A2A2E8D00B70A36 /* PostModel.swift */; };
 		B582880029D6C42500C5DF5E /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58287FF29D6C42500C5DF5E /* UIApplication+Extensions.swift */; };
@@ -188,6 +193,11 @@
 		B564CE8E2A2C8E5700AE0851 /* ProfileTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTopView.swift; sourceTree = "<group>"; };
 		B564CE902A2CB0A100AE0851 /* ProfilDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilDS.swift; sourceTree = "<group>"; };
 		B564CE932A2CB59200AE0851 /* StoryTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryTVCell.swift; sourceTree = "<group>"; };
+		B57BF68C2A7715B0008CB59F /* Collections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collections.swift; sourceTree = "<group>"; };
+		B57BF68E2A7715C4008CB59F /* PostStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStorage.swift; sourceTree = "<group>"; };
+		B57BF6902A7715F0008CB59F /* UserDataTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataTag.swift; sourceTree = "<group>"; };
+		B57BF6922A771606008CB59F /* PostDataTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataTag.swift; sourceTree = "<group>"; };
+		B57BF6942A771625008CB59F /* AllUserTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserTag.swift; sourceTree = "<group>"; };
 		B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostManager.swift; sourceTree = "<group>"; };
 		B581B8082A2A2E8D00B70A36 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		B58287FF29D6C42500C5DF5E /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
@@ -482,6 +492,7 @@
 		B562D43029D5707C00C56A2F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B57BF68B2A77159E008CB59F /* Constants */,
 				B562D43329D570A300C56A2F /* Models */,
 				B562D43229D5709C00C56A2F /* Routers */,
 			);
@@ -538,6 +549,18 @@
 				B5087D282A2DED3A00A62F42 /* ProfilePostCVCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		B57BF68B2A77159E008CB59F /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				B57BF68C2A7715B0008CB59F /* Collections.swift */,
+				B57BF68E2A7715C4008CB59F /* PostStorage.swift */,
+				B57BF6902A7715F0008CB59F /* UserDataTag.swift */,
+				B57BF6922A771606008CB59F /* PostDataTag.swift */,
+				B57BF6942A771625008CB59F /* AllUserTag.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		B582880529D6F93800C5DF5E /* Login */ = {
@@ -926,6 +949,7 @@
 				B5A2930F29E6DA5100D04542 /* DefsUserModel.swift in Sources */,
 				B582880029D6C42500C5DF5E /* UIApplication+Extensions.swift in Sources */,
 				B5F9E8122A1E8D0600B1DC15 /* BaseTextView.swift in Sources */,
+				B57BF6912A7715F0008CB59F /* UserDataTag.swift in Sources */,
 				B54CD6D529D5999C00AA1AE2 /* TabbarItem.swift in Sources */,
 				B564CE8F2A2C8E5700AE0851 /* ProfileTopView.swift in Sources */,
 				B564CE912A2CB0A100AE0851 /* ProfilDS.swift in Sources */,
@@ -936,6 +960,7 @@
 				B5087D292A2DED3A00A62F42 /* ProfilePostCVCell.swift in Sources */,
 				B5865CB929D577BB0046D0B6 /* ProfileVC.swift in Sources */,
 				B5F9E8142A1E8DE200B1DC15 /* TextType.swift in Sources */,
+				B57BF68F2A7715C4008CB59F /* PostStorage.swift in Sources */,
 				B51206B62A320BB40009DB4B /* UIView+Extensions.swift in Sources */,
 				B582880229D6E1D000C5DF5E /* PostNavView.swift in Sources */,
 				B562D3FF29D56EF000C56A2F /* AppDelegate.swift in Sources */,
@@ -946,12 +971,14 @@
 				B52AA0202A20D475003D9DDC /* PostBottomView.swift in Sources */,
 				B581B8072A2A27E300B70A36 /* FirebasePostManager.swift in Sources */,
 				B564CE8D2A2C84FB00AE0851 /* ProfileVM.swift in Sources */,
+				B57BF6952A771625008CB59F /* AllUserTag.swift in Sources */,
 				B538C63F29FD51CD0075AE9B /* ViewCells+Extensions.swift in Sources */,
 				B563554729DAE93C00A8DCE2 /* BaseLabel.swift in Sources */,
 				B5299D8F29DABAEC0085B22E /* BaseStackView.swift in Sources */,
 				B5E1D5F12A33095100EA59D3 /* PresentPostDS.swift in Sources */,
 				B51F1E6A2A29E22100499843 /* RegisterError.swift in Sources */,
 				B5F7DF152A2A0897003D310D /* UserDataType.swift in Sources */,
+				B57BF68D2A7715B0008CB59F /* Collections.swift in Sources */,
 				B5F5CC112A5DB05500365D6E /* PresentPostType.swift in Sources */,
 				B5BCEFDA29E72FD30066325B /* TabbarVM.swift in Sources */,
 				B5087D272A2DE7AD00A62F42 /* ProfilePostTVCell.swift in Sources */,
@@ -971,6 +998,7 @@
 				B5A2931129E6DA6E00D04542 /* RegisterModel.swift in Sources */,
 				B5858EF12A0534C2009CBF7B /* PHAsset+extension.swift in Sources */,
 				B5859A8F29DC518C001D2836 /* AlertView.swift in Sources */,
+				B57BF6932A771606008CB59F /* PostDataTag.swift in Sources */,
 				B563554C29DAEF9100A8DCE2 /* String+Extensions.swift in Sources */,
 				B5F5CC0B2A5D8DCB00365D6E /* ExploreCell.swift in Sources */,
 				B5A2930929E6A51300D04542 /* UserDefaultsManager.swift in Sources */,

@@ -23,13 +23,10 @@ class FirebasePostManager {
         UIApplication.getTopViewController()?.navigationController?.navigationBar.isUserInteractionEnabled = false
         ProgressHUD.show()
         
-        let storageReferance = Storage.storage().reference()
-        let mediaFolder = storageReferance.child("posts")
-        
         if let data = image.jpegData(compressionQuality: 1) {
             let uuid = UUID().uuidString
             
-            let imageReferance = mediaFolder.child("\(uuid).jpg")
+            let imageReferance = PostStorage.post(uid: uuid).imageReferance
             imageReferance.putData(data) { (metadata, error) in
                 if let error {
                     completion(.failure(error))
@@ -39,7 +36,9 @@ class FirebasePostManager {
                         guard let url else { return }
                         switch shareType {
                         case .post:
-                            self.setPostData(postURL: url.absoluteString, description: description, likeCount: nil)
+                            self.setPostData(postURL: url.absoluteString,
+                                             description: description,
+                                             likeCount: nil)
                         case .profilImage:
                             FirebaseAuthManager.shared.updateUserData(userDataType: .profilImageUrl,
                                                                       data: url.absoluteString)
@@ -56,23 +55,21 @@ class FirebasePostManager {
                              description: String?,
                              likeCount: String?) {
         guard let uid = Defs.shared.userModel?.uuid else { return }
-        let data: [String : Any] = ["postURL": postURL,
-                                    "description" : description,
-                                    "likeCount" : likeCount,
-                                    "author" : uid,
-                                    "date" : Date().stringValue()]
+        let data: [String : Any] = [PostDataTag.postURL: postURL,
+                                    PostDataTag.description : description,
+                                    PostDataTag.likeCount : likeCount,
+                                    PostDataTag.author : uid,
+                                    PostDataTag.date : Date().stringValue()]
         
-        let fireStoreDatabase = Firestore.firestore()
-        
-        fireStoreDatabase.collection("postData").document("\(uid)postData").collection("sharePosts").addDocument(data: data)
-        fireStoreDatabase.collection("allPosts").addDocument(data: data)
+
+        Collections.postData(uid: uid).collection.addDocument(data: data)
+        Collections.allUsers.collection.addDocument(data: data)
     }
     
     public func getAllPosts(completion: @escaping([PostModel]?,Error?) -> Void) {
-        let db = Firestore.firestore()
         var posts = [PostModel]()
         
-        db.collection("allPosts").getDocuments { (snapShot, error) in
+        Collections.allPosts.collection.getDocuments { (snapShot, error) in
             if let error {
                 completion(nil, error)
             }
@@ -80,15 +77,15 @@ class FirebasePostManager {
             for document in snapShot!.documents {
                 let data = document.data()
                 
-                if let postURL = data["postURL"] as? String,
-                   let date = data["date"] as? String,
-                   let author = data["author"] as? String {
+                if let postURL = data[PostDataTag.postURL] as? String,
+                   let date = data[PostDataTag.date] as? String,
+                   let author = data[PostDataTag.author] as? String {
                     var post = PostModel(authorUID: author, postURL: postURL, description: nil, likeCount: nil, date: date)
-                    if let likeCount = data["likeCount"] as? String {
+                    if let likeCount = data[PostDataTag.likeCount] as? String {
                         post.likeCount = likeCount
                     }
                     
-                    if let description = data["description"] as? String {
+                    if let description = data[PostDataTag.description] as? String {
                         post.description = description
                     }
                     posts.append(post)
@@ -100,10 +97,10 @@ class FirebasePostManager {
     }
     
     public func getPostData(uid: String, completion: @escaping([PostModel]?,Error?) -> Void) {
-        let db = Firestore.firestore()
+
         var posts = [PostModel]()
         
-        db.collection("postData").document("\(uid)postData").collection("sharePosts").getDocuments { (snapShot, error) in
+        Collections.postData(uid: uid).collection.getDocuments { (snapShot, error) in
             if let error {
                 completion(nil, error)
             }
@@ -111,15 +108,15 @@ class FirebasePostManager {
             for document in snapShot!.documents {
                 let data = document.data()
                 
-                if let postURL = data["postURL"] as? String,
-                   let date = data["date"] as? String,
-                   let author = data["author"] as? String {
+                if let postURL = data[PostDataTag.postURL] as? String,
+                   let date = data[PostDataTag.date] as? String,
+                   let author = data[PostDataTag.author] as? String {
                     var post = PostModel(authorUID: author, postURL: postURL, description: nil, likeCount: nil, date: date)
-                    if let likeCount = data["likeCount"] as? String {
+                    if let likeCount = data[PostDataTag.likeCount] as? String {
                         post.likeCount = likeCount
                     }
                     
-                    if let description = data["description"] as? String {
+                    if let description = data[PostDataTag.description] as? String {
                         post.description = description
                     }
                     posts.append(post)
@@ -131,13 +128,12 @@ class FirebasePostManager {
     }
     
     public func followedPosts(follwedPersons: [String], completion: @escaping([PostModel]?,FetchError?) -> Void) {
-        let db = Firestore.firestore()
         var posts = [PostModel]()
         let group = DispatchGroup()
         
         for person in follwedPersons {
             group.enter()
-            db.collection("postData").document("\(person)postData").collection("sharePosts").getDocuments { (snapShot, error) in
+            Collections.postData(uid: person).collection.getDocuments { (snapShot, error) in
                 defer {
                     group.leave()
                 }
@@ -147,15 +143,15 @@ class FirebasePostManager {
                     for document in snapShot.documents {
                         let data = document.data()
                         
-                        if let postURL = data["postURL"] as? String,
-                           let date = data["date"] as? String,
-                           let author = data["author"] as? String {
+                        if let postURL = data[PostDataTag.postURL] as? String,
+                           let date = data[PostDataTag.date] as? String,
+                           let author = data[PostDataTag.author] as? String {
                             var post = PostModel(authorUID: author, postURL: postURL, description: nil, likeCount: nil, date: date)
-                            if let likeCount = data["likeCount"] as? String {
+                            if let likeCount = data[PostDataTag.likeCount] as? String {
                                 post.likeCount = likeCount
                             }
                             
-                            if let description = data["description"] as? String {
+                            if let description = data[PostDataTag.description] as? String {
                                 post.description = description
                             }
                             posts.append(post)
