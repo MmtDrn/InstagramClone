@@ -65,6 +65,7 @@
 		B57BF6912A7715F0008CB59F /* UserDataTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6902A7715F0008CB59F /* UserDataTag.swift */; };
 		B57BF6932A771606008CB59F /* PostDataTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6922A771606008CB59F /* PostDataTag.swift */; };
 		B57BF6952A771625008CB59F /* AllUserTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6942A771625008CB59F /* AllUserTag.swift */; };
+		B57BF6982A771834008CB59F /* Routers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57BF6972A771834008CB59F /* Routers.swift */; };
 		B581B8072A2A27E300B70A36 /* FirebasePostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */; };
 		B581B8092A2A2E8D00B70A36 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B581B8082A2A2E8D00B70A36 /* PostModel.swift */; };
 		B582880029D6C42500C5DF5E /* UIApplication+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58287FF29D6C42500C5DF5E /* UIApplication+Extensions.swift */; };
@@ -198,6 +199,7 @@
 		B57BF6902A7715F0008CB59F /* UserDataTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataTag.swift; sourceTree = "<group>"; };
 		B57BF6922A771606008CB59F /* PostDataTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDataTag.swift; sourceTree = "<group>"; };
 		B57BF6942A771625008CB59F /* AllUserTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllUserTag.swift; sourceTree = "<group>"; };
+		B57BF6972A771834008CB59F /* Routers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routers.swift; sourceTree = "<group>"; };
 		B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebasePostManager.swift; sourceTree = "<group>"; };
 		B581B8082A2A2E8D00B70A36 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		B58287FF29D6C42500C5DF5E /* UIApplication+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extensions.swift"; sourceTree = "<group>"; };
@@ -492,9 +494,11 @@
 		B562D43029D5707C00C56A2F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */,
+				B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */,
 				B57BF68B2A77159E008CB59F /* Constants */,
 				B562D43329D570A300C56A2F /* Models */,
-				B562D43229D5709C00C56A2F /* Routers */,
+				B57BF6962A77180F008CB59F /* Routers */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -508,13 +512,6 @@
 				B54CD6D029D5932100AA1AE2 /* Extensions */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		B562D43229D5709C00C56A2F /* Routers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Routers;
 			sourceTree = "<group>";
 		};
 		B562D43329D570A300C56A2F /* Models */ = {
@@ -534,8 +531,6 @@
 				B5859A9029DC5A92001D2836 /* AlertManager.swift */,
 				B5A2930829E6A51300D04542 /* UserDefaultsManager.swift */,
 				B5A2930A29E6A54400D04542 /* Defs.swift */,
-				B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */,
-				B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -561,6 +556,14 @@
 				B57BF6942A771625008CB59F /* AllUserTag.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		B57BF6962A77180F008CB59F /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+				B57BF6972A771834008CB59F /* Routers.swift */,
+			);
+			path = Routers;
 			sourceTree = "<group>";
 		};
 		B582880529D6F93800C5DF5E /* Login */ = {
@@ -988,6 +991,7 @@
 				B52AA0172A20B344003D9DDC /* HomeTVCell.swift in Sources */,
 				B55AB36E2A13C5A0000B3FC8 /* SharePostVM.swift in Sources */,
 				B546CE702A38AC6000E69F40 /* SearchVM.swift in Sources */,
+				B57BF6982A771834008CB59F /* Routers.swift in Sources */,
 				B5087D2B2A2F171400A62F42 /* ShareType.swift in Sources */,
 				B5858EF52A05423B009CBF7B /* BaseCollectionViewCell.swift in Sources */,
 				B5C8FAB029D6FFC4004E9531 /* CGFloat+Extensions.swift in Sources */,

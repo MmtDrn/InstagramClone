@@ -63,7 +63,7 @@ class FirebasePostManager {
         
 
         Collections.postData(uid: uid).collection.addDocument(data: data)
-        Collections.allUsers.collection.addDocument(data: data)
+        Collections.allPosts.collection.addDocument(data: data)
     }
     
     public func getAllPosts(completion: @escaping([PostModel]?,Error?) -> Void) {
