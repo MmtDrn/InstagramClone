@@ -9,7 +9,13 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-class FirebaseAuthManager {
+protocol AuthManagerPRotocol {
+    func userRegister(model: RegisterModel, completion: @escaping(Result<Bool, RegisterError>)-> Void)
+    func logIn(email: String, password: String, completion: @escaping(Result<Bool, Error>) -> Void)
+    func logOut(completion: @escaping(Result<Bool, Error>) -> Void)
+}
+
+class FirebaseAuthManager: AuthManagerPRotocol {
     
     static let shared = FirebaseAuthManager()
     private init() {}
