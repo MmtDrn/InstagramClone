@@ -116,7 +116,10 @@ class TabbarVC: WHTabbarController {
             switch state {
             case .pushPostVC:
                 DispatchQueue.main.async {
-                    self.navigationController?.pushViewController(ChoosePostVC(shareType: .post), animated: true)
+                    let postManager = FirebasePostManager.shared
+                    let chooseVM = ChoosePostVM(postManager: postManager)
+                    let choosePostVC = ChoosePostVC(viewModel: chooseVM, shareType: .post)
+                    self.navigationController?.pushViewController(choosePostVC, animated: true)
                 }
             case .showAlert:
                 DispatchQueue.main.async {

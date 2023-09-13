@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class SearchVC: BaseViewController {
 
-    private let viewModel = SearchVM()
+    private let viewModel: SearchVM
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -33,6 +33,15 @@ class SearchVC: BaseViewController {
 
         return collectionView
     }()
+    
+    init(viewModel: SearchVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

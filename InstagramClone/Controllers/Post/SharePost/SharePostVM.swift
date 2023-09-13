@@ -17,8 +17,14 @@ enum SharePostVMStateChange: StateChange {
 
 class SharePostVM: StatefulVM<SharePostVMStateChange> {
     
+    private let postManager: PostManagerProtocol
+    
+    init(postManager: PostManagerProtocol) {
+        self.postManager = postManager
+    }
+    
     public func sharePost(image: UIImage, description: String?) {
-        FirebasePostManager.shared.shareImage(shareType: .post, image: image, description: description) { [weak self] result in
+        postManager.shareImage(shareType: .post, image: image, description: description) { [weak self] result in
             guard let self else { return }
             switch result {
                 

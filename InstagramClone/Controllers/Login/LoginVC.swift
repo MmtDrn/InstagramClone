@@ -10,7 +10,7 @@ import SnapKit
 
  class LoginVC: BaseViewController {
     
-    private lazy var viewModel = LoginVM()
+     private var viewModel: LoginVM
     
     private lazy var backGroundImageview: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "loginBackGround"))
@@ -111,7 +111,16 @@ import SnapKit
         
         return view
     }()
-    
+     
+     init(viewModel: LoginVM) {
+         self.viewModel = viewModel
+         super.init(nibName: nil, bundle: nil)
+     }
+     
+     required init?(coder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
+     
     override func setupViews() {
         super.setupViews()
         
@@ -211,7 +220,7 @@ import SnapKit
 extension LoginVC {
     
     @objc private func toRegisterViewAction() {
-        let registerVC = RegisterVC()
+        let registerVC = viewModel.registerRouter()
         presentNavigate(to: registerVC)
     }
     

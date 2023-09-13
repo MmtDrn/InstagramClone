@@ -64,13 +64,23 @@ enum TabbarItem: Int {
     var viewController: UIViewController? {
         switch self {
         case .Home:
-            return HomeVC()
+            let postManager = FirebasePostManager.shared
+            let homeVM = HomeVM(postManager: postManager)
+            let homeVC = HomeVC(viewModel: homeVM)
+            return homeVC
         case .Search:
-            return SearchVC()
+            let postManager = FirebasePostManager.shared
+            let searchVM = SearchVM(postManager: postManager)
+            let searchVC = SearchVC(viewModel: searchVM)
+            return searchVC
         case .Notifications:
             return NotificationsVC()
         case .Profile:
-            return ProfileVC(profilType: .oneself)
+            let profileVM = ProfileVM(authManager: FirebaseAuthManager.shared,
+                                      postManager: FirebasePostManager.shared,
+                                      userDataManager: FirebaseUserDataManager.shared)
+            let profileVC = ProfileVC(viewModel: profileVM, profilType: .oneself)
+            return profileVC
         case .Post:
             return nil
         }

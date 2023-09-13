@@ -10,7 +10,7 @@ import SnapKit
 
 class ChoosePostVC: BaseViewController {
     
-    private lazy var viewModel = ChoosePostVM()
+    private var viewModel: ChoosePostVM
     
     private lazy var imageView: BaseImageView = {
         let imageView = BaseImageView(image: nil,
@@ -36,7 +36,8 @@ class ChoosePostVC: BaseViewController {
         return collectionView
     }()
     
-    init(shareType: ShareType) {
+    init(viewModel: ChoosePostVM, shareType: ShareType) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.shareType = shareType
     }
@@ -107,7 +108,10 @@ class ChoosePostVC: BaseViewController {
         
         switch shareType {
         case .post:
-            push(to: SharePostVC(image: image))
+            let postManager = FirebasePostManager.shared
+            let sharePostViewModel = SharePostVM(postManager: postManager)
+            let sharePostVC = SharePostVC(image: image, viewModel: sharePostViewModel)
+            push(to: sharePostVC)
         case .profilImage:
             viewModel.setProfilImage(image: image)
         }

@@ -9,7 +9,7 @@ import UIKit
 
 class RegisterVC: BaseViewController {
     
-    private lazy var viewModel = RegisterVM()
+    private var viewModel: RegisterVM
     
     private lazy var backGroundImageview: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "loginBackGround"))
@@ -160,6 +160,15 @@ class RegisterVC: BaseViewController {
         
         return view
     }()
+    
+    init(registerVM: RegisterVM) {
+        self.viewModel = registerVM
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func setupViews() {
         super.setupViews()

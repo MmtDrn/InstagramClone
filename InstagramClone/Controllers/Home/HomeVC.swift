@@ -9,7 +9,7 @@ import UIKit
 
 class HomeVC: BaseViewController {
     
-    private let viewModel = HomeVM()
+    private let viewModel: HomeVM
     
     private lazy var tableView: BaseTableView = {
         let tableView = BaseTableView(cells: [HomeTVCell.self,
@@ -23,6 +23,15 @@ class HomeVC: BaseViewController {
         
         return tableView
     }()
+    
+    init(viewModel: HomeVM) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,8 +84,11 @@ class HomeVC: BaseViewController {
             switch state {
                 
             case .navigateToProfil(let uid):
-                let vc = ProfileVC(profilType: .anyone(uid: uid))
-                self.push(to: vc)
+                let profileVM = ProfileVM(authManager: FirebaseAuthManager.shared,
+                                          postManager: FirebasePostManager.shared,
+                                          userDataManager: FirebaseUserDataManager.shared)
+                let profileVC = ProfileVC(viewModel: profileVM, profilType: .anyone(uid: uid))
+                self.push(to: profileVC)
             }
         }
     }

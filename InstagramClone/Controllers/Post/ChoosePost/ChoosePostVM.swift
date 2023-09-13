@@ -15,8 +15,13 @@ enum ChoosePostVMStateChange: StateChange {
 
 class ChoosePostVM: StatefulVM<ChoosePostVMStateChange> {
     
+    private let postManager: PostManagerProtocol
     var dataSource = ChoosePostDS()
     var shareType: ShareType?
+    
+    init(postManager: PostManagerProtocol) {
+        self.postManager = postManager
+    }
     
     func fetchImages() {
         let fetchOptions = PHFetchOptions()
@@ -32,7 +37,7 @@ class ChoosePostVM: StatefulVM<ChoosePostVMStateChange> {
     }
     
     func setProfilImage(image: UIImage) {
-        FirebasePostManager.shared.shareImage(shareType: .profilImage,
+        postManager.shareImage(shareType: .profilImage,
                                               image: image, description: nil) { [weak self] result in
             guard let self else { return }
             switch result {

@@ -14,17 +14,20 @@ enum HomeVMStateChange: StateChange {
     case fetcPostsSuccess
 }
 
-
 class HomeVM: StatefulVM<HomeVMStateChange> {
     
     let dataSource = HomeDS()
+    private let postManager: PostManagerProtocol
     
+    init(postManager: PostManagerProtocol) {
+        self.postManager = postManager
+    }
     
     func getAllPostData() {
         guard let followed = Defs.shared.userModel?.followingUID else {
             self.emit(.fetcPostsError("You have to follow someone to see the stream on the homepage."))
             return }
-        FirebasePostManager.shared.followedPosts(follwedPersons: followed) { [weak self] (models, error) in
+        postManager.followedPosts(follwedPersons: followed) { [weak self] (models, error) in
             guard let self else { return }
             if let error {
                 self.emit(.fetcPostsError(error.message))

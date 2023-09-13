@@ -13,10 +13,16 @@ enum RegisterVMStateChange: StateChange {
 }
 
 class RegisterVM: StatefulVM<RegisterVMStateChange> {
+    
     var registerModel = RegisterModel()
+    private let authManager: AuthManagerPRotocol
+    
+    init(authManager: AuthManagerPRotocol) {
+        self.authManager = authManager
+    }
     
     public func register() {
-        FirebaseAuthManager.shared.userRegister(model: registerModel) { [weak self] result in
+        authManager.userRegister(model: registerModel) { [weak self] result in
             guard let self else { return }
             switch result {
                 

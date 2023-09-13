@@ -14,6 +14,12 @@ enum LoginVMStateChange: StateChange {
 
 class LoginVM: StatefulVM<LoginVMStateChange> {
     
+    private let authManager: AuthManagerPRotocol
+    
+    init(authManager: AuthManagerPRotocol) {
+        self.authManager = authManager
+    }
+    
     func login(email: String, password: String) {
         FirebaseAuthManager.shared.logIn(email: email, password: password) { [weak self] result in
             guard let self else { return }
@@ -25,5 +31,13 @@ class LoginVM: StatefulVM<LoginVMStateChange> {
                 self.emit(.showAlert(message: error.localizedDescription))
             }
         }
-    } 
+    }
+    
+    func registerRouter() -> RegisterVC {
+        let authManager = FirebaseAuthManager.shared
+        let registerVM = RegisterVM(authManager: authManager)
+        let registerVC = RegisterVC(registerVM: registerVM)
+        
+        return registerVC
+    }
 }

@@ -14,6 +14,10 @@ enum ProfileVMStateFullVM: StateChange {
 
 class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     
+    private let authManager: AuthManagerPRotocol
+    private let postManager: PostManagerProtocol
+    private let userDataManager: UserDataManagerProtocol
+    
     let dataSource = ProfilDS()
     var postModels = [PostModel]()
     var following: [String]?
@@ -22,6 +26,12 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     var userName: String?
     var fullName: String?
     var pfURL: String?
+    
+    init(authManager: AuthManagerPRotocol, postManager: PostManagerProtocol, userDataManager: UserDataManagerProtocol) {
+        self.authManager = authManager
+        self.postManager = postManager
+        self.userDataManager = userDataManager
+    }
     
     func getPostData() {
         guard let profilType else { return }
@@ -35,18 +45,18 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
             guard let uid = Defs.shared.userModel?.uuid else { return }
             self.getPostsService(uid: uid)
         case .anyone(let uid):
-            FirebaseUserDataManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self] (data: String?, error) in
+            userDataManager.getUserdata(userDataType: .userName, uid: uid) { [weak self] (data: String?, error) in
                 guard let self, let data else { return }
                 self.userName = data
                 self.getPostsService(uid: uid)
             }
             
-            FirebaseUserDataManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
+            userDataManager.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
                 guard let self, let data else { return }
                 self.fullName = data
             }
             
-            FirebaseUserDataManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
+            userDataManager.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
                 guard let self else { return }
                 if error == nil {
                     guard let data else { return }
@@ -54,7 +64,7 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
                 }
             }
             
-            FirebaseUserDataManager.shared.getUserdata(userDataType: .followers, uid: uid) { [weak self] (data: [String]?, error) in
+            userDataManager.getUserdata(userDataType: .followers, uid: uid) { [weak self] (data: [String]?, error) in
                 guard let self else { return }
                 if error == nil {
                     guard let data else { return }
@@ -62,7 +72,7 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
                 }
             }
             
-            FirebaseUserDataManager.shared.getUserdata(userDataType: .followed, uid: uid) { [weak self] (data: [String]?, error) in
+            userDataManager.getUserdata(userDataType: .followed, uid: uid) { [weak self] (data: [String]?, error) in
                 guard let self else { return }
                 if error == nil {
                     guard let data else { return }
@@ -74,7 +84,7 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     
     private func getPostsService(uid: String) {
         self.postModels.removeAll()
-        FirebasePostManager.shared.getPostData(uid: uid) { [weak self] (models, error) in
+        postManager.getPostData(uid: uid) { [weak self] (models, error) in
             guard let self else { return }
             if let error {
                 print(error.localizedDescription)
@@ -95,15 +105,12 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     }
     
     public func logOut() {
-        FirebaseAuthManager.shared.logOut { [weak self] result in
+        authManager.logOut { [weak self] result in
             guard let self else { return }
             switch result {
                 
             case .success(_):
-                guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
-                      let window = sceneDelegate.window else { return }
-                let controller = UINavigationController(rootViewController: LoginVC())
-                window.rootViewController = controller
+                self.rootLogin()
             case .failure(let error):
                 self.emit(.showAlert(error.localizedDescription))
             }
@@ -113,5 +120,16 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
     public func checkFollowStatus(uid: String) -> Bool {
         guard let followed = Defs.shared.userModel?.followingUID else { return false }
         return followed.contains(uid)
+    }
+    
+    private func rootLogin() {
+        guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+              let window = sceneDelegate.window else { return }
+        
+        let loginVM = LoginVM(authManager: authManager)
+        let loginVC = LoginVC(viewModel: loginVM)
+        
+        let controller = UINavigationController(rootViewController: loginVC)
+        window.rootViewController = controller
     }
 }

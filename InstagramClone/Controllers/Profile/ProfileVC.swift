@@ -10,7 +10,7 @@ import Firebase
 
 class ProfileVC: BaseViewController {
     
-    private var viewModel = ProfileVM()
+    private var viewModel: ProfileVM
     
     private lazy var profilTopView: ProfileTopView = {
         let view = ProfileTopView()
@@ -41,8 +41,9 @@ class ProfileVC: BaseViewController {
         return tableView
     }()
     
-    init(profilType: ProfilType) {
-        viewModel.profilType = profilType
+    init(viewModel: ProfileVM, profilType: ProfilType) {
+        self.viewModel = viewModel
+        self.viewModel.profilType = profilType
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -144,7 +145,10 @@ class ProfileVC: BaseViewController {
             switch state {
                 
             case .setPF:
-                self.push(to: ChoosePostVC(shareType: .profilImage))
+                let postManager = FirebasePostManager.shared
+                let chooseVM = ChoosePostVM(postManager: postManager)
+                let choosePostVC = ChoosePostVC(viewModel: chooseVM, shareType: .profilImage)
+                self.push(to: choosePostVC)
             
             case .toPresentPosts(let models, let index):
                 let vc = PresentPostVC(presentType: .posts, models: models, scrollIndex: index)

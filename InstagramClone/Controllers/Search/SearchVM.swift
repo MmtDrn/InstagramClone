@@ -13,12 +13,17 @@ enum SearchVMStateChange: StateChange {
 }
 
 class SearchVM: StatefulVM<SearchVMStateChange> {
+    private let postManager: PostManagerProtocol
     let dataSource = SearchDS()
     var posts = [PostModel]()
     
+    init(postManager: PostManagerProtocol) {
+        self.postManager = postManager
+    }
+    
     public func getAllpost() {
         guard let selfUID = Defs.shared.userModel?.uuid else { return }
-        FirebasePostManager.shared.getAllPosts { [weak self] (posts, error) in
+        postManager.getAllPosts { [weak self] (posts, error) in
             guard let self else { return }
             
             if let _ = error {

@@ -9,7 +9,7 @@ import UIKit
 
 class SharePostVC: BaseViewController {
     
-    private lazy var viewModel = SharePostVM()
+    private var viewModel: SharePostVM
     
     private lazy var imageView: BaseImageView = {
         let imageView = BaseImageView(image: nil,
@@ -54,7 +54,8 @@ class SharePostVC: BaseViewController {
         return button
     }()
     
-    init(image: UIImage) {
+    init(image: UIImage, viewModel: SharePostVM) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.imageView.image = image
     }

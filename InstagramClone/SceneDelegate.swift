@@ -24,7 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window?.rootViewController = vc
             window?.makeKeyAndVisible()
         } else {
-            let vc = LoginVC()
+            let authManager = FirebaseAuthManager.shared
+            let vm = LoginVM(authManager: authManager)
+            let vc = LoginVC(viewModel: vm)
             window?.rootViewController = vc
             window?.makeKeyAndVisible()
         }

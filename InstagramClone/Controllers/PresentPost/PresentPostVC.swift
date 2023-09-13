@@ -79,8 +79,11 @@ class PresentPostVC: BaseViewController {
             case .navigateToProfil(let uid):
                 guard let selfUID = Defs.shared.userModel?.uuid else { return }
                 if uid != selfUID {
-                    let vc = ProfileVC(profilType: .anyone(uid: uid))
-                    self.push(to: vc)
+                    let profileVM = ProfileVM(authManager: FirebaseAuthManager.shared,
+                                              postManager: FirebasePostManager.shared,
+                                              userDataManager: FirebaseUserDataManager.shared)
+                    let profileVC = ProfileVC(viewModel: profileVM, profilType: .anyone(uid: uid))
+                    self.push(to: profileVC)
                 }
             }
         }
