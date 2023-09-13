@@ -15,6 +15,7 @@
 		B5087D2B2A2F171400A62F42 /* ShareType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2A2A2F171400A62F42 /* ShareType.swift */; };
 		B5087D2D2A2F934000A62F42 /* ProfileBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */; };
 		B51206B62A320BB40009DB4B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51206B52A320BB40009DB4B /* UIView+Extensions.swift */; };
+		B51BB0122AB1CD2300C1532A /* FirebaseUserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */; };
 		B51F1E682A29C7F700499843 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */; };
 		B51F1E6A2A29E22100499843 /* RegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E692A29E22100499843 /* RegisterError.swift */; };
 		B5299D8D29DAB7360085B22E /* LoginRegisterSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */; };
@@ -145,6 +146,7 @@
 		B5087D2A2A2F171400A62F42 /* ShareType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareType.swift; sourceTree = "<group>"; };
 		B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBackView.swift; sourceTree = "<group>"; };
 		B51206B52A320BB40009DB4B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDataManager.swift; sourceTree = "<group>"; };
 		B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		B51F1E692A29E22100499843 /* RegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterError.swift; sourceTree = "<group>"; };
 		B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterSubView.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 			children = (
 				B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */,
 				B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */,
+				B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */,
 				B57BF68B2A77159E008CB59F /* Constants */,
 				B562D43329D570A300C56A2F /* Models */,
 				B57BF6962A77180F008CB59F /* Routers */,
@@ -992,6 +995,7 @@
 				B55AB36E2A13C5A0000B3FC8 /* SharePostVM.swift in Sources */,
 				B546CE702A38AC6000E69F40 /* SearchVM.swift in Sources */,
 				B57BF6982A771834008CB59F /* Routers.swift in Sources */,
+				B51BB0122AB1CD2300C1532A /* FirebaseUserDataManager.swift in Sources */,
 				B5087D2B2A2F171400A62F42 /* ShareType.swift in Sources */,
 				B5858EF52A05423B009CBF7B /* BaseCollectionViewCell.swift in Sources */,
 				B5C8FAB029D6FFC4004E9531 /* CGFloat+Extensions.swift in Sources */,

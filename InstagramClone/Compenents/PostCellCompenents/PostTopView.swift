@@ -83,7 +83,7 @@ class PostTopView: BaseView {
     
     public func setViews(uid: String) {
         self.uid = uid
-        FirebaseAuthManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self]
+        FirebaseUserDataManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self]
             (data: String?, error) in
             guard let self else { return }
             if error == nil {
@@ -91,7 +91,7 @@ class PostTopView: BaseView {
             }
         }
         
-        FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self]
+        FirebaseUserDataManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self]
             (data: String?, error) in
             guard let self else { return }
             if error == nil {

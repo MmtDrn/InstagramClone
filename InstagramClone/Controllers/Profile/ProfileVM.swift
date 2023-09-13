@@ -35,18 +35,18 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
             guard let uid = Defs.shared.userModel?.uuid else { return }
             self.getPostsService(uid: uid)
         case .anyone(let uid):
-            FirebaseAuthManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self] (data: String?, error) in
+            FirebaseUserDataManager.shared.getUserdata(userDataType: .userName, uid: uid) { [weak self] (data: String?, error) in
                 guard let self, let data else { return }
                 self.userName = data
                 self.getPostsService(uid: uid)
             }
             
-            FirebaseAuthManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
+            FirebaseUserDataManager.shared.getUserdata(userDataType: .fullName, uid: uid) { [weak self] (data:String?, error) in
                 guard let self, let data else { return }
                 self.fullName = data
             }
             
-            FirebaseAuthManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
+            FirebaseUserDataManager.shared.getUserdata(userDataType: .profilImageUrl, uid: uid) { [weak self] (data: String?, error) in
                 guard let self else { return }
                 if error == nil {
                     guard let data else { return }
@@ -54,7 +54,7 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
                 }
             }
             
-            FirebaseAuthManager.shared.getUserdata(userDataType: .followers, uid: uid) { [weak self] (data: [String]?, error) in
+            FirebaseUserDataManager.shared.getUserdata(userDataType: .followers, uid: uid) { [weak self] (data: [String]?, error) in
                 guard let self else { return }
                 if error == nil {
                     guard let data else { return }
@@ -62,7 +62,7 @@ class ProfileVM: StatefulVM<ProfileVMStateFullVM> {
                 }
             }
             
-            FirebaseAuthManager.shared.getUserdata(userDataType: .followed, uid: uid) { [weak self] (data: [String]?, error) in
+            FirebaseUserDataManager.shared.getUserdata(userDataType: .followed, uid: uid) { [weak self] (data: [String]?, error) in
                 guard let self else { return }
                 if error == nil {
                     guard let data else { return }

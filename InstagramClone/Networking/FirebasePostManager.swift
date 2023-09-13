@@ -40,7 +40,7 @@ class FirebasePostManager {
                                              description: description,
                                              likeCount: nil)
                         case .profilImage:
-                            FirebaseAuthManager.shared.updateUserData(userDataType: .profilImageUrl,
+                            FirebaseUserDataManager.shared.updateUserData(userDataType: .profilImageUrl,
                                                                       data: url.absoluteString)
                         }
                     }
@@ -51,7 +51,7 @@ class FirebasePostManager {
     }
     
     
-    private func setPostData(postURL: String,
+    func setPostData(postURL: String,
                              description: String?,
                              likeCount: String?) {
         guard let uid = Defs.shared.userModel?.uuid else { return }
