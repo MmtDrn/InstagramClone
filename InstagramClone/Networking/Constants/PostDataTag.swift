@@ -14,5 +14,5 @@ struct PostDataTag {
     static let date = "date"
     static let description = "description"
     static let likeCount = "likeCount"
-    static let postURL = "posstURL"
+    static let postURL = "postURL"
 }
