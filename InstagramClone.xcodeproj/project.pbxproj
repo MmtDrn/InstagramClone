@@ -16,6 +16,10 @@
 		B5087D2D2A2F934000A62F42 /* ProfileBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */; };
 		B51206B62A320BB40009DB4B /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51206B52A320BB40009DB4B /* UIView+Extensions.swift */; };
 		B51BB0122AB1CD2300C1532A /* FirebaseUserDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */; };
+		B51BB0142AB2F3D300C1532A /* HomeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BB0132AB2F3D300C1532A /* HomeTest.swift */; };
+		B51BB0192AB2F5CD00C1532A /* PostManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BB0182AB2F5CD00C1532A /* PostManagerProtocol.swift */; };
+		B51BB01B2AB2F60A00C1532A /* AuthManagerPRotocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BB01A2AB2F60A00C1532A /* AuthManagerPRotocol.swift */; };
+		B51BB01D2AB2F64A00C1532A /* UserDataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51BB01C2AB2F64A00C1532A /* UserDataManagerProtocol.swift */; };
 		B51F1E682A29C7F700499843 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */; };
 		B51F1E6A2A29E22100499843 /* RegisterError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51F1E692A29E22100499843 /* RegisterError.swift */; };
 		B5299D8D29DAB7360085B22E /* LoginRegisterSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */; };
@@ -147,6 +151,10 @@
 		B5087D2C2A2F934000A62F42 /* ProfileBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileBackView.swift; sourceTree = "<group>"; };
 		B51206B52A320BB40009DB4B /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 		B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUserDataManager.swift; sourceTree = "<group>"; };
+		B51BB0132AB2F3D300C1532A /* HomeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTest.swift; sourceTree = "<group>"; };
+		B51BB0182AB2F5CD00C1532A /* PostManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManagerProtocol.swift; sourceTree = "<group>"; };
+		B51BB01A2AB2F60A00C1532A /* AuthManagerPRotocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagerPRotocol.swift; sourceTree = "<group>"; };
+		B51BB01C2AB2F64A00C1532A /* UserDataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataManagerProtocol.swift; sourceTree = "<group>"; };
 		B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 		B51F1E692A29E22100499843 /* RegisterError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterError.swift; sourceTree = "<group>"; };
 		B5299D8C29DAB7360085B22E /* LoginRegisterSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRegisterSubView.swift; sourceTree = "<group>"; };
@@ -296,6 +304,33 @@
 				D6CC2F650D68285A04048AD9 /* Pods-InstagramCloneTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B51BB0152AB2F59A00C1532A /* PostManager */ = {
+			isa = PBXGroup;
+			children = (
+				B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */,
+				B51BB0182AB2F5CD00C1532A /* PostManagerProtocol.swift */,
+			);
+			path = PostManager;
+			sourceTree = "<group>";
+		};
+		B51BB0162AB2F5A400C1532A /* AuthManager */ = {
+			isa = PBXGroup;
+			children = (
+				B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */,
+				B51BB01A2AB2F60A00C1532A /* AuthManagerPRotocol.swift */,
+			);
+			path = AuthManager;
+			sourceTree = "<group>";
+		};
+		B51BB0172AB2F5B400C1532A /* UserDataManager */ = {
+			isa = PBXGroup;
+			children = (
+				B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */,
+				B51BB01C2AB2F64A00C1532A /* UserDataManagerProtocol.swift */,
+			);
+			path = UserDataManager;
 			sourceTree = "<group>";
 		};
 		B5299D9029DAC0B80085B22E /* Register */ = {
@@ -448,6 +483,7 @@
 			isa = PBXGroup;
 			children = (
 				B562D41529D56EF100C56A2F /* InstagramCloneTests.swift */,
+				B51BB0132AB2F3D300C1532A /* HomeTest.swift */,
 			);
 			path = InstagramCloneTests;
 			sourceTree = "<group>";
@@ -496,9 +532,9 @@
 		B562D43029D5707C00C56A2F /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				B581B8062A2A27E300B70A36 /* FirebasePostManager.swift */,
-				B51F1E672A29C7F600499843 /* FirebaseAuthManager.swift */,
-				B51BB0112AB1CD2300C1532A /* FirebaseUserDataManager.swift */,
+				B51BB0172AB2F5B400C1532A /* UserDataManager */,
+				B51BB0162AB2F5A400C1532A /* AuthManager */,
+				B51BB0152AB2F59A00C1532A /* PostManager */,
 				B57BF68B2A77159E008CB59F /* Constants */,
 				B562D43329D570A300C56A2F /* Models */,
 				B57BF6962A77180F008CB59F /* Routers */,
@@ -943,6 +979,7 @@
 				B54CD6DE29D5D87000AA1AE2 /* StateFulDS.swift in Sources */,
 				B5C8FAAC29D6FCEA004E9531 /* TextFieldType.swift in Sources */,
 				B5A2931329E6F9BF00D04542 /* ChoosePostVM.swift in Sources */,
+				B51BB01B2AB2F60A00C1532A /* AuthManagerPRotocol.swift in Sources */,
 				B5A2930B29E6A54400D04542 /* Defs.swift in Sources */,
 				B5858EF32A0537C9009CBF7B /* PostCell.swift in Sources */,
 				B54CD6D729D599E300AA1AE2 /* NavBarType.swift in Sources */,
@@ -969,6 +1006,7 @@
 				B57BF68F2A7715C4008CB59F /* PostStorage.swift in Sources */,
 				B51206B62A320BB40009DB4B /* UIView+Extensions.swift in Sources */,
 				B582880229D6E1D000C5DF5E /* PostNavView.swift in Sources */,
+				B51BB0192AB2F5CD00C1532A /* PostManagerProtocol.swift in Sources */,
 				B562D3FF29D56EF000C56A2F /* AppDelegate.swift in Sources */,
 				B5865CBC29D577E10046D0B6 /* ChoosePostVC.swift in Sources */,
 				B52AA01A2A20B740003D9DDC /* PostTopView.swift in Sources */,
@@ -996,6 +1034,7 @@
 				B546CE702A38AC6000E69F40 /* SearchVM.swift in Sources */,
 				B57BF6982A771834008CB59F /* Routers.swift in Sources */,
 				B51BB0122AB1CD2300C1532A /* FirebaseUserDataManager.swift in Sources */,
+				B51BB01D2AB2F64A00C1532A /* UserDataManagerProtocol.swift in Sources */,
 				B5087D2B2A2F171400A62F42 /* ShareType.swift in Sources */,
 				B5858EF52A05423B009CBF7B /* BaseCollectionViewCell.swift in Sources */,
 				B5C8FAB029D6FFC4004E9531 /* CGFloat+Extensions.swift in Sources */,
@@ -1028,6 +1067,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B51BB0142AB2F3D300C1532A /* HomeTest.swift in Sources */,
 				B562D41629D56EF100C56A2F /* InstagramCloneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
