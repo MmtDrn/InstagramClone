@@ -7,7 +7,11 @@
 
 import Foundation
 
-class Defs {
+protocol DefsProtocol {
+    var userModel: DefsUserModel? { get set }
+}
+
+class Defs: DefsProtocol {
     
     static let shared = Defs()
     private init() { }
