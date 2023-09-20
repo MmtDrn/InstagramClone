@@ -18,13 +18,15 @@ class HomeVM: StatefulVM<HomeVMStateChange> {
     
     let dataSource = HomeDS()
     private let postManager: PostManagerProtocol
+    private let defsManager: DefsProtocol
     
-    init(postManager: PostManagerProtocol) {
+    init(postManager: PostManagerProtocol, defsManager: DefsProtocol) {
         self.postManager = postManager
+        self.defsManager = defsManager
     }
     
     func getAllPostData() {
-        guard let followed = Defs.shared.userModel?.followingUID else {
+        guard let followed = getFollowedPersons() else {
             self.emit(.fetcPostsError("You have to follow someone to see the stream on the homepage."))
             return }
         postManager.followedPosts(follwedPersons: followed) { [weak self] (models, error) in
@@ -36,6 +38,15 @@ class HomeVM: StatefulVM<HomeVMStateChange> {
                 self.dataSource.models = models
                 self.emit(.fetcPostsSuccess)
             }
+        }
+    }
+    
+    func getFollowedPersons() -> [String]? {
+        if let followed = defsManager.userModel?.followingUID {
+            return followed
+        } else {
+            emit(.fetcPostsError("You have to follow someone to see the stream on the homepage."))
+            return nil
         }
     }
 }

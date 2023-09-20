@@ -65,7 +65,8 @@ enum TabbarItem: Int {
         switch self {
         case .Home:
             let postManager = FirebasePostManager.shared
-            let homeVM = HomeVM(postManager: postManager)
+            let defsManager = Defs.shared
+            let homeVM = HomeVM(postManager: postManager, defsManager: defsManager)
             let homeVC = HomeVC(viewModel: homeVM)
             return homeVC
         case .Search:
