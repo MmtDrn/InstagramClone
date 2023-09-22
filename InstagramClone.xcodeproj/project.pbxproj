@@ -40,6 +40,7 @@
 		B53A68642ABD813200B23877 /* MockPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A68632ABD813200B23877 /* MockPostManager.swift */; };
 		B53A68662ABD815800B23877 /* MockHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A68652ABD815800B23877 /* MockHomeVC.swift */; };
 		B53A68682ABDDC8600B23877 /* ExploreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A68672ABDDC8600B23877 /* ExploreTests.swift */; };
+		B53A686B2ABDF43200B23877 /* MockExploreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53A686A2ABDF43200B23877 /* MockExploreVC.swift */; };
 		B546CE6E2A3882DC00E69F40 /* UIImage+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B546CE6D2A3882DC00E69F40 /* UIImage+extensions.swift */; };
 		B546CE702A38AC6000E69F40 /* ExploreVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = B546CE6F2A38AC6000E69F40 /* ExploreVM.swift */; };
 		B546CE762A38D52F00E69F40 /* ExploreDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = B546CE752A38D52F00E69F40 /* ExploreDS.swift */; };
@@ -179,6 +180,7 @@
 		B53A68632ABD813200B23877 /* MockPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPostManager.swift; sourceTree = "<group>"; };
 		B53A68652ABD815800B23877 /* MockHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeVC.swift; sourceTree = "<group>"; };
 		B53A68672ABDDC8600B23877 /* ExploreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTests.swift; sourceTree = "<group>"; };
+		B53A686A2ABDF43200B23877 /* MockExploreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockExploreVC.swift; sourceTree = "<group>"; };
 		B546CE6D2A3882DC00E69F40 /* UIImage+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+extensions.swift"; sourceTree = "<group>"; };
 		B546CE6F2A38AC6000E69F40 /* ExploreVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreVM.swift; sourceTree = "<group>"; };
 		B546CE752A38D52F00E69F40 /* ExploreDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreDS.swift; sourceTree = "<group>"; };
@@ -390,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				B53A68672ABDDC8600B23877 /* ExploreTests.swift */,
+				B53A686A2ABDF43200B23877 /* MockExploreVC.swift */,
 			);
 			path = ExploreTests;
 			sourceTree = "<group>";
@@ -1109,6 +1112,7 @@
 				B562D41629D56EF100C56A2F /* InstagramCloneTests.swift in Sources */,
 				B53A68642ABD813200B23877 /* MockPostManager.swift in Sources */,
 				B53A68682ABDDC8600B23877 /* ExploreTests.swift in Sources */,
+				B53A686B2ABDF43200B23877 /* MockExploreVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

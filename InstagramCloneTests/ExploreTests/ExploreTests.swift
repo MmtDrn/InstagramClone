@@ -14,16 +14,24 @@ final class ExploreTests: XCTestCase {
     private var mockPostManager: MockPostManager!
     private var mockDefsManager: MockDefs!
     private var mockExploreVC: MockExploreVC!
+    private var mockCollectionView: UICollectionView!
     
     override func setUpWithError() throws {
         mockPostManager = MockPostManager()
         mockDefsManager = MockDefs()
         viewModel = .init(postManager: mockPostManager, defsManager: mockDefsManager)
         mockExploreVC = .init(viewModel: viewModel)
+        
+        mockCollectionView = .init(frame: .zero, collectionViewLayout: .init())
+        mockCollectionView.register(ExploreCell.self, forCellWithReuseIdentifier: ExploreCell.identifier)
     }
     
     override func tearDownWithError() throws {
-        
+        mockPostManager = nil
+        mockDefsManager = nil
+        viewModel = nil
+        mockExploreVC = nil
+        mockCollectionView = nil
     }
     
     func testVM_getSelfUID_WhenSuccess() throws {
@@ -59,29 +67,29 @@ final class ExploreTests: XCTestCase {
         
         XCTAssertTrue(mockExploreVC.postFetchedFailure)
     }
-}
-
-class MockExploreVC {
     
-    private let viewModel: ExploreVM
-    
-    var postFetchedSuccess = false
-    var postFetchedFailure = false
-    
-    init(viewModel: ExploreVM) {
-        self.viewModel = viewModel
-        observeViewModel()
+    func testDS_numberOfSections() throws {
+        let numberOfSections = viewModel.dataSource.numberOfSections(in: mockCollectionView)
+        XCTAssertEqual(numberOfSections, 1)
     }
     
-    func observeViewModel() {
-        viewModel.subscribe { state in
-            switch state {
-                
-            case .fetchError:
-                self.postFetchedFailure = true
-            case .allPostFetched:
-                self.postFetchedSuccess = true
-            }
-        }
+    func testDS_numberOfItemsInSection() throws {
+        let numberOfItemsInSection = viewModel.dataSource.collectionView(mockCollectionView, numberOfItemsInSection: 0)
+        
+        XCTAssertEqual(numberOfItemsInSection, viewModel.dataSource.posts.count)
+    }
+    
+    func testDS_cellForItemAt() throws {
+        viewModel.dataSource.posts = [.init()]
+        let indexPath = IndexPath(item: 0, section: 0)
+        let cell = viewModel.dataSource.collectionView(mockCollectionView, cellForItemAt: indexPath)
+
+        XCTAssertTrue(cell is ExploreCell)
+    }
+    
+    func testDS_clickPost() {
+        viewModel.dataSource.clickPost(cell: .init())
+        
+        XCTAssertTrue(mockExploreVC.clickPost)
     }
 }
