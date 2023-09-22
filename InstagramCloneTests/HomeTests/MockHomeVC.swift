@@ -12,10 +12,12 @@ final class MockHomeVC {
     
     var errorMessage: String?
     var reloatData = false
+    var uid: String?
     
     init(viewModel: HomeVM) {
         self.viewModel = viewModel
         observeViewModel()
+        observeDataSource()
     }
     
     func observeViewModel() {
@@ -26,6 +28,16 @@ final class MockHomeVC {
                 self.errorMessage = errorMessage
             case .fetcPostsSuccess:
                 self.reloatData = true
+            }
+        }
+    }
+    
+    func observeDataSource() {
+        viewModel.dataSource.subscribe { state in
+            switch state {
+                
+            case .navigateToProfil(let uid):
+                self.uid = uid
             }
         }
     }
