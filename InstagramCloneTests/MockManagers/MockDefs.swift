@@ -8,7 +8,9 @@
 @testable import InstagramClone
 
 final class MockDefs: DefsProtocol {
+    
     var mockUserModel: DefsUserModel?
+    
     var userModel: InstagramClone.DefsUserModel? {
         get {
             return mockUserModel
