@@ -23,6 +23,10 @@ final class HomeTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
+        mockPostManager = nil
+        mockDefsManager = nil
+        sutVM = nil
+        mockHomeVC = nil
     }
     
     func testFetchFollowedPost_whenSuccess() throws {
@@ -57,38 +61,5 @@ final class HomeTests: XCTestCase {
         let followingPersons = sutVM.getFollowedPersons()
 
         XCTAssertEqual(followingPersons, nil)
-    }
-}
-
-final class MockHomeVC {
-    private let viewModel: HomeVM
-    
-    var errorMessage: String?
-    var reloatData = false
-    
-    init(viewModel: HomeVM) {
-        self.viewModel = viewModel
-        observeViewModel()
-    }
-    
-    func observeViewModel() {
-        viewModel.subscribe { state in
-            switch state {
-                
-            case .fetcPostsError(let errorMessage):
-                self.errorMessage = errorMessage
-            case .fetcPostsSuccess:
-                self.reloatData = true
-            }
-        }
-    }
-}
-
-final class MockPostManager: PostManagerProtocol {
-    var result: ([PostModel]?, FetchError?)?
-    func followedPosts(follwedPersons: [String], completion: @escaping ([PostModel]?, FetchError?) -> Void) {
-        if let result {
-            completion(result.0, result.1)
-        }
     }
 }
