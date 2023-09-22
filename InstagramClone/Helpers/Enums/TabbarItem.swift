@@ -9,7 +9,7 @@ import UIKit
 
 enum TabbarItem: Int {
     case Home
-    case Search
+    case Explore
     case Post
     case Notifications
     case Profile
@@ -18,7 +18,7 @@ enum TabbarItem: Int {
         switch self {
         case .Home:
             return UIImage(systemName: "house") ?? .add
-        case .Search:
+        case .Explore:
             return UIImage(systemName: "magnifyingglass") ?? .add
         case .Notifications:
             return UIImage(systemName: "heart") ?? .add
@@ -50,7 +50,7 @@ enum TabbarItem: Int {
         switch self {
         case .Home:
             return UIImage(systemName: "house.fill") ?? .add
-        case .Search:
+        case .Explore:
             return UIImage(systemName: "magnifyingglass") ?? .add
         case .Notifications:
             return UIImage(systemName: "heart.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal) ?? .add
@@ -69,10 +69,11 @@ enum TabbarItem: Int {
             let homeVM = HomeVM(postManager: postManager, defsManager: defsManager)
             let homeVC = HomeVC(viewModel: homeVM)
             return homeVC
-        case .Search:
+        case .Explore:
             let postManager = FirebasePostManager.shared
-            let searchVM = SearchVM(postManager: postManager)
-            let searchVC = SearchVC(viewModel: searchVM)
+            let defsManager = Defs.shared
+            let searchVM = ExploreVM(postManager: postManager, defsManager: defsManager)
+            let searchVC = ExploreVC(viewModel: searchVM)
             return searchVC
         case .Notifications:
             return NotificationsVC()

@@ -59,7 +59,7 @@ class TabbarVC: WHTabbarController {
         tabBar.tintColor = .label
         
         let homeVC = createVC(item: .Home)
-        let searchVC = createVC(item: .Search)
+        let searchVC = createVC(item: .Explore)
         let postVC = createVC(item: .Post)
         let notificationsVC = createVC(item: .Notifications)
         let profileVC = createVC(item: .Profile)
