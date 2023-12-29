@@ -11,7 +11,7 @@ protocol HomeTVCellProtocol: AnyObject {
     func setUID(uid: String)
 }
 
-class HomeTVCell: BaseTableViewCell {
+class PresenPostTVCell: BaseTableViewCell {
     
     weak var delegate: HomeTVCellProtocol?
     
@@ -102,7 +102,7 @@ class HomeTVCell: BaseTableViewCell {
     }
 }
 
-extension HomeTVCell: PostMiddleViewProtocol, PostTopViewProtocol {
+extension PresenPostTVCell: PostMiddleViewProtocol, PostTopViewProtocol {
     
     func setUID(uid: String) {
         delegate?.setUID(uid: uid)

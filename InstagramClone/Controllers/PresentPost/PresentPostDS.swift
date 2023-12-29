@@ -29,7 +29,7 @@ extension PresentPostDS: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = models[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: HomeTVCell.identifier, for: indexPath) as! HomeTVCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: PresenPostTVCell.identifier, for: indexPath) as! PresenPostTVCell
         cell.setModel(model: model)
         cell.delegate = self
         if indexPath.row == 0 {

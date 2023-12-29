@@ -12,7 +12,7 @@ class PresentPostVC: BaseViewController {
     private let viewModel = PresentPostVM()
     
     private lazy var tableView: BaseTableView = {
-        let tableView = BaseTableView(cells: [HomeTVCell.self],
+        let tableView = BaseTableView(cells: [PresenPostTVCell.self],
                                       showsVerticalScrollIndicator: false,
                                       separatorStyle: .none,
                                       backgroundColor: .clear)

@@ -21,7 +21,7 @@ class FirebasePostManager: PostManagerProtocol {
                           completion: @escaping(Result<Bool,Error>) -> Void) {
         UIApplication.getTopViewController()?.view.isUserInteractionEnabled = false
         UIApplication.getTopViewController()?.navigationController?.navigationBar.isUserInteractionEnabled = false
-        ProgressHUD.show()
+//        ProgressHUD.show()
         
         if let data = image.jpegData(compressionQuality: 1) {
             let uuid = UUID().uuidString

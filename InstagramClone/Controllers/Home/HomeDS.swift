@@ -15,48 +15,35 @@ class HomeDS: StatefulDS<HomeDSStateChange> {
     var models = [PostModel]()
 }
 
-extension HomeDS: UITableViewDelegate, UITableViewDataSource {
+extension HomeDS: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return HomeCase.allCases.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch HomeCase.allCases[section] {
             
         case .story:
-            return 1
+            return 20
         case .post:
             return models.count
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch HomeCase.allCases[indexPath.section] {
             
         case .story:
-            let cell = tableView.dequeueReusableCell(withIdentifier: StoryTVCell.identifier, for: indexPath) as! StoryTVCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryCVCell.identifier, for: indexPath) as! StoryCVCell
             return cell
         case .post:
             let model = models[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: HomeTVCell.identifier, for: indexPath) as! HomeTVCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCVCell.identifier, for: indexPath) as! HomeCVCell
             cell.setModel(model: model)
             cell.delegate = self
             return cell
         }
-        
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch HomeCase.allCases[indexPath.section] {
-            
-        case .story:
-            return 100
-        case .post:
-            return 570
-        }
-        
     }
 }
 

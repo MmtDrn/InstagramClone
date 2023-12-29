@@ -11,17 +11,17 @@ class HomeVC: BaseViewController {
     
     private let viewModel: HomeVM
     
-    private lazy var tableView: BaseTableView = {
-        let tableView = BaseTableView(cells: [HomeTVCell.self,
-                                              StoryTVCell.self],
-                                      showsVerticalScrollIndicator: false,
-                                      separatorStyle: .none,
-                                      backgroundColor: .clear)
+    private lazy var collectionView: BaseCollectionView = {
+        let collectionView = BaseCollectionView(layout: createLayoutDifferentSection(),
+                                                cells: [StoryCVCell.self,
+                                                        HomeCVCell.self],
+                                                showsVerticalScrollIndicator: false,
+                                                showsHorizontalScrollIndicator: false)
         
-        tableView.dataSource = viewModel.dataSource
-        tableView.delegate = viewModel.dataSource
+        collectionView.dataSource = viewModel.dataSource
+        collectionView.delegate = viewModel.dataSource
         
-        return tableView
+        return collectionView
     }()
     
     init(viewModel: HomeVM) {
@@ -47,13 +47,13 @@ class HomeVC: BaseViewController {
     
     override func setupViews() {
         super.setupViews()
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
     }
     
     override func setupLayouts() {
         super.setupLayouts()
         
-        tableView.snp.makeConstraints { make in
+        collectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.leading.trailing.bottom.equalToSuperview()
         }
@@ -72,7 +72,7 @@ class HomeVC: BaseViewController {
             case .fetcPostsError(let message):
                 AlertManager.shared.showAlert(onVC: self, type: .justMessage(message: message))
             case .fetcPostsSuccess:
-                self.tableView.reloadData()
+                self.collectionView.reloadData()
             }
         }
     }
@@ -91,5 +91,48 @@ class HomeVC: BaseViewController {
                 self.push(to: profileVC)
             }
         }
+    }
+    
+    func createLayoutDifferentSection() -> UICollectionViewLayout {
+        
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            if sectionIndex == 0 {
+                return self.storyLayout()
+            } else {
+                return self.postLayout()
+            }
+        }
+            
+        return layout
+    }
+    
+    func postLayout() -> NSCollectionLayoutSection  {
+        let postCase = NSCollectionLayoutItem(layoutSize:
+                                                NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                                       heightDimension: .fractionalHeight(1)))
+        
+        let postGroup = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(1),
+                                                                           heightDimension: .absolute(570)),
+                                                         subitems: [postCase])
+        
+        
+        let postSection = NSCollectionLayoutSection(group: postGroup)
+        
+        return postSection
+    }
+    
+    func storyLayout() -> NSCollectionLayoutSection  {
+        let storyCase = NSCollectionLayoutItem(layoutSize:
+                                                NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                                                       heightDimension: .fractionalHeight(1)))
+        
+        let storyGroup = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .absolute(80),
+                                                                              heightDimension: .absolute(80)),
+                                                            subitems: [storyCase])
+        let storySection = NSCollectionLayoutSection(group: storyGroup)
+        
+        storySection.orthogonalScrollingBehavior = .continuous
+        
+        return storySection
     }
 }
